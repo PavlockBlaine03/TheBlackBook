@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MainMenuState.h"
 
 void MainMenuState::initBackground()
@@ -46,19 +47,19 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new gui::Button(1800.f, 700.f, 250.f, 50.f, &this->font, "New Game", 32,
+	this->buttons["GAME_STATE"] = new gui::Button(1800.f, 700.f, 150.f, 50.f, &this->font, "New Game", 32,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["SETTINGS_STATE"] = new gui::Button(1800.f, 800.f, 250.f, 50.f, &this->font, "Settings", 32,
+	this->buttons["SETTINGS_STATE"] = new gui::Button(1800.f, 800.f, 150.f, 50.f, &this->font, "Settings", 32,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["EDITOR_STATE"] = new gui::Button(1800.f, 900.f, 250.f, 50.f, &this->font, "Editor", 32,
+	this->buttons["EDITOR_STATE"] = new gui::Button(1800.f, 900.f, 150.f, 50.f, &this->font, "Editor", 32,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["EXIT_STATE"] = new gui::Button(1800.f, 1000.f, 250.f, 50.f, &this->font, "Quit", 32,
+	this->buttons["EXIT_STATE"] = new gui::Button(1800.f, 1000.f, 150.f, 50.f, &this->font, "Quit", 32,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 }	

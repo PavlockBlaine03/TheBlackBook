@@ -7,15 +7,18 @@ private:
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font font;
+	sf::Text optionsText;
 
 	std::map<std::string, gui::Button*> buttons;
 	std::map<std::string, gui::DropDownList*> dropDownLists;
+	std::vector<sf::VideoMode> modes;
 
 	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
 	void initGui();
+	void initText();
 
 public:
 	SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);

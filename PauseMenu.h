@@ -1,13 +1,6 @@
 #pragma once
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
+
 #include "Gui.h"
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 
 class PauseMenu
 {

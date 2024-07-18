@@ -1,15 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <sstream>
-#include <ctime>
-#include <sstream>
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-
 enum button_states{BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
 
 namespace gui
@@ -50,10 +40,12 @@ namespace gui
 		void update(const sf::Vector2f& mousePos);
 		void render(sf::RenderTarget& target);
 
+		const short unsigned& getID() const;
 		const bool isPressed() const;
 		const std::string getText() const;
 
 		void setText(std::string text);
+		void setID(const short unsigned id);
 	};
 
 	class DropDownList
@@ -73,6 +65,8 @@ namespace gui
 		virtual ~DropDownList();
 
 		const bool getKeytime();
+		const unsigned short& getActiveElementID() const;
+
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);

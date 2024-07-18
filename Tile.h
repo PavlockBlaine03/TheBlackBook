@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Gui.h"
 
 class Tile
 {
