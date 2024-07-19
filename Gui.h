@@ -65,7 +65,7 @@ namespace gui
 		virtual ~DropDownList();
 
 		const bool getKeytime();
-		const unsigned short& getActiveElementID() const;
+		const unsigned short& getActiveElementID();
 
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos, const float& dt);

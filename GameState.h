@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "PauseMenu.h"
+#include "Tilemap.h"
 
 
 class GameState : public State
@@ -10,6 +11,8 @@ private:
 
 	Player* player;
 	PauseMenu* pmenu;
+
+	TileMap map;
 
 	void initKeybinds();
 	void initTextures();

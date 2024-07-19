@@ -37,6 +37,7 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->outlineHoverColor = outline_hover_color;
 	this->outlineActiveColor = outline_active_color;
 
+	this->id = id;
 }
 
 gui::Button::~Button()
@@ -143,7 +144,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height, sf:
 		sf::Color(255, 255, 255, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 50)
 	);
 
-	for (size_t i = 0; i < numOfElements; i++)
+	for (unsigned i = 0; i < numOfElements; i++)
 	{
 		this->list.push_back(
 			new gui::Button(
@@ -179,7 +180,7 @@ const bool gui::DropDownList::getKeytime()
 		return false;
 }
 
-const unsigned short& gui::DropDownList::getActiveElementID() const
+const unsigned short& gui::DropDownList::getActiveElementID()
 {
 	return this->activeElement->getID();
 }

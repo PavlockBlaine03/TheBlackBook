@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Gui.h"
+#include "GraphicSettings.h"
 
 
 class State
