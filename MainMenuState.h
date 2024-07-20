@@ -4,11 +4,15 @@
 #include "Gui.h"
 #include "SettingsState.h"
 
+class GameState;
+class EditorState;
+class Gui;
+class SettingsState;
+
 class MainMenuState : public State
 {
 private:
 
-	GraphicSettings& gfxSettings;
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font font;
@@ -22,7 +26,7 @@ private:
 	void initButtons();
 
 public:
-	MainMenuState(sf::RenderWindow* window, GraphicSettings& gfx_settings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	MainMenuState(StateData* state_data);
 	virtual ~MainMenuState();
 
 	void updateInput(const float& dt);

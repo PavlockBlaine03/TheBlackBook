@@ -1,26 +1,37 @@
 #pragma once
 #include "State.h"
+#include "Gui.h"
+#include "PauseMenu.h"
+#include "TileMap.h"
+
+class Gui;
+class State;
+class PauseMenu;
+class TileMap;
 
 class EditorState : public State
 {
 private:
-	sf::Texture backgroundTexture;
-	sf::RectangleShape background;
 	sf::Font font;
+	PauseMenu* pmenu;
 
 	std::map<std::string, gui::Button*> buttons;
+
+	TileMap map;
 
 	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
+	void initPauseMenu();
 	void initButtons();
 
 public:
-	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	EditorState(StateData* state_data);
 	virtual ~EditorState();
 
 	void updateInput(const float& dt);
+	void updatePauseMenuButtons();
 	void updateButtons();
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget& target);

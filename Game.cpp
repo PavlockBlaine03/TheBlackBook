@@ -9,11 +9,21 @@ void Game::initVariables()
 {
 	this->window = NULL;
 	this->dt = 0.f;
+	this->gridSize = 50.f;
 }
 
 void Game::initGraphicSettings()
 {
 	this->gfxSettings.loadFromFile("config/graphics.ini");
+}
+
+void Game::InitStateData()
+{
+	this->stateData.window = this->window;
+	this->stateData.gfxSettings = &this->gfxSettings;
+	this->stateData.supportedKeys = &this->supportedKeys;
+	this->stateData.states = &this->states;
+	this->stateData.gridSize = this->gridSize;
 }
 
 void Game::initWindow()
@@ -42,17 +52,17 @@ void Game::initKeys()
 
 	ifs.close();
 
-	// debug print
-	for (auto i : this->supportedKeys)
-	{
-		std::cout << i.first << " " << i.second << "\n";
-	}
+	//// debug print
+	//for (auto i : this->supportedKeys)
+	//{
+	//	std::cout << i.first << " " << i.second << "\n";
+	//}
 }
 
 
 void Game::initStates()
 {
-	this->states.push(new MainMenuState(this->window, this->gfxSettings, &this->supportedKeys, &this->states));
+	this->states.push(new MainMenuState(&this->stateData));
 }
 
 // Constructor/Destructor
@@ -62,6 +72,7 @@ Game::Game()
 	this->initGraphicSettings();
 	this->initWindow();
 	this->initKeys();
+	this->InitStateData();
 	this->initStates();
 }
 Game::~Game()

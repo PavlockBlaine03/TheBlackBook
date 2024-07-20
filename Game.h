@@ -1,11 +1,14 @@
 #pragma once
 #include "MainMenuState.h"
 
+class MainMenuState;
+
 class Game
 {
 private:
 	// variables
 	sf::RenderWindow *window;
+	StateData stateData;
 	sf::Event sfEvent;
 	sf::Clock dtClock;
 
@@ -15,10 +18,12 @@ private:
 	std::map<std::string, int> supportedKeys;
 
 	float dt;
+	float gridSize;
 
 	// init
 	void initVariables();
 	void initGraphicSettings();
+	void InitStateData();
 	void initWindow();
 	void initStates();
 	void initKeys();

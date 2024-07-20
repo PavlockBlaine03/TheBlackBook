@@ -3,8 +3,7 @@
 
 void EditorState::initBackground()
 {
-	this->background.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)));
-	this->background.setFillColor(sf::Color(50, 50, 50, 255));
+
 }
 
 void EditorState::initVariables()
@@ -14,7 +13,7 @@ void EditorState::initVariables()
 
 void EditorState::initFonts()
 {
-	if (!this->font.loadFromFile("fonts/Bricks.ttf"))
+	if (!this->font.loadFromFile("fonts/Folker.ttf"))
 	{
 		std::cerr << "ERROR::EDITOR_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
@@ -40,18 +39,23 @@ void EditorState::initKeybinds()
 
 void EditorState::initButtons()
 {
-	this->buttons["EXIT_STATE"] = new gui::Button(2300.f, 1300.f, 250.f, 50.f, &this->font, "Back", 32,
-		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
-		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
+	
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+	this->pmenu->addButton("PAUSED_STATE", this->window->getSize().y / 1.5, "Quit");
+}
+
+EditorState::EditorState(StateData* state_data)
+	: State(state_data)
 {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
+	this->initPauseMenu();
 	this->initButtons();
 
 }
@@ -64,12 +68,23 @@ EditorState::~EditorState()
 	{
 		delete it->second;
 	}
+	delete this->pmenu;
 }
 
 void EditorState::updateInput(const float& dt)
 {
-	// update player input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("PAUSE"))) && this->getKeytime())
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
+}
+
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("PAUSED_STATE"))
 		this->endState();
 }
 
@@ -81,25 +96,23 @@ void EditorState::updateButtons()
 		it.second->update(this->mousePosView);
 	}
 
-	if (this->buttons["EXIT_STATE"]->isPressed())
-	{
-		this->endState();
-	}
 }
 
 void EditorState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
-	this->updateButtons();
-}
 
-void EditorState::render(sf::RenderTarget* target)
-{
-	if (!target)
-		target = this->window;
-	target->draw(this->background);
-	this->renderButtons(*target);
+	if (!this->paused)	// Unpaused update
+	{
+		this->updateButtons();
+	}
+	else    // Paused update
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 
 }
 
@@ -110,3 +123,28 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 		it.second->render(target);
 	}
 }
+
+void EditorState::render(sf::RenderTarget* target)
+{
+	if (!target)
+		target = this->window;
+	this->renderButtons(*target);
+
+	this->map.render(*target);
+
+	if (this->paused)	// paused menu render
+	{
+		this->pmenu->render(*target);
+	}
+
+	// Remove later
+	sf::Text mouseText;
+	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y - 50);
+	mouseText.setFont(this->font);
+	mouseText.setCharacterSize(12);
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y;
+	mouseText.setString(ss.str());
+	target->draw(mouseText);
+}
+

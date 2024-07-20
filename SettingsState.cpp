@@ -84,8 +84,8 @@ void SettingsState::initText()
 	this->optionsText.setString("Resolution \n\n\nFullscreen \n\n\nVsync \n\n\nAntialiasing \n\n\n");
 }
 
-SettingsState::SettingsState(sf::RenderWindow* window, GraphicSettings& gfx_settings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states), gfxSettings(gfx_settings)
+SettingsState::SettingsState(StateData* state_data)
+	: State(state_data)
 {
 	this->initVariables();
 	this->initBackground();
@@ -140,10 +140,10 @@ void SettingsState::updateGui(const float& dt)
 	if (this->buttons["APPLY"]->isPressed())
 	{	
 		// Test remove later
-		this->gfxSettings.resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementID()];
+		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementID()];
 		this->window->close();
 
-		this->window->create(this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Default);
+		this->window->create(this->stateData->gfxSettings->resolution, this->stateData->gfxSettings->title, sf::Style::Default);
 	}
 
 	// Update Dropdownlists
