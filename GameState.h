@@ -12,13 +12,14 @@ private:
 	Player* player;
 	PauseMenu* pmenu;
 
-	TileMap map;
+	TileMap* tileMap;
 
 	void initKeybinds();
 	void initTextures();
 	void initPauseMenu();
 	void initPlayers();
 	void initFonts();
+	void initTileMap();
 
 public:
 	GameState(StateData* state_data);

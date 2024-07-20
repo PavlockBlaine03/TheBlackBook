@@ -17,7 +17,10 @@ private:
 
 	std::map<std::string, gui::Button*> buttons;
 
-	TileMap map;
+	TileMap* tileMap;
+
+	sf::IntRect textureRect;
+	sf::RectangleShape selectorRect;
 
 	void initBackground();
 	void initVariables();
@@ -25,16 +28,21 @@ private:
 	void initKeybinds();
 	void initPauseMenu();
 	void initButtons();
+	void initGui();
+	void initTileMap();
 
 public:
 	EditorState(StateData* state_data);
 	virtual ~EditorState();
 
 	void updateInput(const float& dt);
+	void updateEditorInput(const float& dt);
 	void updatePauseMenuButtons();
 	void updateButtons();
+	void updateGui();
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget& target);
+	void renderGui(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = nullptr);
 };
 

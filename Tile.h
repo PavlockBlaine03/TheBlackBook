@@ -12,7 +12,7 @@ protected:
 
 public:
 	Tile();
-	Tile(float x, float y, float gridSizeF);
+	Tile(float x, float y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect);
 	virtual ~Tile();
 
 	// Functions

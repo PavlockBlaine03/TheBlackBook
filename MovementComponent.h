@@ -1,6 +1,6 @@
 #pragma once
 
-enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN};
+enum movement_states {IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN, SPRINT_RIGHT, SPRINT_LEFT, SPRINT_UP, SPRINT_DOWN};
 
 class MovementComponent
 {
@@ -24,6 +24,9 @@ public:
 
 	// Functions
 	const bool getState(const short unsigned state) const;
+
+	void setVelocity(const sf::Vector2f& velocity);
+	void setMaxVelocity(const float& max_velocity);
 
 	void move(const float x, const float y, const float dt);
 	void update(const float& dt);

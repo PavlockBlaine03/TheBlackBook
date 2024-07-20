@@ -8,7 +8,7 @@ void EditorState::initBackground()
 
 void EditorState::initVariables()
 {
-
+	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 }
 
 void EditorState::initFonts()
@@ -42,6 +42,20 @@ void EditorState::initButtons()
 	
 }
 
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setOutlineThickness(1.f);
+	this->selectorRect.setOutlineColor(sf::Color::Green);
+}
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 void EditorState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
@@ -57,7 +71,8 @@ EditorState::EditorState(StateData* state_data)
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
-
+	this->initGui();
+	this->initTileMap();
 }
 
 EditorState::~EditorState()
@@ -69,6 +84,7 @@ EditorState::~EditorState()
 		delete it->second;
 	}
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 void EditorState::updateInput(const float& dt)
@@ -79,6 +95,50 @@ void EditorState::updateInput(const float& dt)
 			this->pauseState();
 		else
 			this->unpauseState();
+	}
+}
+
+void EditorState::updateEditorInput(const float& dt)
+{
+	// Add a tile to tilemap
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+	{
+		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+	}
+	// remove a tile from tilemap
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+	{
+		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	}
+
+	// Change texture
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("FORWARD_TEXTURE"))) && this->getKeytime())
+	{
+		if (this->textureRect.left <= 600)
+		{
+			this->textureRect.left += 100;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("BACKWARD_TEXTURE"))) && this->getKeytime())
+	{
+		if (this->textureRect.left > 0)
+		{
+			this->textureRect.left -= 100;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("UPWARD_TEXTURE"))) && this->getKeytime())
+	{
+		if (this->textureRect.top > 0)
+		{
+			this->textureRect.top -= 100;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DOWNWARD_TEXTURE"))) && this->getKeytime())
+	{
+		if (this->textureRect.top <= 100)
+		{
+			this->textureRect.top += 100;
+		}
 	}
 }
 
@@ -98,6 +158,11 @@ void EditorState::updateButtons()
 
 }
 
+void EditorState::updateGui()
+{
+	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y * this->stateData->gridSize);
+}
+
 void EditorState::update(const float& dt)
 {
 	this->updateMousePositions();
@@ -107,6 +172,8 @@ void EditorState::update(const float& dt)
 	if (!this->paused)	// Unpaused update
 	{
 		this->updateButtons();
+		this->updateGui();
+		this->updateEditorInput(dt);
 	}
 	else    // Paused update
 	{
@@ -124,13 +191,19 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 	}
 }
 
+void EditorState::renderGui(sf::RenderTarget& target)
+{
+	target.draw(this->selectorRect);
+}
+
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
 	this->renderButtons(*target);
+	this->renderGui(*target);
 
-	this->map.render(*target);
+	this->tileMap->render(*target);
 
 	if (this->paused)	// paused menu render
 	{
@@ -143,7 +216,7 @@ void EditorState::render(sf::RenderTarget* target)
 	mouseText.setFont(this->font);
 	mouseText.setCharacterSize(12);
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->textureRect.left << " " << this->textureRect.top;
 	mouseText.setString(ss.str());
 	target->draw(mouseText);
 }

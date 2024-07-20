@@ -28,6 +28,11 @@ void GameState::initFonts()
 	}
 }
 
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 void GameState::initTextures()
 {
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("resources/images/Sprites/Player/PLAYER_SHEET.png"))
@@ -57,12 +62,14 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
 {
 	delete this->player;
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 void GameState::updateInput(const float& dt)

@@ -120,8 +120,41 @@ const bool MovementComponent::getState(const short unsigned state) const
 			return true;
 
 		break;
+	case SPRINT_LEFT:
+		if (this->velocity.x < 0.f)
+			return true;
+
+		break;
+	case SPRINT_RIGHT:
+
+		if (this->velocity.x > 0.f)
+			return true;
+
+		break;
+	case SPRINT_UP:
+
+		if (this->velocity.y < 0.f)
+			return true;
+
+		break;
+	case SPRINT_DOWN:
+
+		if (this->velocity.y > 0.f)
+			return true;
+
+		break;
 	}
 	return false;
+}
+
+void MovementComponent::setVelocity(const sf::Vector2f& velocity)
+{
+	this->velocity = velocity;
+}
+
+void MovementComponent::setMaxVelocity(const float& max_velocity)
+{
+	this->maxVelocity = max_velocity;
 }
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float dt)

@@ -8,6 +8,7 @@ private:
 	sf::Vector2f scale;
 	bool mainAttack;
 	bool powerAttack;
+	bool isSprinting;
 
 	// init functions
 	void initVariables();
@@ -19,6 +20,7 @@ public:
 
 	// Functions
 	void updateAttack();
+	void updateSprint();
 	void updateAnimation(const float& dt);
 	virtual void update(const float& dt);
 };

@@ -6,6 +6,7 @@ void Player::initVariables()
 	this->scale = sf::Vector2f(3.f, 3.f);
 	this->mainAttack = false;
 	this->powerAttack = false;
+	this->isSprinting = false;
 }
 
 void Player::initComponents()
@@ -28,6 +29,7 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	this->animationComponent->addAnimation("WALK", 8.f, 0, 1, 7, 1, 67, 86);
 	this->animationComponent->addAnimation("MAIN_ATTACK", 12.f, 0, 2, 3, 2, 67 * 1.6f, 86);
 	this->animationComponent->addAnimation("POWER_ATTACK", 16.f, 0, 3, 4, 3, 67 * 1.27f, 86);
+	this->animationComponent->addAnimation("SPRINT", 8.f, 0, 4, 6, 4, 67 + 2, 86);
 }
 
 Player::~Player()
@@ -56,8 +58,18 @@ void Player::updateAnimation(const float& dt)
 	{
 		this->animationComponent->play("IDLE", dt);
 	}
+
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
+		if (this->isSprinting)
+		{
+			if (this->animationComponent->play("SPRINT", dt, true))
+			{
+				this->movementComponent->setMaxVelocity(500.f);
+				this->isSprinting = false;
+			}
+		}
+
 		if (this->sprite.getScale().x < 0.f)
 		{
 			this->sprite.setOrigin(0.f, 0.f);
@@ -67,6 +79,15 @@ void Player::updateAnimation(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
+		if (this->isSprinting)
+		{
+			if (this->animationComponent->play("SPRINT", dt, true))
+			{
+				this->movementComponent->setMaxVelocity(500.f);
+				this->isSprinting = false;
+			}
+		}
+
 		if (this->sprite.getScale().x > 0.f)
 		{
 			this->sprite.setOrigin(53.f, 0.f);
@@ -76,12 +97,31 @@ void Player::updateAnimation(const float& dt)
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
+		if (this->isSprinting)
+		{
+			if (this->animationComponent->play("SPRINT", dt, true))
+			{
+				this->movementComponent->setMaxVelocity(500.f);
+				this->isSprinting = false;
+			}
+		}
+
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_DOWN))
 	{
+		if (this->isSprinting)
+		{
+			if (this->animationComponent->play("SPRINT", dt, true))
+			{
+				this->movementComponent->setMaxVelocity(500.f);
+				this->isSprinting = false;
+			}
+		}
+
 		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
+
 }
 
 void Player::updateAttack()
@@ -96,11 +136,17 @@ void Player::updateAttack()
 	}
 }
 
+void Player::updateSprint()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		this->isSprinting = true;
+}
 
 void Player::update(const float& dt)
 {
 	this->movementComponent->update(dt);
 	this->updateAttack();
+	this->updateSprint();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 }
