@@ -13,6 +13,7 @@ class EditorState : public State
 {
 private:
 	sf::Font font;
+	sf::Text cursorText;
 	PauseMenu* pmenu;
 
 	std::map<std::string, gui::Button*> buttons;
@@ -21,10 +22,12 @@ private:
 
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
+	gui::TextureSelector* texureSelector;
 
 	void initBackground();
 	void initVariables();
 	void initFonts();
+	void initText();
 	void initKeybinds();
 	void initPauseMenu();
 	void initButtons();

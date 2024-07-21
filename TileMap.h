@@ -1,6 +1,7 @@
 #pragma once
 #include "Tile.h"
 
+class Tile;
 class TileMap
 {
 private:
@@ -9,11 +10,14 @@ private:
 	unsigned layers;
 	sf::Vector2u maxSize;
 	std::vector<std::vector<std::vector<Tile*>>> map;
-	sf::Texture tileTextureSheet;
+	sf::Texture tileSheet;
 
 public:
 	TileMap(float grid_size, unsigned width, unsigned height);
 	virtual ~TileMap();
+
+	// Accessors
+	const sf::Texture* getTileSheet() const;
 
 	// Functions
 	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& tex_rect);
