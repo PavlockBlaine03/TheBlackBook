@@ -162,7 +162,7 @@ void EditorState::updatePauseMenuButtons()
 		this->tileMap->saveToFile("test.tbbmp");
 
 	if (this->pmenu->isButtonPressed("LOAD"))
-		this->tileMap->loadFromFile("test.tbbmp");
+		this->tileMap->loadFromFile("C:/VisualCodeProjects/TheBlackBook/test.tbbmp");
 
 }
 

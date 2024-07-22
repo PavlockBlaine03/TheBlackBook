@@ -62,7 +62,24 @@ void MainMenuState::initButtons()
 	this->buttons["EXIT_STATE"] = new gui::Button(1800.f, 1000.f, 150.f, 50.f, &this->font, "Quit", 32,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
-}	
+}
+void MainMenuState::initAudio()
+{
+	if (!this->menuBuffer.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav"))
+	{
+		std::cerr << "ERROR::MAIN_MENU_STATE::INIT_AUDIO::COULD_NOT_LOAD_AUDIO_FILE" << std::endl;
+	}
+	this->menuSound.setBuffer(this->menuBuffer);
+
+	if (!this->menuMusic.openFromFile("C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav"))
+	{
+		std::cerr << "ERROR::MAIN_MENU_STATE::INIT_AUDIO::COULD_NOT_LOAD_MUSIC_FILE" << std::endl;
+	}
+
+	this->menuMusic.setLoop(true);
+	this->menuMusic.setVolume(25);
+	this->menuMusic.play();
+}
 
 MainMenuState::MainMenuState(StateData* state_data)
 	: State(state_data)
@@ -72,17 +89,24 @@ MainMenuState::MainMenuState(StateData* state_data)
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+	this->initAudio();
 
 }
 
 MainMenuState::~MainMenuState()
 {
+	this->stopMusic();
 	auto it = this->buttons.begin();
 	auto end = this->buttons.end();
 	for (it; it != end; ++it)
 	{
 		delete it->second;
 	}
+}
+
+void MainMenuState::stopMusic()
+{
+	this->menuMusic.stop();
 }
 
 void MainMenuState::updateInput(const float& dt)
@@ -101,6 +125,7 @@ void MainMenuState::updateButtons()
 	// New game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
+		this->stopMusic();
 		this->states->push(new GameState(this->stateData));
 	}
 

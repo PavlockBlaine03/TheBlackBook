@@ -23,7 +23,7 @@ void GameState::initFonts()
 {
 	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Bricks.ttf"))
 	{
-		std::cerr << "ERROR::MAIN_STATE::COULD_NOT_LOAD_FONT";
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
 	}
 }

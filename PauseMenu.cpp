@@ -21,7 +21,8 @@ PauseMenu::PauseMenu(sf::RenderWindow& window, sf::Font& font)
 		)
 	);
 	this->container.setFillColor(sf::Color(20, 20, 20, 200));
-	this->container.setPosition(static_cast<float>(window.getSize().x) / 2.f - this->container.getSize().x / 2.f,
+	this->container.setPosition(
+		static_cast<float>(window.getSize().x) / 2.f - this->container.getSize().x / 2.f,
 		200.f
 	);
 

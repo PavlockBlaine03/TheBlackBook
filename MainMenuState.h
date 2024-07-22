@@ -19,16 +19,23 @@ private:
 
 	std::map<std::string, gui::Button*> buttons;
 
+	sf::SoundBuffer menuBuffer;
+	sf::Sound menuSound;
+	sf::Music menuMusic;
+
 	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initAudio();
 
 public:
 	MainMenuState(StateData* state_data);
 	virtual ~MainMenuState();
 
+
+	void stopMusic();
 	void updateInput(const float& dt);
 	void updateButtons();
 	void update(const float& dt);

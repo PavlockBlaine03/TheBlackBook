@@ -42,7 +42,7 @@ TileMap::TileMap(float grid_size, unsigned width, unsigned height, std::string t
 			}
 		}
 	}
-
+	
 	if (!this->tileSheet.loadFromFile(texture_file))
 	{
 		std::cerr << "ERROR::TILEMAP::FAILED TO LOAD TEXTURE SHEET::FILENAME: " << texture_file << std::endl;
