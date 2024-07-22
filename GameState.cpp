@@ -4,7 +4,7 @@
 
 void GameState::initKeybinds()
 {
-	std::ifstream ifs("config/gamestate_keybinds.ini");
+	std::ifstream ifs("C:/VisualCodeProjects/TheBlackBook/config/gamestate_keybinds.ini");
 
 	if (ifs.is_open())
 	{
@@ -21,7 +21,7 @@ void GameState::initKeybinds()
 
 void GameState::initFonts()
 {
-	if (!this->font.loadFromFile("fonts/Bricks.ttf"))
+	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Bricks.ttf"))
 	{
 		std::cerr << "ERROR::MAIN_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
@@ -30,12 +30,12 @@ void GameState::initFonts()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
 }
 
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("resources/images/Sprites/Player/PLAYER_SHEET.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET.png"))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE";
 		exit(EXIT_FAILURE);

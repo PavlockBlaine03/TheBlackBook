@@ -6,7 +6,7 @@ void SettingsState::initBackground()
 {
 	this->background.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)));
 
-	if (!this->backgroundTexture.loadFromFile("resources/images/backgrounds/bg1.png"))
+	if (!this->backgroundTexture.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/backgrounds/bg1.png"))
 	{
 		std::cerr << "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_BACKGROUND_IMAGE_FILE";
 		exit(EXIT_FAILURE);
@@ -22,7 +22,7 @@ void SettingsState::initVariables()
 
 void SettingsState::initFonts()
 {
-	if (!this->font.loadFromFile("fonts/Folker.ttf"))
+	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Folker.ttf"))
 	{
 		std::cerr << "ERROR::MAIN_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
@@ -31,7 +31,7 @@ void SettingsState::initFonts()
 
 void SettingsState::initKeybinds()
 {
-	std::ifstream ifs("config/settings_keybinds.ini");
+	std::ifstream ifs("C:/VisualCodeProjects/TheBlackBook/config/settings_keybinds.ini");
 
 	if (ifs.is_open())
 	{

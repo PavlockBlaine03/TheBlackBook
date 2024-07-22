@@ -2,9 +2,10 @@
 #include "MovementComponent.h"
 
 MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity, float acceleration, float deceleration)
-	: sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration)
+	: sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration), ogAcceleration(acceleration)
 {
 	this->maxVelocity = maxVelocity;
+	this->sprintAcceleration = 5.f;
 }
 
 MovementComponent::~MovementComponent()
@@ -147,9 +148,14 @@ const bool MovementComponent::getState(const short unsigned state) const
 	return false;
 }
 
-void MovementComponent::setVelocity(const sf::Vector2f& velocity)
+void MovementComponent::setAcceleration()
 {
-	this->velocity = velocity;
+	this->acceleration = this->ogAcceleration;
+}
+
+void MovementComponent::addAcceleration()
+{
+	this->acceleration += sprintAcceleration;
 }
 
 void MovementComponent::setMaxVelocity(const float& max_velocity)

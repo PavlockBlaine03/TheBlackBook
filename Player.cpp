@@ -65,17 +65,29 @@ void Player::updateAnimation(const float& dt)
 		{
 			if (this->animationComponent->play("SPRINT", dt, true))
 			{
-				this->movementComponent->setMaxVelocity(500.f);
+				this->movementComponent->addAcceleration();
+				this->movementComponent->setMaxVelocity(600.f);
 				this->isSprinting = false;
 			}
+			if (this->sprite.getScale().x < 0.f)
+			{
+				this->sprite.setOrigin(0.f, 0.f);
+				this->sprite.setScale(3.f, 3.f);
+			}
 		}
-
-		if (this->sprite.getScale().x < 0.f)
+		else
 		{
-			this->sprite.setOrigin(0.f, 0.f);
-			this->sprite.setScale(3.f, 3.f);
+			this->movementComponent->setMaxVelocity(350.f);
+			this->movementComponent->setAcceleration();
+
+			if (this->sprite.getScale().x < 0.f)
+			{
+				this->sprite.setOrigin(0.f, 0.f);
+				this->sprite.setScale(3.f, 3.f);
+			}
+
+			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 		}
-		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
@@ -83,17 +95,29 @@ void Player::updateAnimation(const float& dt)
 		{
 			if (this->animationComponent->play("SPRINT", dt, true))
 			{
-				this->movementComponent->setMaxVelocity(500.f);
+				this->movementComponent->addAcceleration();
+				this->movementComponent->setMaxVelocity(600.f);
 				this->isSprinting = false;
 			}
+			if (this->sprite.getScale().x > 0.f)
+			{
+				this->sprite.setOrigin(53.f, 0.f);
+				this->sprite.setScale(-3.f, 3.f);
+			}
 		}
-
-		if (this->sprite.getScale().x > 0.f)
+		else
 		{
-			this->sprite.setOrigin(53.f, 0.f);
-			this->sprite.setScale(-3.f, 3.f);
+			this->movementComponent->setAcceleration();
+			this->movementComponent->setMaxVelocity(350.f);
+
+			if (this->sprite.getScale().x > 0.f)
+			{
+				this->sprite.setOrigin(53.f, 0.f);
+				this->sprite.setScale(-3.f, 3.f);
+			}
+
+			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 		}
-		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
@@ -101,12 +125,17 @@ void Player::updateAnimation(const float& dt)
 		{
 			if (this->animationComponent->play("SPRINT", dt, true))
 			{
-				this->movementComponent->setMaxVelocity(500.f);
+				this->movementComponent->addAcceleration();
+				this->movementComponent->setMaxVelocity(600.f);
 				this->isSprinting = false;
 			}
 		}
-
-		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		else
+		{
+			this->movementComponent->setAcceleration();
+			this->movementComponent->setMaxVelocity(350.f);
+			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		}
 	}
 	else if (this->movementComponent->getState(MOVING_DOWN))
 	{
@@ -114,12 +143,17 @@ void Player::updateAnimation(const float& dt)
 		{
 			if (this->animationComponent->play("SPRINT", dt, true))
 			{
-				this->movementComponent->setMaxVelocity(500.f);
+				this->movementComponent->addAcceleration();
+				this->movementComponent->setMaxVelocity(600.f);
 				this->isSprinting = false;
 			}
 		}
-
-		this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		else
+		{
+			this->movementComponent->setAcceleration();
+			this->movementComponent->setMaxVelocity(350.f);
+			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		}
 	}
 
 }

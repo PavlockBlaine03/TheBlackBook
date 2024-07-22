@@ -22,6 +22,7 @@ private:
 
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
+	sf::RectangleShape sideBar;
 	gui::TextureSelector* texureSelector;
 
 	void initBackground();
@@ -42,7 +43,7 @@ public:
 	void updateEditorInput(const float& dt);
 	void updatePauseMenuButtons();
 	void updateButtons();
-	void updateGui();
+	void updateGui(const float& dt);
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget& target);
 	void renderGui(sf::RenderTarget& target);

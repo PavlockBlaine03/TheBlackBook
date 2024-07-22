@@ -13,7 +13,7 @@ void EditorState::initVariables()
 
 void EditorState::initFonts()
 {
-	if (!this->font.loadFromFile("fonts/Folker.ttf"))
+	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Folker.ttf"))
 	{
 		std::cerr << "ERROR::EDITOR_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
@@ -30,7 +30,7 @@ void EditorState::initText()
 
 void EditorState::initKeybinds()
 {
-	std::ifstream ifs("config/editorstate_keybinds.ini");
+	std::ifstream ifs("C:/VisualCodeProjects/TheBlackBook/config/editorstate_keybinds.ini");
 
 	if (ifs.is_open())
 	{
@@ -52,6 +52,15 @@ void EditorState::initButtons()
 
 void EditorState::initGui()
 {
+	this->sideBar.setSize(sf::Vector2f(
+			static_cast<float>(this->stateData->gfxSettings->resolution.width),
+			80.f
+		)
+	);
+	this->sideBar.setFillColor(sf::Color(50, 50, 50, 100));
+	this->sideBar.setOutlineColor(sf::Color(200, 200, 200, 150));
+	this->sideBar.setOutlineThickness(1.f);
+
 	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
 	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	this->selectorRect.setOutlineThickness(1.f);
@@ -59,18 +68,21 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-	this->texureSelector = new gui::TextureSelector(1700.f, 20.f, 800.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet());
+	this->texureSelector = new gui::TextureSelector(1700.f, 90.f, 800.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font, "TS");
 }
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, 
+		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
 }
 
 void EditorState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
-	this->pmenu->addButton("PAUSED_STATE", this->window->getSize().y / 1.5, "Quit");
+	this->pmenu->addButton("QUIT", this->window->getSize().y / 1.5, "Quit");
+	this->pmenu->addButton("SAVE", this->window->getSize().y / 1.5 - 150, "Save");
+	this->pmenu->addButton("LOAD", this->window->getSize().y / 1.5 - 300, "Load");
 }
 
 EditorState::EditorState(StateData* state_data)
@@ -116,29 +128,42 @@ void EditorState::updateEditorInput(const float& dt)
 	// Add a tile to tilemap
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
 	{
-		if (!this->texureSelector->getActive())
+		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(mousePosWindow)))
 		{
-			this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
-		}
-		else
-		{
-			this->textureRect = this->texureSelector->getTextureRect();
+			if (!this->texureSelector->getActive())
+			{
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+			}
+			else
+			{
+				this->textureRect = this->texureSelector->getTextureRect();
+			}
 		}
 	}
 	// remove a tile from tilemap
 	else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
 	{
-		if (!this->texureSelector->getActive())
+		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(mousePosWindow)))
 		{
-			this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+			if (!this->texureSelector->getActive())
+			{
+				this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+			}
 		}
 	}
 }
 
 void EditorState::updatePauseMenuButtons()
 {
-	if (this->pmenu->isButtonPressed("PAUSED_STATE"))
+	if (this->pmenu->isButtonPressed("QUIT"))
 		this->endState();
+
+	if (this->pmenu->isButtonPressed("SAVE"))
+		this->tileMap->saveToFile("test.tbbmp");
+
+	if (this->pmenu->isButtonPressed("LOAD"))
+		this->tileMap->loadFromFile("test.tbbmp");
+
 }
 
 void EditorState::updateButtons()
@@ -151,22 +176,15 @@ void EditorState::updateButtons()
 
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float& dt)
 {
-	this->texureSelector->update(this->mousePosWindow);
+	this->texureSelector->update(this->mousePosWindow, dt);
 
 	if (!this->texureSelector->getActive())
 	{
 		this->selectorRect.setTextureRect(this->textureRect);
 		this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y * this->stateData->gridSize);
 	}
-
-	this->cursorText.setPosition(this->mousePosView.x - 50.f, this->mousePosView.y - 50.f);
-	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y <<
-		"\n" << this->mousePosGrid.x << this->mousePosGrid.y <<
-		"\n" << this->textureRect.left << " " << this->textureRect.top;
-	this->cursorText.setString(ss.str());
 }
 
 void EditorState::update(const float& dt)
@@ -178,7 +196,7 @@ void EditorState::update(const float& dt)
 	if (!this->paused)	// Unpaused update
 	{
 		this->updateButtons();
-		this->updateGui();
+		this->updateGui(dt);
 		this->updateEditorInput(dt);
 	}
 	else    // Paused update
@@ -186,6 +204,14 @@ void EditorState::update(const float& dt)
 		this->pmenu->update(this->mousePosView);
 		this->updatePauseMenuButtons();
 	}
+
+	/*****************debug remove later************************/
+	this->cursorText.setPosition(this->mousePosView.x - 50.f, this->mousePosView.y - 50.f);
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y <<
+		"\n" << this->mousePosGrid.x << this->mousePosGrid.y <<
+		"\n" << this->textureRect.left << " " << this->textureRect.top;
+	this->cursorText.setString(ss.str());
 
 }
 
@@ -206,6 +232,8 @@ void EditorState::renderGui(sf::RenderTarget& target)
 
 	this->texureSelector->render(target);
 	target.draw(this->cursorText);
+
+	target.draw(this->sideBar);
 }
 
 void EditorState::render(sf::RenderTarget* target)

@@ -14,7 +14,7 @@ void Game::initVariables()
 
 void Game::initGraphicSettings()
 {
-	this->gfxSettings.loadFromFile("config/graphics.ini");
+	this->gfxSettings.loadFromFile("C:/VisualCodeProjects/TheBlackBook/config/graphics.ini");
 }
 
 void Game::InitStateData()
@@ -38,7 +38,7 @@ void Game::initWindow()
 
 void Game::initKeys()
 {
-	std::ifstream ifs("config/supported_keys.ini");
+	std::ifstream ifs("C:/VisualCodeProjects/TheBlackBook/config/supported_keys.ini");
 
 	if (ifs.is_open())
 	{

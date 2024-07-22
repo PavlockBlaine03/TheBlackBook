@@ -238,10 +238,15 @@ void gui::DropDownList::render(sf::RenderTarget& target)
 * ******************************
 ********************************/
 
-gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet)
+gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet,
+	sf::Font& font, std::string text)
+	: keytimeMax(2.f), keytime(0.f)
 {
+	this->hidden = false;
 	this->active = false;
 	this->gridSize = grid_size;
+
+	float yOffset = 70.f;
 
 	this->bounds.setSize(sf::Vector2f(width, height));
 	this->bounds.setPosition(x, y);
@@ -269,11 +274,16 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 
 	this->textureRect.width = static_cast<int>(this->gridSize);
 	this->textureRect.height = static_cast<int>(this->gridSize);
+
+	this->hideBtn = new gui::Button(
+		x, y - yOffset, 125.f, 50.f, &font, text, 32,
+		sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(90, 90, 90, 200),
+		sf::Color(100, 100, 100, 200), sf::Color(150, 150, 150, 250), sf::Color(70, 70, 70, 50));
 }
 
 gui::TextureSelector::~TextureSelector()
 {
-
+	delete this->hideBtn;
 }
 
 // Accessors
@@ -287,35 +297,72 @@ const sf::IntRect& gui::TextureSelector::getTextureRect() const
 	return this->textureRect;
 }
 
-// Functions
-void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
+const bool gui::TextureSelector::getKeytime()
 {
-	if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
-		this->active = true;
-	else
-		this->active = false;
-
-	if (this->active)
+	if (this->keytime >= this->keytimeMax)
 	{
-		this->mousePosGrid.x = ((mousePosWindow.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->gridSize));
-		this->mousePosGrid.y = ((mousePosWindow.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->gridSize));
+		this->keytime = 0.f;
+		return true;
+	}
+	else
+		return false;
+}
 
-		this->selector.setPosition(
-			this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSize,
-			this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSize
-		);
+// Functions
+void gui::TextureSelector::updateKeytime(const float& dt)
+{
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f * dt;
+}
 
-		// Update texture rectangle
-		this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
-		this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
+{
+	this->updateKeytime(dt);
+	this->hideBtn->update(static_cast<sf::Vector2f>(mousePosWindow));
+
+	if (this->hideBtn->isPressed() && this->getKeytime())
+	{
+		if (this->hidden)
+			this->hidden = false;
+		else
+			this->hidden = true;
+	}
+
+	if (!this->hidden)
+	{
+		if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
+			this->active = true;
+		else
+			this->active = false;
+
+		if (this->active)
+		{
+			this->mousePosGrid.x = ((mousePosWindow.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->gridSize));
+			this->mousePosGrid.y = ((mousePosWindow.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->gridSize));
+
+			this->selector.setPosition(
+				this->bounds.getPosition().x + this->mousePosGrid.x * this->gridSize,
+				this->bounds.getPosition().y + this->mousePosGrid.y * this->gridSize
+			);
+
+			// Update texture rectangle
+			this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+			this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+		}
 	}
 }
 
 void gui::TextureSelector::render(sf::RenderTarget& target)
 {
-	target.draw(this->bounds);
-	target.draw(this->sheet);
 
-	if(this->active)
-		target.draw(this->selector);
+	if (!this->hidden)
+	{
+		target.draw(this->bounds);
+		target.draw(this->sheet);
+
+		if (this->active)
+			target.draw(this->selector);
+	}
+
+	this->hideBtn->render(target);
 }
