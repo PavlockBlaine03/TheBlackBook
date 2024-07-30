@@ -3,7 +3,7 @@
 
 void Player::initVariables()
 {
-	this->scale = sf::Vector2f(3.f, 3.f);
+	this->scale = sf::Vector2f(2.f, 2.f);
 	this->mainAttack = false;
 	this->powerAttack = false;
 	this->isSprinting = false;
@@ -20,7 +20,7 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 
 	this->setPosition(x, y);
 
-	this->createHitboxComponent(this->sprite, 35.5f, 70.f, 86.5f, 185.f);
+	this->createHitboxComponent(this->sprite, 10.f, 50.f, 86.5f, 115.f);
 	this->createMovementComponent(350.f, 15.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 	this->setScale(scale);
@@ -72,7 +72,7 @@ void Player::updateAnimation(const float& dt)
 			if (this->sprite.getScale().x < 0.f)
 			{
 				this->sprite.setOrigin(0.f, 0.f);
-				this->sprite.setScale(3.f, 3.f);
+				this->sprite.setScale(2.f, 2.f);
 			}
 		}
 		else
@@ -83,7 +83,7 @@ void Player::updateAnimation(const float& dt)
 			if (this->sprite.getScale().x < 0.f)
 			{
 				this->sprite.setOrigin(0.f, 0.f);
-				this->sprite.setScale(3.f, 3.f);
+				this->sprite.setScale(2.f, 2.f);
 			}
 
 			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
@@ -102,7 +102,7 @@ void Player::updateAnimation(const float& dt)
 			if (this->sprite.getScale().x > 0.f)
 			{
 				this->sprite.setOrigin(53.f, 0.f);
-				this->sprite.setScale(-3.f, 3.f);
+				this->sprite.setScale(-2.f, 2.f);
 			}
 		}
 		else
@@ -113,7 +113,7 @@ void Player::updateAnimation(const float& dt)
 			if (this->sprite.getScale().x > 0.f)
 			{
 				this->sprite.setOrigin(53.f, 0.f);
-				this->sprite.setScale(-3.f, 3.f);
+				this->sprite.setScale(-2.f, 2.f);
 			}
 
 			this->animationComponent->play("WALK", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
@@ -183,4 +183,11 @@ void Player::update(const float& dt)
 	this->updateSprint();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
+}
+
+void Player::render(sf::RenderTarget& target)
+{
+	target.draw(this->sprite);
+
+	hitboxComponent->render(target);
 }

@@ -119,14 +119,14 @@ void MainMenuState::updateButtons()
 	// Updates all buttons
 	for(auto &it : this->buttons)
 	{
-		it.second->update(this->mousePosView);
+		it.second->update(this->mousePosWindow);
 	}
 
 	// New game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->stopMusic();
-		this->states->push(new GameState(this->stateData));
+		this->states->push(new GameState(this->stateData, &this->menuMusic));
 	}
 
 	// Settings

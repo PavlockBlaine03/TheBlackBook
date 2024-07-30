@@ -47,7 +47,10 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, con
 
 void Entity::setPosition(const float x, const float y)
 {
-	this->sprite.setPosition(x, y);
+	if (this->hitboxComponent)
+		this->hitboxComponent->setPosition(x, y);
+	else
+		this->sprite.setPosition(x, y);
 }
 
 void Entity::move(const float dir_x, const float dir_y, const float dt)
@@ -58,15 +61,27 @@ void Entity::move(const float dir_x, const float dir_y, const float dt)
 	}
 }
 
-void Entity::update(const float dt)
+const sf::Vector2f& Entity::getPosition() const
+{
+	if (this->hitboxComponent)
+		return this->hitboxComponent->getPosition();
+
+	return this->sprite.getPosition();
+}
+
+const sf::FloatRect Entity::getGlobalBounds() const
+{
+	if (this->hitboxComponent)
+		return this->hitboxComponent->getGlobalBounds();
+	return this->sprite.getGlobalBounds();
+}
+
+void Entity::update(const float& dt)
 {
 	
 }
 
 void Entity::render(sf::RenderTarget& target)
 {
-	target.draw(this->sprite);
-
-	if (this->hitboxComponent)
-		hitboxComponent->render(target);
+	
 }

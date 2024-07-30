@@ -37,7 +37,7 @@ namespace gui
 		virtual ~Button();
 
 		// Functions
-		void update(const sf::Vector2f& mousePos);
+		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);
 
 		const short unsigned& getID() const;
@@ -68,7 +68,7 @@ namespace gui
 		const unsigned short& getActiveElementID();
 
 		void updateKeytime(const float& dt);
-		void update(const sf::Vector2f& mousePos, const float& dt);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
 	};
 

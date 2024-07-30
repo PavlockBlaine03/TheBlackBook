@@ -12,6 +12,7 @@ class TileMap;
 class EditorState : public State
 {
 private:
+	sf::View view;
 	sf::Font font;
 	sf::Text cursorText;
 	PauseMenu* pmenu;
@@ -25,7 +26,12 @@ private:
 	sf::RectangleShape sideBar;
 	gui::TextureSelector* texureSelector;
 
+	float cameraSpeed;
+	bool collision;
+	short type;
+
 	void initBackground();
+	void initView();
 	void initVariables();
 	void initFonts();
 	void initText();

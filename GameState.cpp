@@ -2,6 +2,42 @@
 #include "GameState.h"
 
 
+void GameState::initDeferredRender()
+{
+	this->renderTexture.create(
+		this->stateData->gfxSettings->resolution.width,
+		this->stateData->gfxSettings->resolution.height
+	);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(
+		sf::IntRect(
+			0,
+			0,
+			this->stateData->gfxSettings->resolution.width,
+			this->stateData->gfxSettings->resolution.height
+		)
+	);
+
+}
+
+void GameState::initView()
+{
+	this->view.setSize(
+		sf::Vector2f(
+			this->stateData->gfxSettings->resolution.width, 
+			this->stateData->gfxSettings->resolution.height
+		)
+	);
+
+	this->view.setCenter(
+		sf::Vector2f(
+			this->stateData->gfxSettings->resolution.width / 2.f,
+			this->stateData->gfxSettings->resolution.height / 2.f
+		)
+	);
+}
+
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("C:/VisualCodeProjects/TheBlackBook/config/gamestate_keybinds.ini");
@@ -31,6 +67,7 @@ void GameState::initFonts()
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
+	this->tileMap->loadFromFile("C:/VisualCodeProjects/TheBlackBook/test.tbbmp");
 }
 
 void GameState::initTextures()
@@ -50,13 +87,16 @@ void GameState::initPauseMenu()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->textures["PLAYER_SHEET"], 0.f, 0.f);
+	this->player = new Player(this->textures["PLAYER_SHEET"], 0.f, 100.f);
 	
 }
 
-GameState::GameState(StateData* state_data)
+GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	: State(state_data)
 {
+	this->menuMusic = menu_music;
+	this->initDeferredRender();
+	this->initView();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
@@ -72,6 +112,13 @@ GameState::~GameState()
 	delete this->tileMap;
 }
 
+void GameState::restartMenuMusic()
+{
+	this->menuMusic->setLoop(true);
+	this->menuMusic->setVolume(25);
+	this->menuMusic->play();
+}
+
 void GameState::updateInput(const float& dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("PAUSE"))) && this->getKeytime())
@@ -83,20 +130,36 @@ void GameState::updateInput(const float& dt)
 	}
 }
 
+void GameState::updateView(const float& dt)
+{
+	this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
+}
+
+void GameState::updateTileMap(const float& dt)
+{
+	this->tileMap->update();
+	this->tileMap->updateCollision(this->player);
+}
+
 void GameState::update(const float& dt)
 {
-	this->updateMousePositions();
+	this->updateMousePositions(&this->view);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 
 	if (!this->paused)	// Unpaused update
 	{
+		this->updateView(dt);
+
 		this->updatePlayerInput(dt);
+
 		this->player->update(dt);
+
+		this->updateTileMap(dt);
 	}
 	else    // Paused update
 	{
-		this->pmenu->update(this->mousePosView);
+		this->pmenu->update(this->mousePosWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -104,7 +167,10 @@ void GameState::update(const float& dt)
 void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("EXIT_STATE"))
+	{
 		this->endState();
+		this->restartMenuMusic();
+	}
 }
 
 void GameState::updatePlayerInput(const float& dt)
@@ -113,7 +179,6 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 	{
 		this->player->move(-1.f, 0.f, dt);
-		//this->player->getSprite().setTextureRect(sf::IntRect(rect.left, rect.top + rect.height, rect.width, -rect.height));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
@@ -133,11 +198,22 @@ void GameState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
-	//this->map.render(*target);
-	this->player->render(*target);
+
+	this->renderTexture.clear();
+
+	this->renderTexture.setView(this->view);
+	this->tileMap->render(this->renderTexture);
+
+	this->player->render(this->renderTexture);
 
 	if (this->paused)	// paused menu render
 	{
-		this->pmenu->render(*target);
+		this->renderTexture.setView(this->renderTexture.getDefaultView());
+		this->pmenu->render(this->renderTexture);
 	}
+
+	// final render
+	this->renderTexture.display();
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	target->draw(this->renderSprite);
 }
