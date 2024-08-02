@@ -24,9 +24,12 @@ public:
 	// getters
 	const sf::Vector2f& getVelocity() const;
 	const float& getMaxVelocity() const;
+	const bool getState(const short unsigned state) const;
 
 	// Functions
-	const bool getState(const short unsigned state) const;
+	void stopVelocity();
+	void stopVelocityX();
+	void stopVelocityY();
 
 	void setAcceleration();
 	void addAcceleration();

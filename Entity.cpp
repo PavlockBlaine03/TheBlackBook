@@ -61,12 +61,42 @@ void Entity::move(const float dir_x, const float dir_y, const float dt)
 	}
 }
 
+void Entity::stopVelocity()
+{
+	if (this->movementComponent)
+		this->movementComponent->stopVelocity();
+}
+
+void Entity::stopVelocityX()
+{
+	if (this->movementComponent)
+		this->movementComponent->stopVelocityX();
+}
+
+void Entity::stopVelocityY()
+{
+	if (this->movementComponent)
+		this->movementComponent->stopVelocityY();
+}
+
 const sf::Vector2f& Entity::getPosition() const
 {
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getPosition();
 
 	return this->sprite.getPosition();
+}
+
+const sf::Vector2u Entity::getGridPosition(const unsigned grid_size_u) const
+{
+	if (this->hitboxComponent)
+		return sf::Vector2u(
+			static_cast<unsigned>(this->hitboxComponent->getPosition().x) / grid_size_u,
+			static_cast<unsigned>(this->hitboxComponent->getPosition().y) / grid_size_u);
+
+	return sf::Vector2u(
+		static_cast<unsigned>(this->sprite.getPosition().x) / grid_size_u,
+		static_cast<unsigned>(this->sprite.getPosition().y) / grid_size_u);
 }
 
 const sf::FloatRect Entity::getGlobalBounds() const

@@ -18,6 +18,13 @@ private:
 
 	sf::RectangleShape collisionBox;
 
+	// Culling
+	int fromX;
+	int toX;
+	int fromY;
+	int toY;
+	int layer;
+
 	void clear();
 
 public:
