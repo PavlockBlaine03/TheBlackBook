@@ -14,11 +14,11 @@ public:
 	StateData() {};
 
 	// Variables
-	float gridSize;
-	sf::RenderWindow* window;
-	GraphicSettings* gfxSettings;
-	std::map<std::string, int>* supportedKeys;
-	std::stack<State*>* states;
+	float gridSize = 0.f;
+	sf::RenderWindow* window = NULL;
+	GraphicSettings* gfxSettings = NULL;
+	std::map<std::string, int>* supportedKeys = NULL;
+	std::stack<State*>* states = NULL;
 };
 
 class State

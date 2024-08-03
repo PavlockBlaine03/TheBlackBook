@@ -25,8 +25,8 @@ void GameState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width, 
-			this->stateData->gfxSettings->resolution.height
+			static_cast<float>(this->stateData->gfxSettings->resolution.width),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height)
 		)
 	);
 
@@ -82,7 +82,7 @@ void GameState::initTextures()
 void GameState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
-	this->pmenu->addButton("EXIT_STATE", this->window->getSize().y / 1.5, "Quit");
+	this->pmenu->addButton("EXIT_STATE", static_cast<float>(this->window->getSize().y) / 1.5f, "Quit");
 }
 
 void GameState::initPlayers()
@@ -138,7 +138,7 @@ void GameState::updateView(const float& dt)
 void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->update();
-	this->tileMap->updateCollision(this->player);
+	this->tileMap->updateCollision(this->player, dt);
 }
 
 void GameState::update(const float& dt)
@@ -153,9 +153,9 @@ void GameState::update(const float& dt)
 
 		this->updatePlayerInput(dt);
 
-		this->player->update(dt);
-
 		this->updateTileMap(dt);
+
+		this->player->update(dt);
 	}
 	else    // Paused update
 	{

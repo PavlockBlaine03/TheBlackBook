@@ -7,7 +7,7 @@ Tile::Tile()
 	this->type = 0;
 }
 
-Tile::Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect, 
+Tile::Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect,
 	bool collision, short type)
 {
 	this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
@@ -35,6 +35,11 @@ const sf::Vector2f& Tile::getPosition() const
 const bool& Tile::getCollision() const
 {
 	return this->collision;
+}
+
+const sf::FloatRect Tile::getGlobalBounds() const
+{
+	return this->shape.getGlobalBounds();
 }
 
 const bool Tile::intersects(const sf::FloatRect bounds) const

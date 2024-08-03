@@ -17,13 +17,14 @@ protected:
 
 public:
 	Tile();
-	Tile(unsigned grid_x, unsigned grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect,
+	Tile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect,
 		bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 
 	// Functions
 	const sf::Vector2f& getPosition() const;
 	const bool& getCollision() const;
+	const sf::FloatRect getGlobalBounds() const;
 	const bool intersects(const sf::FloatRect bounds) const;
 	const std::string getAsString() const;
 

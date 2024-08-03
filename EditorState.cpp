@@ -9,8 +9,8 @@ void EditorState::initBackground()
 void EditorState::initView()
 {
 	this->view.setSize(sf::Vector2f(
-		this->stateData->gfxSettings->resolution.width, 
-		this->stateData->gfxSettings->resolution.height)
+		static_cast<float>(this->stateData->gfxSettings->resolution.width), 
+		static_cast<float>(this->stateData->gfxSettings->resolution.height))
 	);
 	this->view.setCenter(sf::Vector2f(
 		this->stateData->gfxSettings->resolution.width / 2.f, 
@@ -98,9 +98,9 @@ void EditorState::initTileMap()
 void EditorState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
-	this->pmenu->addButton("QUIT", this->window->getSize().y / 1.5, "Quit");
-	this->pmenu->addButton("SAVE", this->window->getSize().y / 1.5 - 150, "Save");
-	this->pmenu->addButton("LOAD", this->window->getSize().y / 1.5 - 300, "Load");
+	this->pmenu->addButton("QUIT", this->window->getSize().y / 1.5f, "Quit");
+	this->pmenu->addButton("SAVE", this->window->getSize().y / 1.5f- 150, "Save");
+	this->pmenu->addButton("LOAD", this->window->getSize().y / 1.5f - 300, "Load");
 }
 
 EditorState::EditorState(StateData* state_data)

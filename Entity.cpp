@@ -6,6 +6,7 @@ void Entity::initVariables()
 	this->hitboxComponent = NULL;
 	this->movementComponent = NULL;
 	this->animationComponent = NULL;
+	this->rect = sf::FloatRect(0.f, 0.f, 0.f, 0.f);
 }
 
 Entity::Entity()
@@ -104,6 +105,15 @@ const sf::FloatRect Entity::getGlobalBounds() const
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getGlobalBounds();
 	return this->sprite.getGlobalBounds();
+}
+
+const sf::FloatRect& Entity::getNextPositionBounds(const float& dt) const
+{
+	if (this->hitboxComponent && this->movementComponent)
+	{
+		return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
+	}
+	return this->rect;
 }
 
 void Entity::update(const float& dt)
