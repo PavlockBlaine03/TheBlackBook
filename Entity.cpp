@@ -6,7 +6,6 @@ void Entity::initVariables()
 	this->hitboxComponent = NULL;
 	this->movementComponent = NULL;
 	this->animationComponent = NULL;
-	this->rect = sf::FloatRect(0.f, 0.f, 0.f, 0.f);
 }
 
 Entity::Entity()
@@ -88,16 +87,16 @@ const sf::Vector2f& Entity::getPosition() const
 	return this->sprite.getPosition();
 }
 
-const sf::Vector2u Entity::getGridPosition(const unsigned grid_size_u) const
+const sf::Vector2i Entity::getGridPosition(const int grid_size_i) const
 {
 	if (this->hitboxComponent)
-		return sf::Vector2u(
-			static_cast<unsigned>(this->hitboxComponent->getPosition().x) / grid_size_u,
-			static_cast<unsigned>(this->hitboxComponent->getPosition().y) / grid_size_u);
+		return sf::Vector2i(
+			static_cast<int>(this->hitboxComponent->getPosition().x) / grid_size_i,
+			static_cast<int>(this->hitboxComponent->getPosition().y) / grid_size_i);
 
-	return sf::Vector2u(
-		static_cast<unsigned>(this->sprite.getPosition().x) / grid_size_u,
-		static_cast<unsigned>(this->sprite.getPosition().y) / grid_size_u);
+	return sf::Vector2i(
+		static_cast<int>(this->sprite.getPosition().x) / grid_size_i,
+		static_cast<int>(this->sprite.getPosition().y) / grid_size_i);
 }
 
 const sf::FloatRect Entity::getGlobalBounds() const
@@ -107,13 +106,13 @@ const sf::FloatRect Entity::getGlobalBounds() const
 	return this->sprite.getGlobalBounds();
 }
 
-const sf::FloatRect& Entity::getNextPositionBounds(const float& dt) const
+const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
 {
 	if (this->hitboxComponent && this->movementComponent)
 	{
 		return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
 	}
-	return this->rect;
+	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
 }
 
 void Entity::update(const float& dt)

@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 
+class State;
 class SettingsState : public State
 {
 private:

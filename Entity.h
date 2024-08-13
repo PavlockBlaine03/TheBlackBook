@@ -3,6 +3,10 @@
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 
+
+class HitboxComponent;
+class MovementComponent;
+class AnimationComponent;
 class Entity
 {
 private:
@@ -10,7 +14,6 @@ private:
 
 protected:
 	sf::Sprite sprite;
-	sf::FloatRect rect;
 
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
@@ -36,9 +39,9 @@ public:
 	virtual void stopVelocityY();
 
 	virtual const sf::Vector2f& getPosition() const;
-	virtual const sf::Vector2u getGridPosition(const unsigned grid_size_u) const;
+	virtual const sf::Vector2i getGridPosition(const int grid_size_i) const;
 	virtual const sf::FloatRect getGlobalBounds() const;
-	virtual const sf::FloatRect& getNextPositionBounds(const float& dt) const;
+	virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;
 	virtual const sf::Vector2f& getVelocity() const { return this->movementComponent->getVelocity(); }
 
 	virtual void update(const float& dt) = 0;
