@@ -4,7 +4,7 @@
 
 class Gui;
 
-enum TileTypes {DEFAULT = 0, DAMAGING};
+enum TileTypes {DEFAULT = 0, DAMAGING, RENDERTOP};
 class Tile
 {
 private:
@@ -27,6 +27,7 @@ public:
 	const sf::FloatRect getGlobalBounds() const;
 	const bool intersects(const sf::FloatRect bounds) const;
 	const std::string getAsString() const;
+	const short& getType() const;
 
 	void update();
 	void render(sf::RenderTarget& target);

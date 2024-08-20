@@ -92,7 +92,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, 
+	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, 
 		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
 }
 
@@ -306,6 +306,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	target->setView(this->view);
 	this->tileMap->render(*target, this->mousePosGrid);
+	this->tileMap->renderDeferred(*target);
 
 	target->setView(this->window->getDefaultView());
 	this->renderButtons(*target);

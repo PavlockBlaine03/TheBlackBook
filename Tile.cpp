@@ -60,6 +60,11 @@ const std::string Tile::getAsString() const
 	return ss.str();
 }
 
+const short& Tile::getType() const
+{
+	return this->type;
+}
+
 void Tile::update()
 {
 

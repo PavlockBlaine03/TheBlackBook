@@ -66,7 +66,7 @@ void GameState::initFonts()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
 	this->tileMap->loadFromFile("C:/VisualCodeProjects/TheBlackBook/test.tbbmp");
 }
 
@@ -87,7 +87,7 @@ void GameState::initPauseMenu()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->textures["PLAYER_SHEET"], 0.f, 100.f);
+	this->player = new Player(this->textures["PLAYER_SHEET"], 400.f, 200.f);
 	
 }
 
@@ -205,6 +205,8 @@ void GameState::render(sf::RenderTarget* target)
 	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
 	this->player->render(this->renderTexture);
+
+	this->tileMap->renderDeferred(this->renderTexture);
 
 	if (this->paused)	// paused menu render
 	{

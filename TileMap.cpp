@@ -412,7 +412,14 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i &gridPosition)
 		{
 			for (int k = 0; k < this->map[x][y][this->layer].size(); k++)
 			{
-				this->map[x][y][this->layer][k]->render(target);
+				if (this->map[x][y][this->layer][k]->getType() == TileTypes::RENDERTOP)
+				{
+					this->deferredRenderStack.push(this->map[x][y][this->layer][k]);
+				}
+				else
+				{
+					this->map[x][y][this->layer][k]->render(target);
+				}
 
 				// debug
 				if (this->map[x][y][this->layer][k]->getCollision())
@@ -422,6 +429,15 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i &gridPosition)
 				}
 			}
 		}
+	}
+}
+
+void TileMap::renderDeferred(sf::RenderTarget& target)
+{
+	while (!this->deferredRenderStack.empty()) 
+	{
+		deferredRenderStack.top()->render(target);
+		deferredRenderStack.pop();
 	}
 }
 
