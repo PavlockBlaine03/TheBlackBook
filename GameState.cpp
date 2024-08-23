@@ -91,6 +91,11 @@ void GameState::initPlayers()
 	
 }
 
+void GameState::initPlayerGUI()
+{
+	this->playerGUI = new PlayerGUI(this->player);
+}
+
 GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	: State(state_data)
 {
@@ -102,6 +107,7 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initPlayerGUI();
 	this->initTileMap();
 }
 
@@ -110,6 +116,7 @@ GameState::~GameState()
 	delete this->player;
 	delete this->pmenu;
 	delete this->tileMap;
+	delete this->playerGUI;
 }
 
 void GameState::restartMenuMusic()
@@ -141,6 +148,11 @@ void GameState::updateTileMap(const float& dt)
 	this->tileMap->updateCollision(this->player, dt);
 }
 
+void GameState::updatePlayerGUI(const float& dt)
+{
+	this->playerGUI->update(dt);
+}
+
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions(&this->view);
@@ -156,6 +168,8 @@ void GameState::update(const float& dt)
 		this->updateTileMap(dt);
 
 		this->player->update(dt);
+
+		this->updatePlayerGUI(dt);
 	}
 	else    // Paused update
 	{
@@ -207,6 +221,9 @@ void GameState::render(sf::RenderTarget* target)
 	this->player->render(this->renderTexture);
 
 	this->tileMap->renderDeferred(this->renderTexture);
+
+	this->renderTexture.setView(this->renderTexture.getDefaultView());
+	this->playerGUI->render(this->renderTexture);
 
 	if (this->paused)	// paused menu render
 	{

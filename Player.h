@@ -20,6 +20,13 @@ public:
 	virtual ~Player();
 
 	// Functions
+	AttributeComponent* getAttributeComponent();
+
+	void loseHP(const int hp);
+	void loseEXP(const unsigned exp);
+	void gainHP(const int hp);
+	void gainEXP(const unsigned exp);
+
 	void updateAttack();
 	void updateSprint();
 	void updateAnimation(const float& dt);
