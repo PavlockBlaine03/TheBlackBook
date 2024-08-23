@@ -24,7 +24,7 @@ void EditorState::initVariables()
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
-	this->cameraSpeed = 100.f;
+	this->cameraSpeed = 300.f;
 	this->layer = 0;
 }
 

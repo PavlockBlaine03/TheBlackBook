@@ -17,13 +17,13 @@ void Player::initComponents()
 Player::Player(sf::Texture& texture_sheet, float x, float y)
 {
 	this->initVariables();
-
+	this->setScale(scale);
 	this->setPosition(x, y);
 
 	this->createHitboxComponent(this->sprite, 10.f, 45.f, 86.5f, 125.f);
 	this->createMovementComponent(350.f, 1500.f, 500.f);
 	this->createAnimationComponent(texture_sheet);
-	this->setScale(scale);
+	this->createAttributeComponent(0);
 
 	this->animationComponent->addAnimation("IDLE", 11.f, 0, 0, 3, 0, 67, 86);
 	this->animationComponent->addAnimation("WALK", 8.f, 0, 1, 7, 1, 67, 86);
