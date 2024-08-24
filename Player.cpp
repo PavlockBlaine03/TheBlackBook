@@ -173,7 +173,7 @@ void Player::loseHP(const int hp)
 	}
 }
 
-void Player::loseEXP(const unsigned exp)
+void Player::loseEXP(const int exp)
 {
 	attributeComponent->exp -= exp;
 
@@ -193,7 +193,7 @@ void Player::gainHP(const int hp)
 	}
 }
 
-void Player::gainEXP(const unsigned exp)
+void Player::gainEXP(const int exp)
 {
 	attributeComponent->gainExp(exp);
 }

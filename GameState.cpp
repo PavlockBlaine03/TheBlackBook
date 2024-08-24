@@ -183,7 +183,7 @@ void GameState::updatePauseMenuButtons()
 	if (this->pmenu->isButtonPressed("EXIT_STATE"))
 	{
 		this->endState();
-		this->restartMenuMusic();
+		//this->restartMenuMusic();
 	}
 }
 
@@ -196,6 +196,9 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
+		if (getKeytime())
+			player->loseEXP(10);
+
 		this->player->move(0.f, 1.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
@@ -204,6 +207,9 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 	{
+		if (getKeytime())
+			player->gainEXP(10);
+
 		this->player->move(0.f, -1.f, dt);
 	}
 }

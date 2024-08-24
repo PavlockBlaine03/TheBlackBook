@@ -47,19 +47,19 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new gui::Button(1800.f, 700.f, 150.f, 50.f, &this->font, "New Game", 32,
+	this->buttons["GAME_STATE"] = new gui::Button(p2pX(70.3f), p2pY(48.6f), p2pX(6.f), p2pY(3.5f), &this->font, "New Game", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["SETTINGS_STATE"] = new gui::Button(1800.f, 800.f, 150.f, 50.f, &this->font, "Settings", 32,
+	this->buttons["SETTINGS_STATE"] = new gui::Button(p2pX(70.3f), p2pY(55.5f), p2pX(6.f), p2pY(3.5f), &this->font, "Settings", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["EDITOR_STATE"] = new gui::Button(1800.f, 900.f, 150.f, 50.f, &this->font, "Editor", 32,
+	this->buttons["EDITOR_STATE"] = new gui::Button(p2pX(70.3f), p2pY(62.5f), p2pX(6.f), p2pY(3.5f), &this->font, "Editor", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 
-	this->buttons["EXIT_STATE"] = new gui::Button(1800.f, 1000.f, 150.f, 50.f, &this->font, "Quit", 32,
+	this->buttons["EXIT_STATE"] = new gui::Button(p2pX(70.3f), p2pY(69.4), p2pX(6.f), p2pY(3.5f), &this->font, "Quit", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 }
@@ -78,7 +78,7 @@ void MainMenuState::initAudio()
 
 	this->menuMusic.setLoop(true);
 	this->menuMusic.setVolume(25);
-	this->menuMusic.play();
+	//this->menuMusic.play();
 }
 
 MainMenuState::MainMenuState(StateData* state_data)

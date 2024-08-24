@@ -49,16 +49,16 @@ void SettingsState::initKeybinds()
 void SettingsState::initGui()
 {
 	this->buttons["BACK"] = new gui::Button(
-		2300.f, 1300.f, 150.f, 50.f, 
-		&this->font, "Back", 24,
+		p2pX(90.f), p2pY(90.2f), p2pX(6.f), p2pY(3.5f),
+		&this->font, "Back", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),	
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0
 		)
 	);
 
 	this->buttons["APPLY"] = new gui::Button(
-		2100.f, 1300.f, 150.f, 50.f, 
-		&this->font, "Apply", 24,
+		p2pX(82.f), p2pY(90.2f), p2pX(6.f), p2pY(3.5f),
+		&this->font, "Apply", calcCharSize(),
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0
 		)
@@ -69,14 +69,14 @@ void SettingsState::initGui()
 	{
 		modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
 	}
-	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(1800.f, 400.f, 200.f, 50.f, font, modes_str.data(), static_cast<unsigned>(modes_str.size()));
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(p2pX(75.3f), p2pY(27.8f), p2pX(7.8f), p2pY(3.5f), font, modes_str.data(), static_cast<unsigned>(modes_str.size()));
 	
 }
 
 void SettingsState::initText()
 {
 	this->optionsText.setFont(this->font);
-	this->optionsText.setPosition(sf::Vector2f(1600, 425.f));
+	this->optionsText.setPosition(sf::Vector2f(p2pX(62.5f), p2pY(29.5f)));
 	this->optionsText.setCharacterSize(20);
 	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
 

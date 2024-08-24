@@ -23,9 +23,9 @@ public:
 	AttributeComponent* getAttributeComponent();
 
 	void loseHP(const int hp);
-	void loseEXP(const unsigned exp);
+	void loseEXP(const int exp);
 	void gainHP(const int hp);
-	void gainEXP(const unsigned exp);
+	void gainEXP(const int exp);
 
 	void updateAttack();
 	void updateSprint();
