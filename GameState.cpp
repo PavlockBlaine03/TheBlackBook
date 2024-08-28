@@ -81,8 +81,10 @@ void GameState::initTextures()
 
 void GameState::initPauseMenu()
 {
-	this->pmenu = new PauseMenu(*this->window, this->font);
-	this->pmenu->addButton("EXIT_STATE", static_cast<float>(this->window->getSize().y) / 1.5f, "Quit");
+	const sf::VideoMode& vm = stateData->gfxSettings->resolution;
+
+	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
+	this->pmenu->addButton("EXIT_STATE", gui::p2pY(66.7f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Quit");
 }
 
 void GameState::initPlayers()
@@ -93,7 +95,7 @@ void GameState::initPlayers()
 
 void GameState::initPlayerGUI()
 {
-	this->playerGUI = new PlayerGUI(this->player);
+	this->playerGUI = new PlayerGUI(this->player, stateData->gfxSettings->resolution);
 }
 
 GameState::GameState(StateData* state_data, sf::Music* menu_music)

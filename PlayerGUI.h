@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "Gui.h"
 
 class Player;
 class sf::RectangleShape;
@@ -9,6 +10,8 @@ class sf::Font;
 class PlayerGUI
 {
 private:
+
+	sf::VideoMode& vm;
 
 	sf::Font font;
 	Player* player;
@@ -38,7 +41,7 @@ private:
 	void initExpBar();
 
 public:
-	PlayerGUI(Player* player);
+	PlayerGUI(Player* player, sf::VideoMode& vm);
 	virtual ~PlayerGUI();
 
 	// Functions

@@ -98,10 +98,12 @@ void EditorState::initTileMap()
 
 void EditorState::initPauseMenu()
 {
-	this->pmenu = new PauseMenu(*this->window, this->font);
-	this->pmenu->addButton("QUIT", this->window->getSize().y / 1.5f, "Quit");
-	this->pmenu->addButton("SAVE", this->window->getSize().y / 1.5f- 150, "Save");
-	this->pmenu->addButton("LOAD", this->window->getSize().y / 1.5f - 300, "Load");
+	const sf::VideoMode& vm = stateData->gfxSettings->resolution;
+
+	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
+	this->pmenu->addButton("QUIT", gui::p2pY(66.7f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Quit");
+	this->pmenu->addButton("SAVE", gui::p2pY(56.3f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Save");
+	this->pmenu->addButton("LOAD", gui::p2pY(45.8f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Load");
 }
 
 EditorState::EditorState(StateData* state_data)

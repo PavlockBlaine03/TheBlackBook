@@ -23,12 +23,12 @@ private:
 	sf::Sound menuSound;
 	sf::Music menuMusic;
 
-	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
-	void initButtons();
+	void initGui();
 	void initAudio();
+	void resetGui();
 
 public:
 	MainMenuState(StateData* state_data);

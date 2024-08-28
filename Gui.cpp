@@ -1,6 +1,51 @@
 #include "stdafx.h"
 #include "Gui.h"
 
+const float gui::p2pX(const float perc, const sf::VideoMode& vm)
+{
+	/*
+	* Converts a percentage value to pixels relative to current resolution in the x-axis.
+	*
+	* @param	float perc				The percentage value.
+	* @param	sf::VideoMode& vm		The current video mode.
+	*
+	* @return	float					The calculated x-axis pixel value.
+	*
+	*/
+
+	return std::floor(static_cast<float>(vm.width * (perc / 100.f)));
+}
+
+const float gui::p2pY(const float perc, const sf::VideoMode& vm)
+{
+	/*
+	* Converts a percentage value to pixels relative to current resolution in the y-axis.
+	*
+	* @param	float perc				The percentage value.
+	* @param	sf::VideoMode& vm		The current video mode.
+	*
+	* @return	float					The calculated y-axis pixel value.
+	*
+	*/
+
+	return std::floor(static_cast<float>(vm.height * (perc / 100.f)));
+}
+
+const unsigned gui::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
+{
+	/*
+	* Calculates character size for text by using current resolution and a constant.
+	* 
+	* @param	sf::VideoMode& vm			The current video mode.
+	* @param	const unsigned modifier		Modifies the character size.
+	* 
+	* @return	unsigned				The calculated character size value.
+	*
+	*/
+
+	return static_cast<unsigned>((vm.width + vm.height) / modifier);
+}
+
 gui::Button::Button(float x, float y, float width, float height,
 	sf::Font* font, std::string text, unsigned character_size, 
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, 
@@ -134,11 +179,11 @@ void gui::Button::setID(const short unsigned id)
 * ******************************
 ********************************/
 
-gui::DropDownList::DropDownList(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned numOfElements, unsigned default_index)
+gui::DropDownList::DropDownList(float x, float y, float width, float height, sf::Font& font, sf::VideoMode vm, std::string list[], unsigned numOfElements, unsigned default_index)
 	: font(font), showList(false), keytimeMax(1.f), keytime(0.f)
 {
 	this->activeElement = new gui::Button(
-		x, y, width, height, &this->font, list[default_index], 16,
+		x, y, width, height, &this->font, list[default_index], gui::calcCharSize(vm, 160),
 		sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),
 		sf::Color(100, 100, 100, 100), sf::Color(150, 150, 150, 100), sf::Color(20, 20, 20, 100), 
 		sf::Color(255, 255, 255, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 50)

@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "PauseMenu.h"
 
-PauseMenu::PauseMenu(sf::RenderWindow& window, sf::Font& font)
+PauseMenu::PauseMenu(sf::VideoMode& vm, sf::Font& font)
 	:	font(font)
 {
 	// init background
 	this->background.setSize(
 		sf::Vector2f(
-			static_cast<float>(window.getSize().x), 
-			static_cast<float>(window.getSize().y)
+			static_cast<float>(vm.width), 
+			static_cast<float>(vm.height)
 		)
 	);
 	this->background.setFillColor(sf::Color(20, 20, 20, 100));
@@ -16,26 +16,26 @@ PauseMenu::PauseMenu(sf::RenderWindow& window, sf::Font& font)
 	// Init container
 	this->container.setSize(
 		sf::Vector2f(
-			static_cast<float>(window.getSize().x) / 4.f, 
-			static_cast<float>(window.getSize().y) / 1.5f
+			static_cast<float>(vm.width) / 4.f,
+			static_cast<float>(vm.height) - gui::p2pY(25.0f, vm)
 		)
 	);
 	this->container.setFillColor(sf::Color(20, 20, 20, 200));
 	this->container.setPosition(
-		static_cast<float>(window.getSize().x) / 2.f - this->container.getSize().x / 2.f,
+		static_cast<float>(vm.width) / 2.f - this->container.getSize().x / 2.f,
 		200.f
 	);
 
 	// Init text
 	this->menuText.setFont(font);
 	this->menuText.setFillColor(sf::Color(255, 255, 255, 200));
-	this->menuText.setCharacterSize(60);
+	this->menuText.setCharacterSize(gui::calcCharSize(vm));
 	this->menuText.setString("PAUSED");
 	this->menuText.setPosition(
 		this->container.getPosition().x + 
 		this->container.getSize().x / 2 - 
 		this->menuText.getGlobalBounds().width / 2.f, 
-		this->container.getPosition().y + 20.f
+		this->container.getPosition().y + gui::p2pY(1.4f, vm)
 	);
 }
 
@@ -63,13 +63,11 @@ const bool PauseMenu::isButtonPressed(const std::string key)
 	return this->buttons[key]->isPressed();
 }
 
-void PauseMenu::addButton(const std::string key, float y, const std::string text)
+void PauseMenu::addButton(const std::string key, const float y, const float width, const float height, const unsigned char_size, const std::string text)
 {
-	float width = 250.f;
-	float height = 50.f;
 	float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
 
-	this->buttons[key] = new gui::Button(x, y, width, height, &this->font, text, 32,
+	this->buttons[key] = new gui::Button(x, y, width, height, &this->font, text, char_size,
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 }

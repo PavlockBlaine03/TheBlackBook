@@ -14,12 +14,11 @@ private:
 	std::map<std::string, gui::DropDownList*> dropDownLists;
 	std::vector<sf::VideoMode> modes;
 
-	void initBackground();
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
 	void initGui();
-	void initText();
+	void resetGui();
 
 public:
 	SettingsState(StateData* state_data);
