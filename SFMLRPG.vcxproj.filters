@@ -180,5 +180,11 @@
   <ItemGroup>
     <None Include="config\supported_keys.ini" />
     <None Include="config\gamestate_keybinds.ini" />
+    <None Include="vertex_shader.vert">
+      <Filter>Source Files\Engine</Filter>
+    </None>
+    <None Include="fragment_shader.frag">
+      <Filter>Source Files\Engine</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -194,6 +194,8 @@
   <ItemGroup>
     <None Include="config\gamestate_keybinds.ini" />
     <None Include="config\supported_keys.ini" />
+    <None Include="fragment_shader.frag" />
+    <None Include="vertex_shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

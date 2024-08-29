@@ -85,7 +85,7 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-	this->texureSelector = new gui::TextureSelector(1700.f, 90.f, 800.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font, "TS");
+	this->texureSelector = new gui::TextureSelector(1700.f, 90.f, 800.f, 700.f, this->stateData->gridSize, this->tileMap->getTileSheet(), this->font, "TS");
 
 
 }
@@ -93,7 +93,7 @@ void EditorState::initGui()
 void EditorState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, 
-		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
+		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet3.png");
 }
 
 void EditorState::initPauseMenu()
@@ -307,7 +307,7 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 
 	target->setView(this->view);
-	this->tileMap->render(*target, this->mousePosGrid);
+	this->tileMap->render(*target, this->mousePosGrid, NULL, sf::Vector2f(), true);
 	this->tileMap->renderDeferred(*target);
 
 	target->setView(this->window->getDefaultView());

@@ -12,6 +12,7 @@ class State;
 class sf::View;
 class sf::RenderTexture;
 class sf::Font;
+class sf::Shader;
 
 class GameState : public State
 {
@@ -30,12 +31,15 @@ private:
 
 	TileMap* tileMap;
 
+	sf::Shader coreShader;
+
 	// init functions
 	void initDeferredRender();
 	void initView();
 	void initKeybinds();
 	void initTextures();
 	void initPauseMenu();
+	void initShaders();
 	void initPlayers();
 	void initPlayerGUI();
 	void initFonts();

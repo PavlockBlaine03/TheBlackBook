@@ -8,8 +8,6 @@ private:
 	// variables
 	sf::Vector2f scale;
 	bool mainAttack;
-	bool powerAttack;
-	bool isSprinting;
 
 	// init functions
 	void initVariables();
@@ -28,9 +26,8 @@ public:
 	void gainEXP(const int exp);
 
 	void updateAttack();
-	void updateSprint();
 	void updateAnimation(const float& dt);
 	virtual void update(const float& dt);
-	void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool show_hitbox = false);
 };
 

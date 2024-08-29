@@ -66,13 +66,13 @@ void GameState::initFonts()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet1.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, "C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet3.png");
 	this->tileMap->loadFromFile("C:/VisualCodeProjects/TheBlackBook/test.tbbmp");
 }
 
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET2.png"))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE";
 		exit(EXIT_FAILURE);
@@ -85,6 +85,15 @@ void GameState::initPauseMenu()
 
 	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
 	this->pmenu->addButton("EXIT_STATE", gui::p2pY(66.7f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Quit");
+}
+
+void GameState::initShaders()
+{
+	if (!coreShader.loadFromFile("C:/VisualCodeProjects/TheBlackBook/vertex_shader.vert", "C:/VisualCodeProjects/TheBlackBook/fragment_shader.frag"))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_SHADER";
+		exit(EXIT_FAILURE);
+	}
 }
 
 void GameState::initPlayers()
@@ -111,6 +120,7 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
+	this->initShaders();
 }
 
 GameState::~GameState()
@@ -141,7 +151,10 @@ void GameState::updateInput(const float& dt)
 
 void GameState::updateView(const float& dt)
 {
-	this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
+	this->view.setCenter(
+		std::floor(this->player->getPosition().x + (static_cast<float>(mousePosWindow.x) - static_cast<float>(stateData->gfxSettings->resolution.width / 2.f)) / 5.f),
+		std::floor(this->player->getPosition().y + (static_cast<float>(mousePosWindow.y) - static_cast<float>(stateData->gfxSettings->resolution.height / 2.f)) / 5.f)
+	);
 }
 
 void GameState::updateTileMap(const float& dt)
@@ -224,11 +237,11 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
+	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)), &coreShader, player->getCenter(), false);
 
-	this->player->render(this->renderTexture);
+	this->player->render(this->renderTexture, &coreShader, false);
 
-	this->tileMap->renderDeferred(this->renderTexture);
+	this->tileMap->renderDeferred(this->renderTexture, &coreShader, player->getCenter());
 
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
 	this->playerGUI->render(this->renderTexture);

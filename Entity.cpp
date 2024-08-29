@@ -94,6 +94,14 @@ const sf::Vector2f& Entity::getPosition() const
 	return this->sprite.getPosition();
 }
 
+const sf::Vector2f Entity::getCenter() const
+{
+	if (this->hitboxComponent)
+		return this->hitboxComponent->getPosition() + sf::Vector2f(hitboxComponent->getGlobalBounds().width / 2.f, hitboxComponent->getGlobalBounds().height / 2.f);
+
+	return this->sprite.getPosition() + sf::Vector2f(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
+}
+
 const sf::Vector2i Entity::getGridPosition(const int grid_size_i) const
 {
 	if (this->hitboxComponent)
@@ -120,14 +128,4 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
 		return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
 	}
 	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
-}
-
-void Entity::update(const float& dt)
-{
-	
-}
-
-void Entity::render(sf::RenderTarget& target)
-{
-	
 }

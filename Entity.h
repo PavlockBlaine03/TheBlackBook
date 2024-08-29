@@ -44,12 +44,13 @@ public:
 	void setTexture(sf::Texture& texture);
 	void setScale(sf::Vector2f& scale);
 	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::Vector2f getCenter() const;
 	virtual const sf::Vector2i getGridPosition(const int grid_size_i) const;
 	virtual const sf::FloatRect getGlobalBounds() const;
 	virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;
 	virtual const sf::Vector2f& getVelocity() const { return this->movementComponent->getVelocity(); }
 
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget& target) = 0;
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox = false) = 0;
 };
 
