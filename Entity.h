@@ -50,7 +50,7 @@ public:
 	virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;
 	virtual const sf::Vector2f& getVelocity() const { return this->movementComponent->getVelocity(); }
 
-	virtual void update(const float& dt) = 0;
+	virtual void update(const float& dt, sf::Vector2f& mos_pos_view) = 0;
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox = false) = 0;
 };
 

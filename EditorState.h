@@ -29,6 +29,7 @@ private:
 	float cameraSpeed;
 	int layer;
 	bool collision;
+	bool tileAddLock;
 	short type;
 
 	void initBackground();

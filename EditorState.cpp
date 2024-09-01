@@ -24,8 +24,9 @@ void EditorState::initVariables()
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
-	this->cameraSpeed = 300.f;
+	this->cameraSpeed = 350.f;
 	this->layer = 0;
+	this->tileAddLock = false;
 }
 
 void EditorState::initFonts()
@@ -92,8 +93,8 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 1000, 1000, 
-		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet3.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, 
+		"C:/VisualCodeProjects/TheBlackBook/resources/images/tiles/tilesheet4.png");
 }
 
 void EditorState::initPauseMenu()
@@ -172,7 +173,18 @@ void EditorState::updateEditorInput(const float& dt)
 		{
 			if (!this->texureSelector->getActive())
 			{
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+				if (this->tileAddLock)
+				{
+					if (this->tileMap->tileEmpty(this->mousePosGrid.x, this->mousePosGrid.y, 0))
+					{
+						this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+					}
+				}
+				else
+				{
+					this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
+
+				}
 			}
 			else
 			{
@@ -195,10 +207,7 @@ void EditorState::updateEditorInput(const float& dt)
 	// Toggle collision
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
 	{
-		if (this->collision)
-			this->collision = false;
-		else
-			this->collision = true;
+		this->collision = !collision;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TYPE_INC"))) && this->getKeytime())
 	{
@@ -206,8 +215,14 @@ void EditorState::updateEditorInput(const float& dt)
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TYPE_DEC"))) && this->getKeytime())
 	{
-		if(this->type > 0)
+		if (this->type > 0)
 			--this->type;
+	}
+
+	// Set Lock on / off
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_TILE_LOCK"))) && this->getKeytime())
+	{
+		this->tileAddLock = !tileAddLock;
 	}
 }
 
@@ -248,11 +263,12 @@ void EditorState::updateGui(const float& dt)
 	this->cursorText.setPosition(this->mousePosView.x - 50.f, this->mousePosView.y - 50.f);
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y <<
-		"\n" << this->mousePosGrid.x << this->mousePosGrid.y <<
+		"\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
 		"\n" << this->textureRect.left << " " << this->textureRect.top <<
 		"\nCollision: " << this->collision << 
 		"\n" << "Type: " << this->type << 
-		"\n" << "Tiles: " << this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y, this->layer);
+		"\n" << "Tiles: " << this->tileMap->getLayerSize(this->mousePosGrid.x, this->mousePosGrid.y, this->layer) <<
+		"\n" << "Tile Lock: " << this->tileAddLock;
 	this->cursorText.setString(ss.str());
 }
 

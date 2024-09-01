@@ -6,8 +6,10 @@ class Player : public Entity
 {
 private:
 	// variables
-	sf::Vector2f scale;
 	bool mainAttack;
+
+	sf::Texture weaponTexture;
+	sf::Sprite weaponSprite;
 
 	// init functions
 	void initVariables();
@@ -27,7 +29,7 @@ public:
 
 	void updateAttack();
 	void updateAnimation(const float& dt);
-	virtual void update(const float& dt);
+	virtual void update(const float& dt, sf::Vector2f& mos_pos_view);
 	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool show_hitbox = false);
 };
 

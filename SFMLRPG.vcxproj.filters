@@ -55,6 +55,24 @@
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{3d3ab629-ecda-4587-8041-6a07f38b7b8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Items">
+      <UniqueIdentifier>{e8bc6a2c-0ba3-4ed1-9775-5beb6dbfd13f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items">
+      <UniqueIdentifier>{2113d07d-777a-4d35-a02e-1cf7b282e14d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\MeleeWeapon">
+      <UniqueIdentifier>{71372bba-bd84-42ed-9a0e-f5315a0c64d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\MeleeWeapon">
+      <UniqueIdentifier>{f94fdbe2-869a-4687-80d1-3c27291cdf1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\RangedWeapon">
+      <UniqueIdentifier>{b383273b-6992-4f47-82e0-4e0aecdc90ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\RangedWeapon">
+      <UniqueIdentifier>{dec67a17-d70c-43b6-9351-dc27c1d21a17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -117,6 +135,9 @@
     <ClCompile Include="PlayerGUI.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -175,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="PlayerGUI.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
