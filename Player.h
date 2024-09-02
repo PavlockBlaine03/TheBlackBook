@@ -1,6 +1,8 @@
 #pragma once
 #include "Entity.h"
+#include "Sword.h"
 
+class Sword;
 class Entity;
 class Player : public Entity
 {
@@ -8,8 +10,7 @@ private:
 	// variables
 	bool mainAttack;
 
-	sf::Texture weaponTexture;
-	sf::Sprite weaponSprite;
+	Sword sword;
 
 	// init functions
 	void initVariables();

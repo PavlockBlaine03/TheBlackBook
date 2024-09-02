@@ -100,7 +100,7 @@ const bool TileMap::tileEmpty(const int x, const int y, const int z) const
 	{
 		return this->map[x][y][z].empty();
 	}
-	throw("ERROR::TILEMAP::TILEEMPTY::TRYING_TO_ACCESS_OUT_OF_BOUNDS_TILE");
+	return false;
 }
 
 // Accessors

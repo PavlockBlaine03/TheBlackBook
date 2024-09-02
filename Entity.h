@@ -3,8 +3,10 @@
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
+#include "SkillComponent.h"
 
 
+class SkillComponent;
 class HitboxComponent;
 class MovementComponent;
 class AnimationComponent;
@@ -17,6 +19,7 @@ private:
 protected:
 	sf::Sprite sprite;
 
+	SkillComponent* skillcomponent;
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
@@ -31,6 +34,7 @@ public:
 	void createAnimationComponent(sf::Texture& texture_sheet);
 	void createHitboxComponent(sf::Sprite& sprite, const float offset_x, const float offset_y, const float width, const float height);
 	void createAttributeComponent(const int level);
+	void createSkillComponent();
 
 	// Functions
 	virtual void setPosition(const float x, const float y);

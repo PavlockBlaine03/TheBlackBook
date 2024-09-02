@@ -20,6 +20,8 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	this->createMovementComponent(200.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
+	this->createSkillComponent();
+	
 
 	this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
 	this->animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 1, 3, 1, 64, 64);
@@ -27,20 +29,6 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 8, 1, 11, 1, 64, 64);
 	this->animationComponent->addAnimation("WALK_UP", 11.f, 12, 1, 15, 1, 64, 64);
 	this->animationComponent->addAnimation("ATTACK", 6.f, 0, 2, 3, 2, 64, 64);
-
-	// Visual Weapon
-	if (!weaponTexture.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/sword.png"))
-	{
-		std::cerr << "ERROR::PLAYER.CPP::COULD_NOT_LOAD_WEAPON_TEXTURE";
-		exit(EXIT_FAILURE);
-	}
-	weaponSprite.setTexture(weaponTexture);
-
-	weaponSprite.setOrigin
-	(
-		weaponSprite.getGlobalBounds().width / 2.f, 
-		weaponSprite.getGlobalBounds().height
-	);
 
 }
 
@@ -63,7 +51,6 @@ void Player::updateAnimation(const float& dt)
 
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-	
 		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
@@ -120,17 +107,7 @@ void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
 	this->updateAttack();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-
-	// update visual weapon
-	weaponSprite.setPosition(getCenter());
-
-	float dx = mos_pos_view.x - weaponSprite.getPosition().x;
-	float dy = mos_pos_view.y - weaponSprite.getPosition().y;
-
-	const float PI = 3.14159265;
-	float deg = atan2(dy, dx) * 180 / PI;
-
-	weaponSprite.setRotation(deg + 90.f);
+	this->sword.update(mos_pos_view, getCenter());
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
@@ -144,12 +121,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool sho
 
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", getCenter());
-		target.draw(weaponSprite, shader);
+		this->sword.render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		target.draw(weaponSprite);
+		this->sword.render(target);
 	}
 
 	if(show_hitbox)

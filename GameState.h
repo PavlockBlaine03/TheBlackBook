@@ -3,7 +3,14 @@
 #include "PauseMenu.h"
 #include "Tilemap.h"
 #include "PlayerGUI.h"
+#include "Sword.h"
+#include "Bow.h"
 
+class Sword;
+class Bow;
+class RangedWeapon;
+class MeleeWeapon;
+class Item;
 class PlayerGUI;
 class PauseMenu;
 class Player;
