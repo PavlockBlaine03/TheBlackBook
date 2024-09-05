@@ -1,4 +1,5 @@
-varying in vec4 vert_pos;
+#version 130
+in vec4 vert_pos;
 
 uniform sampler2D texture;
 uniform bool hasTexture;
@@ -10,10 +11,10 @@ void main()
 	vec4 ambient = vec4(0.02, 0.02, 0.5, 1.0);
 	
 	//Convert light to view coords
-	lightPos = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
+	vec2 lightPosView = (gl_ModelViewProjectionMatrix * vec4(lightPos, 0, 1)).xy;
 	
 	//Calculate the vector from light to pixel (Make circular)
-	vec2 lightToFrag = lightPos - vert_pos.xy;
+	vec2 lightToFrag = lightPosView - vert_pos.xy;
 	lightToFrag.y = lightToFrag.y / 1.7;
 
 	//Length of the vector (distance)
