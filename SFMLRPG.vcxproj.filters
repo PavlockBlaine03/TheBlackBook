@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Map\Tile">
       <UniqueIdentifier>{a2ace657-3f59-4429-ad51-cb0ce1eb1645}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States\Editor Modes">
+      <UniqueIdentifier>{b78e4746-e79c-4ce6-a531-c98f75deb35a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Editor Modes">
+      <UniqueIdentifier>{34ed50bf-ba07-41de-b9c3-13b0be86fa78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -159,6 +165,12 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="EditorMode.cpp">
+      <Filter>Source Files\States\Editor Modes</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultEditorMode.cpp">
+      <Filter>Source Files\States\Editor Modes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -241,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
       <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorMode.h">
+      <Filter>Header Files\States\Editor Modes</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultEditorMode.h">
+      <Filter>Header Files\States\Editor Modes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
