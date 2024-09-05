@@ -4,7 +4,7 @@
 
 class Gui;
 
-enum TileTypes {DEFAULT = 0, DAMAGING, RENDERTOP};
+enum TileTypes {DEFAULT = 0, DAMAGING, RENDERTOP, ENEMYSPAWNER};
 class Tile
 {
 private:
@@ -29,7 +29,7 @@ public:
 	const std::string getAsString() const;
 	const short& getType() const;
 
-	void update();
-	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f playerPosition = sf::Vector2f());
+	virtual void update();
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
 };
 

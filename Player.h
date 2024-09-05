@@ -14,7 +14,7 @@ private:
 
 	// init functions
 	void initVariables();
-	void initComponents();
+	void initAnimations();
 
 public:
 	Player(sf::Texture& texture_sheet, float x, float y);

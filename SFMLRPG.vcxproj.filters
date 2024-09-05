@@ -37,12 +37,6 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{924f4470-3887-456d-91f2-a4c1f08ae922}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Tile">
-      <UniqueIdentifier>{a2ace657-3f59-4429-ad51-cb0ce1eb1645}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Tile">
-      <UniqueIdentifier>{f5818a52-4533-440c-94fc-0f581f0327fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{a7a2c687-3f18-48d6-a44e-513e1da13640}</UniqueIdentifier>
     </Filter>
@@ -72,6 +66,12 @@
     </Filter>
     <Filter Include="Source Files\Items\RangedWeapon">
       <UniqueIdentifier>{dec67a17-d70c-43b6-9351-dc27c1d21a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map\Tile">
+      <UniqueIdentifier>{f5818a52-4533-440c-94fc-0f581f0327fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map\Tile">
+      <UniqueIdentifier>{a2ace657-3f59-4429-ad51-cb0ce1eb1645}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +109,7 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\Tile</Filter>
+      <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Source Files\GUI</Filter>
@@ -153,6 +153,12 @@
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -186,7 +192,7 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Header Files\Tile</Filter>
+      <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
       <Filter>Header Files\GUI</Filter>
@@ -229,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="SkillComponent.h">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

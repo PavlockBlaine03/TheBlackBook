@@ -5,7 +5,9 @@
 #include "PlayerGUI.h"
 #include "Sword.h"
 #include "Bow.h"
+#include "Enemy.h"
 
+class Enemy;
 class Sword;
 class Bow;
 class RangedWeapon;

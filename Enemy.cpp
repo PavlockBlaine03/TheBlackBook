@@ -1,12 +1,12 @@
 #include "stdafx.h"
-#include "Player.h"
+#include "Enemy.h"
 
-void Player::initVariables()
+void Enemy::initVariables()
 {
-	this->mainAttack = false;
+
 }
 
-void Player::initAnimations()
+void Enemy::initAnimations()
 {
 	this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
 	this->animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 1, 3, 1, 64, 64);
@@ -16,33 +16,27 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("ATTACK", 6.f, 0, 2, 3, 2, 64, 64);
 }
 
-Player::Player(sf::Texture& texture_sheet, float x, float y)
+Enemy::Enemy(EnemySpawner& enemy_spawner, sf::Texture& texture_sheet, float x, float y)
+	: enemySpawner(enemy_spawner)
 {
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, 12.f, 10.f, 40.f, 54.f);
 	this->createMovementComponent(200.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(1);
-	this->createSkillComponent();
-	
+
 	this->setPosition(x, y);
 	this->initAnimations();
 
 }
 
-Player::~Player()
+Enemy::~Enemy()
 {
 
 }
 
-void Player::updateAnimation(const float& dt)
+void Enemy::updateAnimation(const float& dt)
 {
-	if (this->mainAttack)
-	{
-		
-	}
-
 	if (this->movementComponent->getState(IDLE))
 	{
 		this->animationComponent->play("IDLE", dt);
@@ -67,49 +61,15 @@ void Player::updateAnimation(const float& dt)
 
 }
 
-AttributeComponent* Player::getAttributeComponent()
-{
-	return attributeComponent;
-}
-
-void Player::loseHP(const int hp)
-{
-	attributeComponent->loseHP(hp);
-}
-
-void Player::loseEXP(const int exp)
-{
-	attributeComponent->loseEXP(exp);
-}
-
-void Player::gainHP(const int hp)
-{
-	attributeComponent->gainHP(hp);
-}
-
-void Player::gainEXP(const int exp)
-{
-	attributeComponent->gainExp(exp);
-}
-
-void Player::updateAttack()
-{
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		this->mainAttack = true;
-	}
-}
-
-void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
+void Enemy::update(const float& dt, sf::Vector2f& mos_pos_view)
 {
 	this->movementComponent->update(dt);
-	this->updateAttack();
+	//this->updateAttack();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-	this->sword.update(mos_pos_view, getCenter());
 }
 
-void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
+void Enemy::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
 {
 	if (shader)
 	{
@@ -117,17 +77,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool sho
 		shader->setUniform("lightPos", getCenter());
 
 		target.draw(this->sprite, shader);
-
-		shader->setUniform("hasTexture", true);
-		shader->setUniform("lightPos", getCenter());
-		this->sword.render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		this->sword.render(target);
 	}
 
-	if(show_hitbox)
+	if (show_hitbox)
 		hitboxComponent->render(target);
 }

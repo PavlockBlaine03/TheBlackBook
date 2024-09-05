@@ -119,6 +119,7 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initPlayerGUI();
 	this->initTileMap();
 	this->initShaders();
+
 }
 
 GameState::~GameState()
@@ -127,6 +128,7 @@ GameState::~GameState()
 	delete this->pmenu;
 	delete this->tileMap;
 	delete this->playerGUI;
+
 }
 
 void GameState::restartMenuMusic()
@@ -184,8 +186,7 @@ void GameState::updateView(const float& dt)
 
 void GameState::updateTileMap(const float& dt)
 {
-	this->tileMap->update();
-	this->tileMap->updateCollision(this->player, dt);
+	this->tileMap->update(this->player, dt);
 }
 
 void GameState::updatePlayerGUI(const float& dt)
@@ -210,6 +211,7 @@ void GameState::update(const float& dt)
 		this->player->update(dt, mousePosView);
 
 		this->updatePlayerGUI(dt);
+
 	}
 	else    // Paused update
 	{
@@ -236,9 +238,6 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
-		if (getKeytime())
-			player->loseEXP(10);
-
 		this->player->move(0.f, 1.f, dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
@@ -247,9 +246,6 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
 	{
-		if (getKeytime())
-			player->gainEXP(10);
-
 		this->player->move(0.f, -1.f, dt);
 	}
 }
