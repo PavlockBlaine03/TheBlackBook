@@ -144,7 +144,8 @@ void DefaultEditorMode::updateGui(const float& dt)
 
 void DefaultEditorMode::update(const float& dt)
 {
-
+	this->updateInput(dt);
+	this->updateGui(dt);
 }
 
 void DefaultEditorMode::renderGui(sf::RenderTarget& target)

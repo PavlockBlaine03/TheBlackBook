@@ -69,12 +69,12 @@ void Enemy::update(const float& dt, sf::Vector2f& mos_pos_view)
 	this->hitboxComponent->update();
 }
 
-void Enemy::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
+void Enemy::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
 {
 	if (shader)
 	{
 		shader->setUniform("hasTexture", true);
-		shader->setUniform("lightPos", getCenter());
+		shader->setUniform("lightPos", light_position);
 
 		target.draw(this->sprite, shader);
 	}

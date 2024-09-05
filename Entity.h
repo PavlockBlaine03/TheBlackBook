@@ -55,6 +55,6 @@ public:
 	virtual const sf::Vector2f& getVelocity() const { return this->movementComponent->getVelocity(); }
 
 	virtual void update(const float& dt, sf::Vector2f& mos_pos_view) = 0;
-	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox = false) = 0;
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox = false) = 0;
 };
 

@@ -51,11 +51,13 @@ public:
 	void updateInput(const float& dt);
 	void updateEditorInput(const float& dt);
 	void updatePauseMenuButtons();
+	void updateModes(const float& dt);
 	void updateButtons();
 	void updateGui(const float& dt);
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget& target);
 	void renderGui(sf::RenderTarget& target);
+	void renderModes(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = nullptr);
 };
 

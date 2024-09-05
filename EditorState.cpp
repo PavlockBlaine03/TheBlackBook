@@ -168,6 +168,11 @@ void EditorState::updatePauseMenuButtons()
 
 }
 
+void EditorState::updateModes(const float& dt)
+{
+	this->modes[EditorModes::DEFAULT_MODE]->update(dt);
+}
+
 void EditorState::updateButtons()
 {
 	// Updates all buttons
@@ -194,7 +199,7 @@ void EditorState::update(const float& dt)
 		this->updateButtons();
 		this->updateGui(dt);
 		this->updateEditorInput(dt);
-		this->modes[EditorModes::DEFAULT_MODE]->update(dt);
+		this->updateModes(dt);
 	}
 	else    // Paused update
 	{
@@ -214,6 +219,11 @@ void EditorState::renderButtons(sf::RenderTarget& target)
 
 void EditorState::renderGui(sf::RenderTarget& target)
 {
+	
+}
+
+void EditorState::renderModes(sf::RenderTarget& target)
+{
 	this->modes[EditorModes::DEFAULT_MODE]->render(target);
 }
 
@@ -230,6 +240,8 @@ void EditorState::render(sf::RenderTarget* target)
 	this->renderButtons(*target);
 
 	this->renderGui(*target);
+
+	this->renderModes(*target);
 
 	if (this->paused)	// paused menu render
 	{
