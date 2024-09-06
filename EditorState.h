@@ -3,9 +3,10 @@
 #include "Gui.h"
 #include "PauseMenu.h"
 #include "TileMap.h"
-#include "DefaultEditorMode.h"
+#include "EditorModes.h"
 
 class EditorMode;
+class EnemyEditorMode;
 class Gui;
 class State;
 class StateData;
@@ -14,7 +15,7 @@ class TileMap;
 class Tile;
 class EditorStateData;
 
-enum EditorModes {DEFAULT_MODE = 0, ENEMY_MODE};
+enum EditorModes {DEFAULT_EDITOR_MODE = 0, ENEMY_EDITOR_MODE};
 
 class EditorState : public State
 {
@@ -30,6 +31,7 @@ private:
 	TileMap* tileMap;
 
 	std::vector<EditorMode*> modes;
+	unsigned activeMode;
 	float cameraSpeed;
 
 	void initView();

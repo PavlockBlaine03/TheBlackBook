@@ -77,6 +77,9 @@ void EditorState::initTileMap()
 void EditorState::initModes()
 {
 	this->modes.push_back(new DefaultEditorMode(this->stateData, this->tileMap, &this->editorStateData));
+	this->modes.push_back(new EnemyEditorMode(this->stateData, this->tileMap, &this->editorStateData));
+
+	this->activeMode = EditorModes::DEFAULT_EDITOR_MODE;
 }
 
 void EditorState::initPauseMenu()
@@ -152,7 +155,28 @@ void EditorState::updateEditorInput(const float& dt)
 		this->view.move(0.f, -this->cameraSpeed * dt);
 	}
 
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MODE_UP"))) && this->getKeytime())
+	{
+		if (activeMode < modes.size() - 1)
+		{
+			activeMode++;
+		}
+		else
+		{
+			std::cout << "ERROR::EDITORSTATE::CANNOT_CHANGE_MODE" << std::endl;
+		}
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MODE_DOWN"))) && this->getKeytime())
+	{
+		if (activeMode > 0)
+		{
+			activeMode--;
+		}
+		else
+		{
+			std::cout << "ERROR::EDITORSTATE::CANNOT_CHANGE_MODE" << std::endl;
+		}
+	}
 }
 
 void EditorState::updatePauseMenuButtons()
@@ -170,7 +194,7 @@ void EditorState::updatePauseMenuButtons()
 
 void EditorState::updateModes(const float& dt)
 {
-	this->modes[EditorModes::DEFAULT_MODE]->update(dt);
+	this->modes[this->activeMode]->update(dt);
 }
 
 void EditorState::updateButtons()
@@ -224,7 +248,7 @@ void EditorState::renderGui(sf::RenderTarget& target)
 
 void EditorState::renderModes(sf::RenderTarget& target)
 {
-	this->modes[EditorModes::DEFAULT_MODE]->render(target);
+	this->modes[this->activeMode]->render(target);
 }
 
 void EditorState::render(sf::RenderTarget* target)

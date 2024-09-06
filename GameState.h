@@ -35,6 +35,8 @@ private:
 	sf::Font font;
 	sf::Music* menuMusic;
 
+	std::vector<Enemy*> activeEnemies;
+
 	Player* player;
 	PlayerGUI* playerGUI;
 	PauseMenu* pmenu;

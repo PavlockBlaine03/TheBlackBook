@@ -5,19 +5,20 @@
 
 class EnemySpawner;
 class Entity;
+
 class Enemy :
     public Entity
 {
 private:
     // Variables
-    EnemySpawner& enemySpawner;
+    //EnemySpawner& enemySpawner;
 
     // Init functions
     void initVariables();
     void initAnimations();
 
 public:
-    Enemy(EnemySpawner& enemy_spawner, sf::Texture& texture_sheet, float x, float y);
+    Enemy(sf::Texture& texture_sheet, float x, float y);
     virtual ~Enemy();
 
     // Functions

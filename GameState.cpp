@@ -73,7 +73,12 @@ void GameState::initTextures()
 {
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET2.png"))
 	{
-		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_IDLE_TEXTURE";
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["RAT1_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Enemy/rat1_60x64.png"))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
 }
@@ -120,6 +125,11 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initTileMap();
 	this->initShaders();
 
+	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 400.f, 400.f));
+	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 400.f, 600.f));
+	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 600.f, 600.f));
+	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 600.f, 400.f));
+	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 300.f, 600.f));
 }
 
 GameState::~GameState()
@@ -129,6 +139,9 @@ GameState::~GameState()
 	delete this->tileMap;
 	delete this->playerGUI;
 
+	for (auto it : activeEnemies) {
+		delete it;
+	}
 }
 
 void GameState::restartMenuMusic()
@@ -187,6 +200,10 @@ void GameState::updateView(const float& dt)
 void GameState::updateTileMap(const float& dt)
 {
 	this->tileMap->update(this->player, dt);
+
+	for (auto* it : activeEnemies) {
+		this->tileMap->update(it, dt);
+	}
 }
 
 void GameState::updatePlayerGUI(const float& dt)
@@ -211,6 +228,10 @@ void GameState::update(const float& dt)
 		this->player->update(dt, mousePosView);
 
 		this->updatePlayerGUI(dt);
+
+		for (auto* it : activeEnemies) {
+			it->update(dt, mousePosView);
+		}
 
 	}
 	else    // Paused update
@@ -265,6 +286,10 @@ void GameState::render(sf::RenderTarget* target)
 		player->getCenter(), 
 		false
 	);
+
+	for (auto* it : activeEnemies) {
+		it->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
+	}
 
 	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), false);
 
