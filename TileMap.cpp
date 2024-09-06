@@ -149,7 +149,7 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 	}
 }
 
-void TileMap::removeTile(const int x, const int y, const int z)
+void TileMap::removeTile(const int x, const int y, const int z, const int type)
 {
 	/* Take three indices from mouse position in grid and remove tile at that position if internal tile map array allows it */
 	if (x < this->maxSizeWorldGrid.x && x >= 0 &&
@@ -159,9 +159,21 @@ void TileMap::removeTile(const int x, const int y, const int z)
 		if (!this->map[x][y][z].empty())
 		{
 			/* ok to remove tile*/
-			delete this->map[x][y][z][this->map[x][y][z].size() - 1];
-			this->map[x][y][z].pop_back();
-			std::cout << "DEBUG: REMOVED A TILE" << std::endl;
+			if (type >= 0)
+			{
+				if (this->map[x][y][z].back()->getType() == type)
+				{
+					delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+					this->map[x][y][z].pop_back();
+					//std::cout << "DEBUG: REMOVED A TILE" << std::endl;
+				}
+			}
+			else
+			{
+				delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+				this->map[x][y][z].pop_back();
+				//std::cout << "DEBUG: REMOVED A TILE" << std::endl;
+			}
 		}
 	}
 }
@@ -296,6 +308,13 @@ void TileMap::loadFromFile(const std::string file_name)
 	}
 
 	in_file.close();
+}
+
+const bool TileMap::checkType(const int x, const int y, const int type) const
+{
+	
+
+	return this->map[x][y][this->layer].back()->getType() == type;
 }
 
 void TileMap::update(Entity* entity, const float& dt)
@@ -475,6 +494,12 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i &gridPosition,
 						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
 						target.draw(this->collisionBox);
 					}
+				}
+
+				if (this->map[x][y][this->layer][k]->getType() == TileTypes::ENEMYSPAWNER)
+				{
+					this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+					target.draw(this->collisionBox);
 				}
 			}
 		}

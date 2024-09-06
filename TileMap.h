@@ -42,9 +42,10 @@ public:
 
 	// Functions
 	void addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect, const bool collision, const short type);
-	void removeTile(const int x, const int y, const int z);
+	void removeTile(const int x, const int y, const int z, const int type = -1);
 	void saveToFile(const std::string file_name);
 	void loadFromFile(const std::string file_name);
+	const bool checkType(const int x, const int y, const int type) const;
 
 	void update(Entity* entity, const float& dt);
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, sf::Shader* shader = NULL, const sf::Vector2f playerPosition = sf::Vector2f(), const bool show_collision = false);
