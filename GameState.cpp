@@ -125,11 +125,11 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initTileMap();
 	this->initShaders();
 
-	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 400.f, 400.f));
-	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 400.f, 600.f));
-	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 600.f, 600.f));
-	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 600.f, 400.f));
-	this->activeEnemies.push_back(new Enemy(this->textures["RAT1_SHEET"], 300.f, 600.f));
+	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 400.f));
+	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 600.f));
+	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 600.f, 600.f));
+	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 600.f, 400.f));
+	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 300.f, 600.f));
 }
 
 GameState::~GameState()

@@ -1,9 +1,14 @@
 #pragma once
-#include "Tile.h"
+
 #include "Entity.h"
+#include "EnemySpawner.h"
+#include "RegularTile.h"
 
 class Entity;
 class Tile;
+class RegularTile;
+class EnemySpawner;
+
 class TileMap
 {
 private:

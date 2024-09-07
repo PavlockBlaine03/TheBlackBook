@@ -168,6 +168,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
+    <ClCompile Include="Rat.cpp" />
+    <ClCompile Include="RegularTile.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="State.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="DefaultEditorMode.h" />
     <ClInclude Include="EditorMode.h" />
     <ClInclude Include="EditorModes.h" />
+    <ClInclude Include="Enemies.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyEditorMode.h" />
     <ClInclude Include="EnemySpawner.h" />
@@ -206,6 +209,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGUI.h" />
     <ClInclude Include="RangedWeapon.h" />
+    <ClInclude Include="Rat.h" />
+    <ClInclude Include="RegularTile.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />
     <ClInclude Include="State.h" />

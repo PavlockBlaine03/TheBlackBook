@@ -14,16 +14,16 @@ private:
     //EnemySpawner& enemySpawner;
 
     // Init functions
-    void initVariables();
-    void initAnimations();
+    virtual void initVariables() = 0;
+    virtual void initAnimations() = 0;
 
 public:
-    Enemy(sf::Texture& texture_sheet, float x, float y);
+    Enemy();
     virtual ~Enemy();
 
     // Functions
-    void updateAnimation(const float& dt);
-    void update(const float& dt, sf::Vector2f& mos_pos_view);
-    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f light_position = sf::Vector2f(), const bool show_hitbox = false);
+    virtual void updateAnimation(const float& dt) = 0;
+    virtual void update(const float& dt, sf::Vector2f& mos_pos_view) = 0;
+    virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f light_position = sf::Vector2f(), const bool show_hitbox = false) = 0;
 };
 

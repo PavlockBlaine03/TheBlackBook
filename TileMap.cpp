@@ -143,8 +143,15 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 		z < this->layers && z >= 0)
 	{
 		/* ok to add tile*/
-		this->map[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileSheet, tex_rect, collision, type));
+		if (type == TileTypes::DEFAULT || type == TileTypes::RENDERTOP)
+		{
+			this->map[x][y][z].push_back(new RegularTile(type, x, y, this->gridSizeF, this->tileSheet, tex_rect, collision));
+		}
+		else if (type == TileTypes::ENEMYSPAWNER)
+		{
+			this->map[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileSheet, tex_rect, 0, 0, 0, 0));
 
+		}
 		std::cout << "DEBUG: ADDED A TILE" << std::endl;
 	}
 }
@@ -189,11 +196,11 @@ void TileMap::saveToFile(const std::string file_name)
 	texture file
 
 	All tiles:
+	type
 	gridPos x y layer
 	TextureRect rect x y
 	collision
-	type
-
+	tile_specific...
 	*/
 
 	std::ofstream out_file;
@@ -287,18 +294,43 @@ void TileMap::loadFromFile(const std::string file_name)
 		}
 
 		// load all tiles
-		while (in_file >> x >> y >> z >> trX >> trY >> collision >> type) 
+		while (in_file >> x >> y >> z >> type)
 		{
-			this->map[x][y][z].push_back(
-				new Tile(
-					x, y, 
-					this->gridSizeF, 
-					this->tileSheet, 
-					sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI), 
-					collision, 
-					type
-				)
-			);
+			if (type == TileTypes::ENEMYSPAWNER)
+			{
+				// amount, time to spawn, max distance
+				int enemy_type = 0, enemy_am = 0, enemy_tts = 0, enemy_md = 0;
+				in_file >> trX >> trY >> enemy_type
+					>> enemy_am >> enemy_tts >> enemy_md;
+
+				this->map[x][y][z].push_back(
+					new EnemySpawner(
+						x, y,
+						this->gridSizeF,
+						this->tileSheet,
+						sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
+						enemy_type,
+						enemy_am,
+						enemy_tts,
+						enemy_md
+					)
+				);
+			}
+			else
+			{
+				in_file >> trX >> trY >> collision;
+
+				this->map[x][y][z].push_back(
+					new RegularTile(
+						type,
+						x, y,
+						this->gridSizeF,
+						this->tileSheet,
+						sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
+						collision
+					)
+				);
+			}
 		}
 	}
 	else

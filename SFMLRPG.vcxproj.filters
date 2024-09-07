@@ -79,6 +79,12 @@
     <Filter Include="Source Files\States\Editor Modes">
       <UniqueIdentifier>{34ed50bf-ba07-41de-b9c3-13b0be86fa78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Enemies">
+      <UniqueIdentifier>{fb833310-f9cc-4191-b506-89fb726116c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Enemies">
+      <UniqueIdentifier>{b47371dc-cfa0-40ff-871b-d97f5225ec1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -159,9 +165,6 @@
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
@@ -173,6 +176,15 @@
     </ClCompile>
     <ClCompile Include="EnemyEditorMode.cpp">
       <Filter>Source Files\States\Editor Modes</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Rat.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="RegularTile.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +263,6 @@
     <ClInclude Include="SkillComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="EnemySpawner.h">
       <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
@@ -268,6 +277,18 @@
     </ClInclude>
     <ClInclude Include="EditorModes.h">
       <Filter>Header Files\States\Editor Modes</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Rat.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemies.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="RegularTile.h">
+      <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
