@@ -165,7 +165,7 @@
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawner.cpp">
+    <ClCompile Include="EnemySpawnerTile.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="EditorMode.cpp">
@@ -263,7 +263,7 @@
     <ClInclude Include="SkillComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawner.h">
+    <ClInclude Include="EnemySpawnerTile.h">
       <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="EditorMode.h">

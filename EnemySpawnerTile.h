@@ -5,7 +5,7 @@
 class Tile;
 class Entity;
 class Enemy;
-class EnemySpawner : public Tile
+class EnemySpawnerTile : public Tile
 {
 private:
 
@@ -15,9 +15,9 @@ private:
 	float enemyMaxDistance;
 
 public:
-	EnemySpawner(int grid_x, int grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect, int enemy_type, 
+	EnemySpawnerTile(int grid_x, int grid_y, float gridSizeF, const sf::Texture& tile_texture_sheet, const sf::IntRect& tex_rect, int enemy_type, 
 		int enemy_amount, int enemy_time_to_spawn, float enemy_max_distance);
-	virtual ~EnemySpawner();
+	virtual ~EnemySpawnerTile();
 
 
 	// Functions

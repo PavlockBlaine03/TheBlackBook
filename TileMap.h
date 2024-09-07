@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Entity.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 #include "RegularTile.h"
 
 class Entity;
 class Tile;
 class RegularTile;
-class EnemySpawner;
+class EnemySpawnerTile;
 
 class TileMap
 {
@@ -47,6 +47,7 @@ public:
 
 	// Functions
 	void addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect, const bool collision, const short type);
+	void addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect, const int enemy_type, const int enemy_amount, const int enemy_tts, const int enemy_max_distance);
 	void removeTile(const int x, const int y, const int z, const int type = -1);
 	void saveToFile(const std::string file_name);
 	void loadFromFile(const std::string file_name);

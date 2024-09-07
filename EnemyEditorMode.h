@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EditorMode.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 
 class State;
 class StateData;
@@ -9,7 +9,7 @@ class EditorMode;
 class TileMap;
 class Tile;
 class Enemy;
-class EnemySpawner;
+class EnemySpawnerTile;
 
 class EnemyEditorMode :
     public EditorMode

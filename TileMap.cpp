@@ -143,16 +143,21 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 		z < this->layers && z >= 0)
 	{
 		/* ok to add tile*/
-		if (type == TileTypes::DEFAULT || type == TileTypes::RENDERTOP)
-		{
-			this->map[x][y][z].push_back(new RegularTile(type, x, y, this->gridSizeF, this->tileSheet, tex_rect, collision));
-		}
-		else if (type == TileTypes::ENEMYSPAWNER)
-		{
-			this->map[x][y][z].push_back(new EnemySpawner(x, y, this->gridSizeF, this->tileSheet, tex_rect, 0, 0, 0, 0));
+		this->map[x][y][z].push_back(new RegularTile(type, x, y, this->gridSizeF, this->tileSheet, tex_rect, collision));
+		//std::cout << "DEBUG: ADDED A TILE" << std::endl;
+	}
+}
 
-		}
-		std::cout << "DEBUG: ADDED A TILE" << std::endl;
+void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect,
+	const int enemy_type, const int enemy_amount, const int enemy_tts, const int enemy_max_distance)
+{
+	/* Take three indices from mouse position in grid and add tile to that position if internal tile map array allows it */
+	if (x < this->maxSizeWorldGrid.x && x >= 0 &&
+		y < this->maxSizeWorldGrid.y && y >= 0 &&
+		z < this->layers && z >= 0)
+	{
+		/* ok to add tile*/
+		this->map[x][y][z].push_back(new EnemySpawnerTile(x, y, this->gridSizeF, this->tileSheet, tex_rect, enemy_type, enemy_amount, enemy_tts, enemy_max_distance));
 	}
 }
 
@@ -304,7 +309,7 @@ void TileMap::loadFromFile(const std::string file_name)
 					>> enemy_am >> enemy_tts >> enemy_md;
 
 				this->map[x][y][z].push_back(
-					new EnemySpawner(
+					new EnemySpawnerTile(
 						x, y,
 						this->gridSizeF,
 						this->tileSheet,

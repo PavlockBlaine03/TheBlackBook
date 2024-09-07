@@ -53,8 +53,7 @@ void EnemyEditorMode::updateInput(const float& dt)
 			this->tileMap->addTile(
 				this->editorStateData->mousePosGrid->x, 
 				this->editorStateData->mousePosGrid->y, 
-				0, 
-				this->textureRect, false, TileTypes::ENEMYSPAWNER);
+				0, this->textureRect, this->type, this->amount, this->timeToSpawn, this->maxDistance);
 		}
 	}
 	// remove a tile from tilemap
@@ -63,6 +62,63 @@ void EnemyEditorMode::updateInput(const float& dt)
 		if (!this->sideBar.getGlobalBounds().contains(sf::Vector2f(*this->editorStateData->mousePosWindow)))
 		{
 			this->tileMap->removeTile(this->editorStateData->mousePosGrid->x, this->editorStateData->mousePosGrid->y, 0, TileTypes::ENEMYSPAWNER);
+		}
+	}
+
+	// Increase Type
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->editorStateData->keybinds->at("TYPE_UP"))) && this->getKeytime())
+	{
+		// Decrease Type
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		{
+			if(this->type > 0)
+				this->type--;
+		}
+		else if (this->type < 1000)
+		{
+			this->type++;
+		}
+	}
+	// Increase Amount
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->editorStateData->keybinds->at("AMOUNT_UP"))) && this->getKeytime())
+	{
+		// Decrease Amount
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		{
+			if (this->amount > 0)
+				this->amount--;
+		}
+		else if (this->amount < 1000)
+		{
+			this->amount++;
+		}
+	}
+	// Increase Time to spawn
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->editorStateData->keybinds->at("TTS_UP"))) && this->getKeytime())
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		{
+			// Decrease Time to spawn
+			if (this->timeToSpawn > 0)
+				this->timeToSpawn--;
+		}
+		else if (this->timeToSpawn < 1000)
+		{
+			this->timeToSpawn++;
+		}
+	}
+	// Increase Max Distance
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->editorStateData->keybinds->at("MD_UP"))) && this->getKeytime())
+	{
+		// Decrease Max Distance
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		{
+			if (this->maxDistance > 0)
+				this->maxDistance--;
+		}
+		else if (this->maxDistance < 1000)
+		{
+			this->maxDistance++;
 		}
 	}
 }
@@ -81,8 +137,8 @@ void EnemyEditorMode::updateGui(const float& dt)
 	ss <<
 		"\n" << "Enemy type: " << this->type <<
 		"\n" << "Enemy amount: " << this->amount <<
-		"\n" << "Enemy max distance: " << this->maxDistance <<
-		"\n" << "Time to spawn: " << this->timeToSpawn;
+		"\n" << "Time to spawn: " << this->timeToSpawn <<
+		"\n" << "Enemy max distance: " << this->maxDistance;
 	this->cursorText.setString(ss.str());
 }
 
