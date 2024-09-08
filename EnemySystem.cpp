@@ -1,0 +1,37 @@
+#include "stdafx.h"
+#include "EnemySystem.h"
+
+EnemySystem::EnemySystem(std::vector<Enemy*>& active_enemies, std::map<std::string, sf::Texture>& textures)
+	: textures(textures), activeEnemies(active_enemies)
+{
+	
+}
+
+EnemySystem::~EnemySystem()
+{
+
+}
+
+void EnemySystem::createEnemy(const short type, const float x_pos, const float y_pos)
+{
+	switch (type)
+	{
+	case EnemyTypes::RAT:
+		this->activeEnemies.push_back(new Rat(textures["RAT1_SHEET"], x_pos, y_pos));
+		break;
+	default:
+		std::cerr << "ERROR::ENEMY_SYSTEM::CREATE_ENEMY_FUNCTION::INVALID_TYPE";
+		exit(EXIT_FAILURE);
+		break;
+	}
+}
+
+void EnemySystem::update(const float& dt)
+{
+
+}
+
+void EnemySystem::render(sf::RenderTarget* target)
+{
+
+}

@@ -5,24 +5,6 @@
 #include "PlayerGUI.h"
 #include "Sword.h"
 #include "Bow.h"
-#include "Enemies.h"
-
-class Enemy;
-class Rat;
-class Sword;
-class Bow;
-class RangedWeapon;
-class MeleeWeapon;
-class Item;
-class PlayerGUI;
-class PauseMenu;
-class Player;
-class TileMap;
-class State;
-class sf::View;
-class sf::RenderTexture;
-class sf::Font;
-class sf::Shader;
 
 class GameState : public State
 {
@@ -38,10 +20,12 @@ private:
 
 	std::vector<Enemy*> activeEnemies;
 
+	EnemySystem* enemySystem;
+
 	Player* player;
 	PlayerGUI* playerGUI;
 	PauseMenu* pmenu;
-
+	
 	TileMap* tileMap;
 
 	sf::Shader coreShader;
@@ -57,6 +41,7 @@ private:
 	void initPlayerGUI();
 	void initFonts();
 	void initTileMap();
+	void initEnemySystem();
 
 public:
 	GameState(StateData* state_data, sf::Music* menu_music);
@@ -68,6 +53,8 @@ public:
 	void updateView(const float& dt);
 	void updateTileMap(const float& dt);
 	void updatePlayerGUI(const float& dt);
+	void updatePlayer(const float& dt);
+	void updateEnemies(const float& dt);
 	void update(const float& dt);
 	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& dt);

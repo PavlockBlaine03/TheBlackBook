@@ -69,6 +69,11 @@ void GameState::initTileMap()
 	this->tileMap = new TileMap("C:/VisualCodeProjects/TheBlackBook/test.tbbmp");
 }
 
+void GameState::initEnemySystem()
+{
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
 void GameState::initTextures()
 {
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET2.png"))
@@ -119,17 +124,13 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
+	this->initEnemySystem();
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
 	this->initShaders();
 
-	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 400.f));
-	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 600.f));
-	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 600.f, 600.f));
-	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 600.f, 400.f));
-	this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 300.f, 600.f));
 }
 
 GameState::~GameState()
@@ -142,6 +143,7 @@ GameState::~GameState()
 	for (auto it : activeEnemies) {
 		delete it;
 	}
+	delete this->enemySystem;
 }
 
 void GameState::restartMenuMusic()
@@ -199,16 +201,29 @@ void GameState::updateView(const float& dt)
 
 void GameState::updateTileMap(const float& dt)
 {
-	this->tileMap->update(this->player, dt);
+	this->tileMap->updateWorldBoundsCollision(this->player, dt);
+	this->tileMap->updateTilesCollision(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
 
 	for (auto* it : activeEnemies) {
-		this->tileMap->update(it, dt);
+		this->tileMap->updateWorldBoundsCollision(it, dt);
+		this->tileMap->updateTilesCollision(it, dt);
 	}
 }
 
 void GameState::updatePlayerGUI(const float& dt)
 {
 	this->playerGUI->update(dt);
+}
+
+void GameState::updatePlayer(const float& dt)
+{
+
+}
+
+void GameState::updateEnemies(const float& dt)
+{
+	//this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 400.f));
 }
 
 void GameState::update(const float& dt)

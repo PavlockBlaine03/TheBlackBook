@@ -9,6 +9,7 @@ class EnemySpawnerTile : public Tile
 {
 private:
 
+	bool spawned;
 	int enemyType;
 	int enemyAmount;
 	int enemyTimeToSpawn;
@@ -21,6 +22,8 @@ public:
 
 
 	// Functions
+	const bool& getSpawned() const;
+	void setSpawned(const bool spawned);
 	virtual const std::string getAsString() const;
 
 	void update();

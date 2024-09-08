@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Entity.h"
 #include "EnemySpawnerTile.h"
 #include "RegularTile.h"
+#include "EnemySystem.h"
 
-class Entity;
+class Rat;
 class Tile;
 class RegularTile;
 class EnemySpawnerTile;
@@ -52,7 +52,10 @@ public:
 	void saveToFile(const std::string file_name);
 	void loadFromFile(const std::string file_name);
 	const bool checkType(const int x, const int y, const int type) const;
-
+	
+	void updateWorldBoundsCollision(Entity* entity, const float& dt);
+	void updateTilesCollision(Entity* entity, const float& dt);
+	void updateTiles(Entity* entity, const float& dt, EnemySystem& enemy_system);
 	void update(Entity* entity, const float& dt);
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, sf::Shader* shader = NULL, const sf::Vector2f playerPosition = sf::Vector2f(), const bool show_collision = false);
 	void renderDeferred(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f playerPosition = sf::Vector2f());

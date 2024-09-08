@@ -186,6 +186,9 @@
     <ClCompile Include="RegularTile.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySystem.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -284,11 +287,11 @@
     <ClInclude Include="Rat.h">
       <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Enemies.h">
-      <Filter>Header Files\Entities\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="RegularTile.h">
       <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySystem.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
