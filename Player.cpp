@@ -4,6 +4,7 @@
 void Player::initVariables()
 {
 	this->mainAttack = false;
+	this->sword = new Sword(20);
 }
 
 void Player::initAnimations()
@@ -14,6 +15,11 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 8, 1, 11, 1, 64, 64);
 	this->animationComponent->addAnimation("WALK_UP", 11.f, 12, 1, 15, 1, 64, 64);
 	this->animationComponent->addAnimation("ATTACK", 6.f, 0, 2, 3, 2, 64, 64);
+}
+
+void Player::initInventory()
+{
+	this->inventory = new Inventory(100);
 }
 
 Player::Player(sf::Texture& texture_sheet, float x, float y)
@@ -28,12 +34,14 @@ Player::Player(sf::Texture& texture_sheet, float x, float y)
 	
 	this->setPosition(x, y);
 	this->initAnimations();
+	this->initInventory();
 
 }
 
 Player::~Player()
 {
-
+	delete sword;
+	delete inventory;
 }
 
 void Player::updateAnimation(const float& dt)
@@ -106,7 +114,7 @@ void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
 	this->updateAttack();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-	this->sword.update(mos_pos_view, getCenter());
+	this->sword->update(mos_pos_view, getCenter());
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
@@ -120,12 +128,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vect
 
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", light_position);
-		this->sword.render(target, shader);
+		this->sword->render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		this->sword.render(target);
+		this->sword->render(target);
 	}
 
 	if(show_hitbox)

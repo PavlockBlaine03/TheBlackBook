@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword()
+Sword::Sword(unsigned value)
+	: MeleeWeapon(value)
 {
 	// Visual Weapon
 	if (!weaponTexture.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/sword.png"))
@@ -43,4 +44,9 @@ void Sword::render(sf::RenderTarget& target, sf::Shader* shader)
 		target.draw(weaponSprite, shader);
 	else
 		target.draw(weaponSprite);
+}
+
+Sword* Sword::clone()
+{
+	return new Sword(*this);
 }
