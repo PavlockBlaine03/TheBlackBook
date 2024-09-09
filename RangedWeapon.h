@@ -1,16 +1,21 @@
 #pragma once
-#include "Item.h"
+#include "Weapon.h"
 
-class Item;
 class RangedWeapon :
-    public Item
+    public Weapon
 {
 private:
 
 
+protected:
+
+
 public:
-    RangedWeapon(unsigned value);
+    RangedWeapon(unsigned value, std::string texture_file);
     virtual ~RangedWeapon();
+
+    virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center) = 0;
+    virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL) = 0;
 
     virtual RangedWeapon* clone() = 0;
 };

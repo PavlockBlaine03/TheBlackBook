@@ -76,12 +76,12 @@ void GameState::initEnemySystem()
 
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET2.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile(this->textureManager.getTextures().at("PLAYER")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
-	if (!this->textures["RAT1_SHEET"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Enemy/rat1_60x64.png"))
+	if (!this->textures["RAT1_SHEET"].loadFromFile(this->textureManager.getTextures().at("RAT1")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
 		exit(EXIT_FAILURE);
@@ -107,7 +107,7 @@ void GameState::initShaders()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->textures["PLAYER_SHEET"], 400.f, 200.f);
+	this->player = new Player(this->textures["PLAYER_SHEET"], &this->textureManager, 400.f, 200.f);
 }
 
 void GameState::initPlayerGUI()
@@ -204,11 +204,6 @@ void GameState::updateTileMap(const float& dt)
 	this->tileMap->updateWorldBoundsCollision(this->player, dt);
 	this->tileMap->updateTilesCollision(this->player, dt);
 	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
-
-	for (auto* it : activeEnemies) {
-		this->tileMap->updateWorldBoundsCollision(it, dt);
-		this->tileMap->updateTilesCollision(it, dt);
-	}
 }
 
 void GameState::updatePlayerGUI(const float& dt)
@@ -221,9 +216,41 @@ void GameState::updatePlayer(const float& dt)
 
 }
 
-void GameState::updateEnemies(const float& dt)
+void GameState::updateCombatAndEnemies(const float& dt)
 {
-	//this->activeEnemies.push_back(new Rat(this->textures["RAT1_SHEET"], 400.f, 400.f));
+	int index = 0;
+	for (auto* enemy : activeEnemies) 
+	{
+		enemy->update(dt, mousePosView);
+		this->tileMap->updateWorldBoundsCollision(enemy, dt);
+		this->tileMap->updateTilesCollision(enemy, dt);
+		this->updateCombat(enemy, index, dt);
+
+		// Dangerous!!! Delete later
+		if (enemy->isDead())
+		{
+			this->player->gainEXP(enemy->getGainExp());
+
+			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+			--index;
+		}
+
+		++index;
+	}
+}
+
+void GameState::updateCombat(Enemy* enemy, const int indexs, const float& dt)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		if (enemy->getGlobalBounds().contains(this->mousePosView) &&
+			enemy->getDistance(*this->player) < this->player->getWeapon()->getRange())
+		{
+			enemy->loseHP(this->player->getWeapon()->getDamageMin());
+			std::cout << enemy->getAttributeComponent()->hp << std::endl;
+		}
+	}
+
 }
 
 void GameState::update(const float& dt)
@@ -244,9 +271,7 @@ void GameState::update(const float& dt)
 
 		this->updatePlayerGUI(dt);
 
-		for (auto* it : activeEnemies) {
-			it->update(dt, mousePosView);
-		}
+		this->updateCombatAndEnemies(dt);
 
 	}
 	else    // Paused update
@@ -302,8 +327,8 @@ void GameState::render(sf::RenderTarget* target)
 		false
 	);
 
-	for (auto* it : activeEnemies) {
-		it->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
+	for (auto* enemy : activeEnemies) {
+		enemy->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
 	}
 
 	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), false);

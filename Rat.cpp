@@ -24,6 +24,7 @@ Rat::Rat(sf::Texture& texture_sheet, float x, float y)
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
+	this->createAttributeComponent(1);
 
 	this->setPosition(x, y);
 	this->initAnimations();

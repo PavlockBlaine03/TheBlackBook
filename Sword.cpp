@@ -1,17 +1,10 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword(unsigned value)
-	: MeleeWeapon(value)
+Sword::Sword(unsigned value, std::string texture_file)
+	: MeleeWeapon(value, texture_file)
 {
 	// Visual Weapon
-	if (!weaponTexture.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/sword.png"))
-	{
-		std::cerr << "ERROR::PLAYER.CPP::COULD_NOT_LOAD_WEAPON_TEXTURE";
-		exit(EXIT_FAILURE);
-	}
-	weaponSprite.setTexture(weaponTexture);
-
 	weaponSprite.setOrigin
 	(
 		weaponSprite.getGlobalBounds().width / 2.f,

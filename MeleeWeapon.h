@@ -1,22 +1,17 @@
 #pragma once
-#include "Item.h"
+#include "Weapon.h"
 
-class Item;
 class MeleeWeapon :
-    public Item
+    public Weapon
 {
 private:
 
 
 protected:
-    sf::Texture weaponTexture;
-    sf::Sprite weaponSprite;
-
-    int damageMin;
-    int damageMax;
+    
 
 public:
-    MeleeWeapon(unsigned value);
+    MeleeWeapon(unsigned value, std::string texture_file);
     virtual ~MeleeWeapon();
 
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center) = 0;

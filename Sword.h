@@ -10,7 +10,7 @@ private:
 
 
 public:
-    Sword(unsigned value);
+    Sword(unsigned value, std::string texture_file);
     virtual ~Sword();
 
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center);

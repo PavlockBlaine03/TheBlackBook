@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Items.h"
 #include "Inventory.h"
+#include "TextureManager.h"
 
 class Sword;
 class Entity;
@@ -11,6 +12,7 @@ class Player : public Entity
 private:
 	// variables
 	Inventory* inventory;
+	TextureManager* textureManager;
 
 	bool mainAttack;
 
@@ -22,11 +24,12 @@ private:
 	void initInventory();
 
 public:
-	Player(sf::Texture& texture_sheet, float x, float y);
+	Player(sf::Texture& texture_sheet, TextureManager* texture_manager, float x, float y);
 	virtual ~Player();
 
 	// Functions
 	AttributeComponent* getAttributeComponent();
+	const Weapon* getWeapon() const;
 
 	void loseHP(const int hp);
 	void loseEXP(const int exp);

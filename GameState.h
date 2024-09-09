@@ -1,4 +1,5 @@
 #pragma once
+
 #include "State.h"
 #include "PauseMenu.h"
 #include "Tilemap.h"
@@ -9,6 +10,8 @@
 class GameState : public State
 {
 private:
+
+	TextureManager textureManager;
 
 	sf::View view;
 	sf::Vector2i viewGridPosition;
@@ -54,7 +57,8 @@ public:
 	void updateTileMap(const float& dt);
 	void updatePlayerGUI(const float& dt);
 	void updatePlayer(const float& dt);
-	void updateEnemies(const float& dt);
+	void updateCombatAndEnemies(const float& dt);
+	void updateCombat(Enemy* enemy, const int index, const float& dt);
 	void update(const float& dt);
 	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& dt);

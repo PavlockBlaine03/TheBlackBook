@@ -43,6 +43,8 @@ public:
 	virtual ~AttributeComponent();
 
 	// Functions
+	const bool isDead() const;
+
 	void loseHP(const int hp);
 	void loseEXP(const int exp);
 	void gainHP(const int hp);

@@ -55,18 +55,6 @@
     <Filter Include="Source Files\Items">
       <UniqueIdentifier>{2113d07d-777a-4d35-a02e-1cf7b282e14d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Items\MeleeWeapon">
-      <UniqueIdentifier>{71372bba-bd84-42ed-9a0e-f5315a0c64d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\MeleeWeapon">
-      <UniqueIdentifier>{f94fdbe2-869a-4687-80d1-3c27291cdf1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Items\RangedWeapon">
-      <UniqueIdentifier>{b383273b-6992-4f47-82e0-4e0aecdc90ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\RangedWeapon">
-      <UniqueIdentifier>{dec67a17-d70c-43b6-9351-dc27c1d21a17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Map\Tile">
       <UniqueIdentifier>{f5818a52-4533-440c-94fc-0f581f0327fb}</UniqueIdentifier>
     </Filter>
@@ -84,6 +72,33 @@
     </Filter>
     <Filter Include="Source Files\Entities\Enemies">
       <UniqueIdentifier>{b47371dc-cfa0-40ff-871b-d97f5225ec1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Weapons">
+      <UniqueIdentifier>{89b5ffef-964b-4393-bce9-0ad2927ee24b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Weapons">
+      <UniqueIdentifier>{d2a0b608-ddea-4745-b6d6-c9ef7a8e5191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Weapons\MeleeWeapon">
+      <UniqueIdentifier>{f94fdbe2-869a-4687-80d1-3c27291cdf1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Weapons\RangedWeapon">
+      <UniqueIdentifier>{dec67a17-d70c-43b6-9351-dc27c1d21a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Weapons\MeleeWeapon">
+      <UniqueIdentifier>{71372bba-bd84-42ed-9a0e-f5315a0c64d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Weapons\RangedWeapon">
+      <UniqueIdentifier>{b383273b-6992-4f47-82e0-4e0aecdc90ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Items\Armors">
+      <UniqueIdentifier>{44f67ec4-a09f-4d5d-93ae-a611fe1b7e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Items\Armors">
+      <UniqueIdentifier>{0672dc3e-7ef6-4e91-8750-46d5a56a91ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{ceb4a8ba-0844-4518-acf6-5c9d32c6585d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -151,16 +166,16 @@
       <Filter>Source Files\Items</Filter>
     </ClCompile>
     <ClCompile Include="MeleeWeapon.cpp">
-      <Filter>Source Files\Items\MeleeWeapon</Filter>
+      <Filter>Source Files\Items\Weapons\MeleeWeapon</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
-      <Filter>Source Files\Items\MeleeWeapon</Filter>
+      <Filter>Source Files\Items\Weapons\MeleeWeapon</Filter>
     </ClCompile>
     <ClCompile Include="RangedWeapon.cpp">
-      <Filter>Source Files\Items\RangedWeapon</Filter>
+      <Filter>Source Files\Items\Weapons\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="Bow.cpp">
-      <Filter>Source Files\Items\RangedWeapon</Filter>
+      <Filter>Source Files\Items\Weapons\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Source Files\Components</Filter>
@@ -191,6 +206,12 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -255,16 +276,16 @@
       <Filter>Header Files\Items</Filter>
     </ClInclude>
     <ClInclude Include="MeleeWeapon.h">
-      <Filter>Header Files\Items\MeleeWeapon</Filter>
+      <Filter>Header Files\Items\Weapons\MeleeWeapon</Filter>
     </ClInclude>
     <ClInclude Include="Sword.h">
-      <Filter>Header Files\Items\MeleeWeapon</Filter>
+      <Filter>Header Files\Items\Weapons\MeleeWeapon</Filter>
     </ClInclude>
     <ClInclude Include="RangedWeapon.h">
-      <Filter>Header Files\Items\RangedWeapon</Filter>
+      <Filter>Header Files\Items\Weapons\RangedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="Bow.h">
-      <Filter>Header Files\Items\RangedWeapon</Filter>
+      <Filter>Header Files\Items\Weapons\RangedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="SkillComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -301,6 +322,12 @@
     </ClInclude>
     <ClInclude Include="Items.h">
       <Filter>Header Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

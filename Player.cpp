@@ -4,7 +4,7 @@
 void Player::initVariables()
 {
 	this->mainAttack = false;
-	this->sword = new Sword(20);
+	this->sword = new Sword(20, this->textureManager->getTextures().at("SWORD"));
 }
 
 void Player::initAnimations()
@@ -22,8 +22,10 @@ void Player::initInventory()
 	this->inventory = new Inventory(100);
 }
 
-Player::Player(sf::Texture& texture_sheet, float x, float y)
+Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, float x, float y)
+	: Entity()
 {
+	this->textureManager = texture_manager;
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, 12.f, 10.f, 40.f, 54.f);
@@ -78,6 +80,11 @@ void Player::updateAnimation(const float& dt)
 AttributeComponent* Player::getAttributeComponent()
 {
 	return attributeComponent;
+}
+
+const Weapon* Player::getWeapon() const
+{
+	return this->sword;
 }
 
 void Player::loseHP(const int hp)

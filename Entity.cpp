@@ -142,3 +142,8 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
 	}
 	return sf::FloatRect(-1.f, -1.f, -1.f, -1.f);
 }
+
+const float Entity::getDistance(const Entity& entity) const
+{
+	return static_cast<float>(sqrt(pow(this->getCenter().x - entity.getCenter().x, 2) + pow(this->getCenter().y - entity.getCenter().y, 2)));
+}
