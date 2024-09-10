@@ -13,8 +13,8 @@ void Weapon::initVariables()
 }
 
 
-Weapon::Weapon(unsigned value, std::string texture_file)
-	: Item(value)
+Weapon::Weapon(unsigned level, unsigned value, std::string texture_file)
+	: Item(level, value)
 {
 	initVariables();
 
@@ -26,8 +26,8 @@ Weapon::Weapon(unsigned value, std::string texture_file)
 	weaponSprite.setTexture(weaponTexture);
 }
 
-Weapon::Weapon(unsigned damage_min, unsigned damage_max, unsigned range, unsigned value, std::string texture_file)
-	: Item(value)
+Weapon::Weapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range, unsigned value, std::string texture_file)
+	: Item(level, value)
 {
 	initVariables();
 	this->damageMin = damage_min;

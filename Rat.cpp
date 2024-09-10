@@ -34,6 +34,8 @@ Rat::Rat(sf::Texture& texture_sheet, float x, float y)
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
 
+	this->generateAttributes(this->attributeComponent->level);
+
 	this->setPosition(x, y);
 	this->initAnimations();
 }

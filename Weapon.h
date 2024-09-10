@@ -21,9 +21,9 @@ protected:
     sf::Int32 attackTimerMax;
 
 public:
-    Weapon(unsigned value, std::string texture_file);
+    Weapon(unsigned level, unsigned value, std::string texture_file);
 
-    Weapon(unsigned damage_min, unsigned damage_max, unsigned range,
+    Weapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
         unsigned value, std::string texture_file);
 
     virtual ~Weapon();
@@ -36,9 +36,9 @@ public:
     const bool getAttackTimer();
 
     // Function
-
-
     virtual Weapon* clone() = 0;
+
+    virtual void generate(const unsigned levelMax, const unsigned levelMin) = 0;
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center) = 0;
     virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL) = 0;
 };

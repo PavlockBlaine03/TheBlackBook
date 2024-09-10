@@ -19,7 +19,7 @@ void TextTagSystem::initTagTemplates()
 {
 	this->tagTemplates[TagTypes::DEFAULT_TAG] = new TextTag(this->font, "", 400.f, 400.f, 0.f, -1.f, sf::Color::White, 40, 100.f, 125.f);
 	this->tagTemplates[TagTypes::EXPERIENCE_TAG] = new TextTag(this->font, "", 400.f, 400.f, 0.5f, -1.f, sf::Color::Cyan, 50, 125.f, 160.f);
-	this->tagTemplates[TagTypes::NEGATIVE_TAG] = new TextTag(this->font, "", 400.f, 400.f, 0.f, 1.f, sf::Color(255, 20, 20), 40, 90.f, 120.f);
+	this->tagTemplates[TagTypes::NEGATIVE_TAG] = new TextTag(this->font, "", 400.f, 400.f, 0.f, 1.f, sf::Color(255, 20, 20), 30, 90.f, 120.f);
 }
 
 TextTagSystem::TextTagSystem(std::string font_file)
@@ -44,23 +44,29 @@ TextTagSystem::~TextTagSystem()
 	}
 }
 
-void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const std::string str)
-{
-	this->tags.push_back(new TextTag(this->tagTemplates[tag_type], pos_x, pos_y, str));
-}
-
-void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const int i)
+void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const std::string str, 
+	const std::string pre_fix, const std::string post_fix)
 {
 	std::stringstream ss;
-	ss << i;
+	ss << pre_fix << " " << str << " " << post_fix;
 
 	this->tags.push_back(new TextTag(this->tagTemplates[tag_type], pos_x, pos_y, ss.str()));
 }
 
-void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const float f)
+void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const int i, 
+	const std::string pre_fix, const std::string post_fix)
 {
 	std::stringstream ss;
-	ss << f;
+	ss << pre_fix << " " << i << " " << post_fix;
+
+	this->tags.push_back(new TextTag(this->tagTemplates[tag_type], pos_x, pos_y, ss.str()));
+}
+
+void TextTagSystem::addTextTag(const unsigned tag_type, const float pos_x, const float pos_y, const float f, 
+	const std::string pre_fix, const std::string post_fix)
+{
+	std::stringstream ss;
+	ss << pre_fix << " " << f << " " << post_fix;
 
 	this->tags.push_back(new TextTag(this->tagTemplates[tag_type], pos_x, pos_y, ss.str()));
 }

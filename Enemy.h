@@ -27,6 +27,7 @@ public:
     const unsigned& getGainExp() const;
 
     // Functions
+    virtual void generateAttributes(const unsigned level);
     virtual void loseHP(const int hp);
     virtual  const bool isDead() const; 
     virtual const AttributeComponent* getAttributeComponent() const;

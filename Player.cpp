@@ -4,7 +4,8 @@
 void Player::initVariables()
 {
 	this->mainAttack = false;
-	this->sword = new Sword(2, 5, 50 , 20, this->textureManager->getTextures().at("SWORD"));
+	this->sword = new Sword(1, 2, 5, 50 , 20, this->textureManager->getTextures().at("SWORD"));
+	this->sword->generate(3, 1);
 }
 
 void Player::initAnimations()

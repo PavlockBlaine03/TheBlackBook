@@ -250,9 +250,11 @@ void GameState::updateCombatAndEnemies(const float& dt)
 			this->textTagSystem->addTextTag(
 				TagTypes::EXPERIENCE_TAG, 
 				this->player->getCenter().x,this->player->getCenter().y, 
-				static_cast<int>(enemy->getGainExp())
+				static_cast<int>(enemy->getGainExp()),
+				"+", "exp"
 			);
 
+			delete this->activeEnemies[index];
 			this->activeEnemies.erase(
 				this->activeEnemies.begin() + index
 			);
@@ -266,18 +268,18 @@ void GameState::updateCombatAndEnemies(const float& dt)
 
 void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
+		&& enemy->getGlobalBounds().contains(this->mousePosView) 
+		&& enemy->getDistance(*this->player) < this->player->getSword()->getRange())
 	{
-		if (this->player->getSword()->getAttackTimer()
-			&& enemy->getGlobalBounds().contains(this->mousePosView) &&
-			enemy->getDistance(*this->player) < this->player->getSword()->getRange())
+		if (this->player->getSword()->getAttackTimer())
 		{
 			int dmg = static_cast<int>(this->player->getSword()->getDamage());
 
 			this->textTagSystem->addTextTag(
 				TagTypes::NEGATIVE_TAG, enemy->getCenter().x,
 				enemy->getCenter().y,
-				dmg
+				dmg, "-", "hp"
 			);
 
 			enemy->loseHP(dmg);
