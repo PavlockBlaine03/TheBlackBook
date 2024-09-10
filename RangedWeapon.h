@@ -11,7 +11,8 @@ protected:
 
 
 public:
-    RangedWeapon(unsigned value, std::string texture_file);
+    RangedWeapon(unsigned damage_min, unsigned damage_max, unsigned range, 
+        unsigned value, std::string texture_file);
     virtual ~RangedWeapon();
 
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center) = 0;

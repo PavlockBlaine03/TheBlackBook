@@ -10,7 +10,8 @@ private:
 
 
 public:
-    Bow(unsigned value, std::string texture_file);
+    Bow(unsigned damage_min, unsigned damage_max, unsigned range, 
+        unsigned value, std::string texture_file);
     virtual ~Bow();
 
     virtual Bow* clone();

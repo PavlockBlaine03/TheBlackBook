@@ -21,6 +21,11 @@ void GameState::initDeferredRender()
 
 }
 
+void GameState::initTextureManager()
+{
+	this->textureManager = new TextureManager();
+}
+
 void GameState::initView()
 {
 	this->view.setSize(
@@ -74,14 +79,19 @@ void GameState::initEnemySystem()
 	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
 }
 
+void GameState::initTextTagSystem()
+{
+	this->textTagSystem = new TextTagSystem("C:/VisualCodeProjects/TheBlackBook/fonts/Digital.TTF");
+}
+
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile(this->textureManager.getTextures().at("PLAYER")))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile(this->textureManager->getTextures().at("PLAYER")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
-	if (!this->textures["RAT1_SHEET"].loadFromFile(this->textureManager.getTextures().at("RAT1")))
+	if (!this->textures["RAT1_SHEET"].loadFromFile(this->textureManager->getTextures().at("RAT1")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
 		exit(EXIT_FAILURE);
@@ -107,7 +117,7 @@ void GameState::initShaders()
 
 void GameState::initPlayers()
 {
-	this->player = new Player(this->textures["PLAYER_SHEET"], &this->textureManager, 400.f, 200.f);
+	this->player = new Player(this->textures["PLAYER_SHEET"], this->textureManager, 400.f, 200.f);
 }
 
 void GameState::initPlayerGUI()
@@ -120,6 +130,8 @@ GameState::GameState(StateData* state_data, sf::Music* menu_music)
 {
 	this->menuMusic = menu_music;
 	this->initDeferredRender();
+	this->initTextureManager();
+	this->initTextTagSystem();
 	this->initView();
 	this->initKeybinds();
 	this->initFonts();
@@ -144,6 +156,8 @@ GameState::~GameState()
 		delete it;
 	}
 	delete this->enemySystem;
+	delete this->textTagSystem;
+	delete this->textureManager;
 }
 
 void GameState::restartMenuMusic()
@@ -218,7 +232,7 @@ void GameState::updatePlayer(const float& dt)
 
 void GameState::updateCombatAndEnemies(const float& dt)
 {
-	int index = 0;
+	unsigned index = 0;
 	for (auto* enemy : activeEnemies) 
 	{
 		enemy->update(dt, mousePosView);
@@ -229,9 +243,20 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		// Dangerous!!! Delete later
 		if (enemy->isDead())
 		{
-			this->player->gainEXP(enemy->getGainExp());
+			this->player->gainEXP(
+				enemy->getGainExp()
+			);
 
-			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+			this->textTagSystem->addTextTag(
+				TagTypes::EXPERIENCE_TAG, 
+				this->player->getCenter().x,this->player->getCenter().y, 
+				static_cast<int>(enemy->getGainExp())
+			);
+
+			this->activeEnemies.erase(
+				this->activeEnemies.begin() + index
+			);
+
 			--index;
 		}
 
@@ -239,15 +264,23 @@ void GameState::updateCombatAndEnemies(const float& dt)
 	}
 }
 
-void GameState::updateCombat(Enemy* enemy, const int indexs, const float& dt)
+void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (enemy->getGlobalBounds().contains(this->mousePosView) &&
-			enemy->getDistance(*this->player) < this->player->getWeapon()->getRange())
+		if (this->player->getSword()->getAttackTimer()
+			&& enemy->getGlobalBounds().contains(this->mousePosView) &&
+			enemy->getDistance(*this->player) < this->player->getSword()->getRange())
 		{
-			enemy->loseHP(this->player->getWeapon()->getDamageMin());
-			std::cout << enemy->getAttributeComponent()->hp << std::endl;
+			int dmg = static_cast<int>(this->player->getSword()->getDamage());
+
+			this->textTagSystem->addTextTag(
+				TagTypes::NEGATIVE_TAG, enemy->getCenter().x,
+				enemy->getCenter().y,
+				dmg
+			);
+
+			enemy->loseHP(dmg);
 		}
 	}
 
@@ -272,6 +305,8 @@ void GameState::update(const float& dt)
 		this->updatePlayerGUI(dt);
 
 		this->updateCombatAndEnemies(dt);
+
+		this->textTagSystem->update(dt);
 
 	}
 	else    // Paused update
@@ -334,6 +369,8 @@ void GameState::render(sf::RenderTarget* target)
 	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), false);
 
 	this->tileMap->renderDeferred(this->renderTexture, &coreShader, player->getCenter());
+
+	this->textTagSystem->render(this->renderTexture);
 
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
 	this->playerGUI->render(this->renderTexture);

@@ -6,20 +6,33 @@ void Weapon::initVariables()
 	this->range = 50;
 	this->damageMin = 1;
 	this->damageMax = 2;
+
+	// Timer
+	this->attackTimer.restart();
+	this->attackTimerMax = 250;
 }
 
-void Weapon::initCoolDown()
-{
-	this->cooldown = 0.f;
-	this->cooldownMax = 10.f;
-	this->cooldownIteration = 1.f;
-}
 
 Weapon::Weapon(unsigned value, std::string texture_file)
 	: Item(value)
 {
 	initVariables();
-	initCoolDown();
+
+	if (!weaponTexture.loadFromFile(texture_file))
+	{
+		std::cerr << "ERROR::PLAYER.CPP::COULD_NOT_LOAD_WEAPON_TEXTURE::" << texture_file << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	weaponSprite.setTexture(weaponTexture);
+}
+
+Weapon::Weapon(unsigned damage_min, unsigned damage_max, unsigned range, unsigned value, std::string texture_file)
+	: Item(value)
+{
+	initVariables();
+	this->damageMin = damage_min;
+	this->damageMax = damage_max;
+	this->range = range;
 
 	if (!weaponTexture.loadFromFile(texture_file))
 	{
@@ -44,7 +57,22 @@ const unsigned& Weapon::getDamageMax() const
 	return this->damageMax;
 }
 
+const unsigned Weapon::getDamage() const
+{
+	return rand() % (this->damageMax - this->damageMin + 1) + (this->damageMin);
+}
+
 const unsigned& Weapon::getRange() const
 {
 	return this->range;
+}
+
+const bool Weapon::getAttackTimer()
+{
+	if (this->attackTimer.getElapsedTime().asMilliseconds() >= this->attackTimerMax)
+	{
+		this->attackTimer.restart();
+		return true;
+	}
+	return false;
 }

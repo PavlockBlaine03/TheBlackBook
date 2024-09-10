@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword(unsigned value, std::string texture_file)
-	: MeleeWeapon(value, texture_file)
+Sword::Sword(unsigned damage_min, unsigned damage_max, unsigned range, 
+	unsigned value, std::string texture_file)
+	: MeleeWeapon(damage_min, damage_max, range, value, texture_file)
 {
 	// Visual Weapon
 	weaponSprite.setOrigin

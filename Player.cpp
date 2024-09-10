@@ -4,7 +4,7 @@
 void Player::initVariables()
 {
 	this->mainAttack = false;
-	this->sword = new Sword(20, this->textureManager->getTextures().at("SWORD"));
+	this->sword = new Sword(2, 5, 50 , 20, this->textureManager->getTextures().at("SWORD"));
 }
 
 void Player::initAnimations()
@@ -42,8 +42,9 @@ Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, floa
 
 Player::~Player()
 {
-	delete sword;
-	delete inventory;
+	delete this->sword;
+	delete this->bow;
+	delete this->inventory;
 }
 
 void Player::updateAnimation(const float& dt)
@@ -60,19 +61,39 @@ void Player::updateAnimation(const float& dt)
 
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play(
+			"WALK_RIGHT",
+			dt,
+			this->movementComponent->getVelocity().y,
+			this->movementComponent->getMaxVelocity()
+		);
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play(
+			"WALK_LEFT",
+			dt,
+			this->movementComponent->getVelocity().y,
+			this->movementComponent->getMaxVelocity()
+		);
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
-		this->animationComponent->play("WALK_UP", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play(
+			"WALK_UP",
+			dt,
+			this->movementComponent->getVelocity().y,
+			this->movementComponent->getMaxVelocity()
+		);
 	}
 	else if (this->movementComponent->getState(MOVING_DOWN))
 	{
-		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play(
+			"WALK_DOWN",
+			dt, 
+			this->movementComponent->getVelocity().y, 
+			this->movementComponent->getMaxVelocity()
+		);
 	}
 
 }
@@ -82,9 +103,14 @@ AttributeComponent* Player::getAttributeComponent()
 	return attributeComponent;
 }
 
-const Weapon* Player::getWeapon() const
+Weapon* Player::getSword() const
 {
 	return this->sword;
+}
+
+Weapon* Player::getBow() const
+{
+	return this->bow;
 }
 
 void Player::loseHP(const int hp)
@@ -107,24 +133,17 @@ void Player::gainEXP(const int exp)
 	attributeComponent->gainExp(exp);
 }
 
-void Player::updateAttack()
-{
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		this->mainAttack = true;
-	}
-}
-
 void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
 {
 	this->movementComponent->update(dt);
-	this->updateAttack();
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 	this->sword->update(mos_pos_view, getCenter());
+	//this->bow->update(mos_pos_view, getCenter());
 }
 
-void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
+void Player::render(sf::RenderTarget& target, sf::Shader* shader,
+	const sf::Vector2f light_position, const bool show_hitbox)
 {
 	if (shader)
 	{
@@ -136,11 +155,13 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vect
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", light_position);
 		this->sword->render(target, shader);
+		//this->bow->render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
 		this->sword->render(target);
+		//this->bow->render(target);
 	}
 
 	if(show_hitbox)

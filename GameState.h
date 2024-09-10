@@ -4,6 +4,7 @@
 #include "PauseMenu.h"
 #include "Tilemap.h"
 #include "PlayerGUI.h"
+#include "TextTagSystem.h"
 #include "Sword.h"
 #include "Bow.h"
 
@@ -11,7 +12,9 @@ class GameState : public State
 {
 private:
 
-	TextureManager textureManager;
+	// Systems
+	TextureManager* textureManager;
+	TextTagSystem* textTagSystem;
 
 	sf::View view;
 	sf::Vector2i viewGridPosition;
@@ -35,6 +38,7 @@ private:
 
 	// init functions
 	void initDeferredRender();
+	void initTextureManager();
 	void initView();
 	void initKeybinds();
 	void initTextures();
@@ -45,6 +49,7 @@ private:
 	void initFonts();
 	void initTileMap();
 	void initEnemySystem();
+	void initTextTagSystem();
 
 public:
 	GameState(StateData* state_data, sf::Music* menu_music);

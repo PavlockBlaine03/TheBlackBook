@@ -6,6 +6,7 @@ void TextureManager::initTextures()
 	this->textures["PLAYER"] = "C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/PLAYER_SHEET2.png";
 	this->textures["RAT1"] = "C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Enemy/rat1_60x64.png";
 	this->textures["SWORD"] = "C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/sword.png";
+	this->textures["BOW"] = "C:/VisualCodeProjects/TheBlackBook/resources/images/Sprites/Player/bow.png";
 }
 
 TextureManager::TextureManager()

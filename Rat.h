@@ -13,6 +13,9 @@ private:
     // Init functions
     virtual void initVariables();
     virtual void initAnimations();
+    virtual void initGui();
+
+    sf::RectangleShape hpBar;
 
 public:
     Rat(sf::Texture& texture_sheet, float x, float y);

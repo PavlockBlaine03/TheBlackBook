@@ -17,6 +17,7 @@ private:
 	bool mainAttack;
 
 	Sword* sword;
+	Bow* bow;
 
 	// init functions
 	void initVariables();
@@ -29,14 +30,14 @@ public:
 
 	// Functions
 	AttributeComponent* getAttributeComponent();
-	const Weapon* getWeapon() const;
+	Weapon* getSword() const;
+	Weapon* getBow() const;
 
 	void loseHP(const int hp);
 	void loseEXP(const int exp);
 	void gainHP(const int hp);
 	void gainEXP(const int exp);
 
-	void updateAttack();
 	void updateAnimation(const float& dt);
 	virtual void update(const float& dt, sf::Vector2f& mos_pos_view);
 	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f light_position = sf::Vector2f(), const bool show_hitbox = false);

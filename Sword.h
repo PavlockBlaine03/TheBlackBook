@@ -10,7 +10,8 @@ private:
 
 
 public:
-    Sword(unsigned value, std::string texture_file);
+    Sword(unsigned damage_min, unsigned damage_max, unsigned range, 
+        unsigned value, std::string texture_file);
     virtual ~Sword();
 
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center);
