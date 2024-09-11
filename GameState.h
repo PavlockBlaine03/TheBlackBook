@@ -13,6 +13,7 @@ class GameState : public State
 private:
 
 	// Systems
+	SoundManager& soundManager;
 	TextureManager* textureManager;
 	TextTagSystem* textTagSystem;
 
@@ -36,6 +37,8 @@ private:
 	sf::Shader coreShader;
 
 	// init functions
+	void initGameMusic();
+	void initGameSound();
 	void initDeferredRender();
 	void initTextureManager();
 	void initView();
@@ -51,7 +54,7 @@ private:
 	void initTextTagSystem();
 
 public:
-	GameState(StateData* state_data);
+	GameState(StateData* state_data, SoundManager* soundManager);
 	virtual ~GameState();
 
 	// Functions

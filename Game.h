@@ -1,12 +1,14 @@
 #pragma once
 #include "MainMenuState.h"
 
+
 class MainMenuState;
 
 class Game
 {
 private:
 	// variables
+	SoundManager soundManager;
 	sf::RenderWindow *window;
 	StateData stateData;
 	sf::Event sfEvent;
@@ -22,6 +24,7 @@ private:
 
 	// init
 	void initVariables();
+	void initSoundManager();
 	void initGraphicSettings();
 	void InitStateData();
 	void initWindow();

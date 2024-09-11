@@ -146,7 +146,9 @@
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
+    <ClCompile Include="Bird.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="CharacterTab.cpp" />
     <ClCompile Include="DefaultEditorMode.cpp" />
     <ClCompile Include="EditorMode.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
+    <ClCompile Include="PlayerTabs.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Rat.cpp" />
     <ClCompile Include="RegularTile.cpp" />
@@ -183,6 +186,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Tab.cpp" />
     <ClCompile Include="TextTagSystem.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -192,7 +196,9 @@
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AttributeComponent.h" />
+    <ClInclude Include="Bird.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="CharacterTab.h" />
     <ClInclude Include="DefaultEditorMode.h" />
     <ClInclude Include="EditorMode.h" />
     <ClInclude Include="EditorModes.h" />
@@ -216,6 +222,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGUI.h" />
+    <ClInclude Include="PlayerTabs.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Rat.h" />
     <ClInclude Include="RegularTile.h" />
@@ -225,6 +232,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Tab.h" />
     <ClInclude Include="TextTagSystem.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />

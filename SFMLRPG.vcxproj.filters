@@ -100,6 +100,12 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{ceb4a8ba-0844-4518-acf6-5c9d32c6585d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI\PlayerGUITabs">
+      <UniqueIdentifier>{e6d7f171-ccaf-467f-81c5-9b6209a88d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\PlayerGUITabs">
+      <UniqueIdentifier>{97be3746-5231-47e9-beb4-ddefae0484c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +224,18 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Bird.cpp">
+      <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTabs.cpp">
+      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterTab.cpp">
+      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab.cpp">
+      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +358,18 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Bird.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTabs.h">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterTab.h">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab.h">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

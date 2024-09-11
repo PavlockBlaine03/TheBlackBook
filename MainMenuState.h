@@ -12,6 +12,7 @@ class SettingsState;
 class MainMenuState : public State
 {
 private:
+	SoundManager& soundManager;
 
 	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
@@ -28,7 +29,7 @@ private:
 	void initMenuMusic();
 
 public:
-	MainMenuState(StateData* state_data);
+	MainMenuState(StateData* state_data, SoundManager* soundManager);
 	virtual ~MainMenuState();
 
 

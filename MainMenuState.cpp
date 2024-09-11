@@ -87,11 +87,12 @@ void MainMenuState::resetGui()
 
 void MainMenuState::initMenuMusic()
 {
-	this->soundManager.loadMusic("MENU_MUSIC", "C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav");
+	this->soundManager.setMusicVolume("MENU_MUSIC", 10.f);
+	this->soundManager.playMusic("MENU_MUSIC");
 }
 
-MainMenuState::MainMenuState(StateData* state_data)
-	: State(state_data)
+MainMenuState::MainMenuState(StateData* state_data, SoundManager* soundManager)
+	: State(state_data), soundManager(*soundManager)
 {
 	this->initVariables();
 	this->initMenuMusic();
@@ -129,7 +130,7 @@ void MainMenuState::updateButtons()
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->soundManager.stopMusic("MENU_MUSIC");
-		this->states->push(new GameState(this->stateData));
+		this->states->push(new GameState(this->stateData, &this->soundManager));
 	}
 
 	// Settings
@@ -156,7 +157,6 @@ void MainMenuState::updateButtons()
 
 void MainMenuState::update(const float& dt)
 {
-	this->soundManager.playMusic("MENU_MUSIC");
 	this->updateMousePositions();
 	this->updateInput(dt);
 	this->updateButtons();

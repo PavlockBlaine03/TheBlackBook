@@ -4,12 +4,22 @@
 // Static functions
 
 // init functions
-
 void Game::initVariables()
 {
 	this->window = NULL;
 	this->dt = 0.f;
 	this->gridSize = 64.f;
+}
+
+void Game::initSoundManager()
+{
+	// Music
+	this->soundManager.loadMusic("MENU_MUSIC", "C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav");
+	this->soundManager.loadMusic("GAME_MUSIC", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/GameMusic.wav");
+
+	// Sound Effects
+	this->soundManager.loadSound("SWORD_ATTACK", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/attackSword.wav");
+	this->soundManager.loadSound("WALK", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/walk.wav");
 }
 
 void Game::initGraphicSettings()
@@ -62,12 +72,13 @@ void Game::initKeys()
 
 void Game::initStates()
 {
-	this->states.push(new MainMenuState(&this->stateData));
+	this->states.push(new MainMenuState(&this->stateData, &soundManager));
 }
 
 // Constructor/Destructor
 Game::Game()
 {
+	this->initSoundManager();
 	this->initVariables();
 	this->initGraphicSettings();
 	this->initWindow();

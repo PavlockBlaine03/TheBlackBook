@@ -1,11 +1,6 @@
-#pragma once
-#include "Player.h"
-#include "Gui.h"
+ #pragma once
 
-class Player;
-class sf::RectangleShape;
-class sf::Text;
-class sf::Font;
+#include "PlayerTabs.h"
 
 class PlayerGUI
 {
@@ -15,6 +10,7 @@ private:
 
 	sf::Font font;
 	Player* player;
+	std::unique_ptr<PlayerTabs> playerTabs;
 	
 	// Level Bar
 	std::string lvlBarString;
@@ -27,36 +23,30 @@ private:
 	// Health Bar
 	gui::ProgressBar* hpBar;
 
-	// Tabs
-
-
-	// Character Tabs
-	sf::RectangleShape characterTabBack;
-	sf::Text characterInfoText;
-
 	void initFont();
 	void initLevelBar();
 	void initHpBar();
 	void initExpBar();
-	void initTabMenu();
-	void initCharacterTab();
+	void initPlayerTabs(sf::VideoMode& vm, sf::Font& font, Player& player);
 
 public:
 	PlayerGUI(Player* player, sf::VideoMode& vm);
 	virtual ~PlayerGUI();
 
 	// Functions
+	const bool getTabsOpen() const;
+	void toggleCharacterTab();
 
+	void updatePlayerTabs();
 	void updateHpBar();
 	void updateExpBar();
 	void updateLevelBar();
-	void updateCharacterTab();
 	void update(const float& dt);
 
+	void renderPlayerTabs(sf::RenderTarget& target);
 	void renderHpbar(sf::RenderTarget& target);
 	void renderExpbar(sf::RenderTarget& target);
 	void renderLevelBar(sf::RenderTarget& target);
-	void renderCharacterTab(sf::RenderTarget& target);
 	void render(sf::RenderTarget& target);
 };
 

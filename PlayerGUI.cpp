@@ -52,32 +52,9 @@ void PlayerGUI::initExpBar()
 	);
 }
 
-void PlayerGUI::initTabMenu()
+void PlayerGUI::initPlayerTabs(sf::VideoMode& vm, sf::Font& font, Player& player)
 {
-
-}
-
-void PlayerGUI::initCharacterTab()
-{
-	// Background
-	this->characterTabBack.setFillColor(sf::Color(20, 20, 20, 200));
-
-	this->characterTabBack.setSize(
-		sf::Vector2f(
-			gui::p2pX(25.f, this->vm),
-			static_cast<float>(this->vm.height)
-		)
-	);
-
-	// Text
-	this->characterInfoText.setFont(this->font);
-	this->characterInfoText.setCharacterSize(gui::calcCharSize(this->vm, 200));
-	this->characterInfoText.setFillColor(sf::Color::White);
-	this->characterInfoText.setPosition(
-		this->characterTabBack.getPosition().x + gui::p2pX(1.f, this->vm),
-		this->characterTabBack.getPosition().y + gui::p2pY(1.f, this->vm)
-	);
-
+	this->playerTabs = std::make_unique<PlayerTabs>(vm, font, player);
 }
 
 PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
@@ -88,15 +65,28 @@ PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
 	initHpBar();
 	initExpBar();
 	initLevelBar();
-	initTabMenu();
-	initCharacterTab();
-
+	initPlayerTabs(vm, font, *player);
 }
 
 PlayerGUI::~PlayerGUI()
 {
 	delete hpBar;
 	delete expBar;
+}
+
+const bool PlayerGUI::getTabsOpen() const
+{
+	return this->playerTabs->tabsOpen();
+}
+
+void PlayerGUI::toggleCharacterTab()
+{
+	this->playerTabs->toggleCharacterTab();
+}
+
+void PlayerGUI::updatePlayerTabs()
+{
+	this->playerTabs->update();
 }
 
 // Functions
@@ -116,17 +106,17 @@ void PlayerGUI::updateLevelBar()
 	lvlBarText.setString(lvlBarString);
 }
 
-void PlayerGUI::updateCharacterTab()
-{
-	this->characterInfoText.setString("TESTING");
-}
-
 void PlayerGUI::update(const float& dt)
 {
 	updateHpBar();
 	updateExpBar();
 	updateLevelBar();
-	updateCharacterTab();
+	updatePlayerTabs();
+}
+
+void PlayerGUI::renderPlayerTabs(sf::RenderTarget& target)
+{
+	this->playerTabs->render(target);
 }
 
 void PlayerGUI::renderHpbar(sf::RenderTarget& target)
@@ -145,18 +135,10 @@ void PlayerGUI::renderLevelBar(sf::RenderTarget& target)
 	target.draw(lvlBarText);
 }
 
-void PlayerGUI::renderCharacterTab(sf::RenderTarget& target)
-{
-	target.draw(this->characterTabBack);
-	target.draw(this->characterInfoText);
-}
-
 void PlayerGUI::render(sf::RenderTarget& target)
 {
 	renderHpbar(target);
 	renderExpbar(target);
-	renderLevelBar(target);
-
-	// Tabs
-	renderCharacterTab(target);
+	renderLevelBar(target); 
+	renderPlayerTabs(target);
 }

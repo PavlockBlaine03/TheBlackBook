@@ -28,7 +28,6 @@ private:
 
 protected:
 
-	SoundManager soundManager;
 	StateData* stateData;
 	std::stack<State*>* states;
 	sf::RenderWindow* window;

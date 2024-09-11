@@ -13,14 +13,16 @@ SoundManager::~SoundManager()
 
 const bool SoundManager::loadSound(const std::string& name, const std::string file_name)
 {
-	if (!this->buffer.loadFromFile(file_name))
+	buffer = std::make_unique<sf::SoundBuffer>();
+	if (!buffer->loadFromFile(file_name))
 	{
 		std::cerr << "ERROR::SOUND_MANAGER::COULD_NOT_LOAD_SOUND_FILE " << file_name << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	this->soundBuffers[name] = buffer;
-	this->sound.setBuffer(this->buffer);
-	this->sounds[name] = sound;
+	this->soundBuffers[name] = std::move(buffer);
+	sound = std::make_unique<sf::Sound>();
+	sound->setBuffer(*soundBuffers[name]);
+	this->sounds[name] = std::move(sound);
 	return true;
 }
 
@@ -33,7 +35,6 @@ const bool SoundManager::loadMusic(const std::string& name, const std::string fi
 		exit(EXIT_FAILURE);
 	}
 	musicTracks[name] = std::move(music);
-	std::cout << "Music Loaded" << std::endl;
 	return true;
 }
 
@@ -41,7 +42,7 @@ void SoundManager::playSound(const std::string& name)
 {
 	if (sounds.find(name) != sounds.end())
 	{
-		sounds[name].play();
+		sounds[name]->play();
 	}
 	else
 	{
@@ -69,7 +70,7 @@ void SoundManager::pauseSound(const std::string& name)
 {
 	if (sounds.find(name) != sounds.end())
 	{
-		sounds[name].pause();
+		sounds[name]->pause();
 	}
 }
 
@@ -85,7 +86,7 @@ void SoundManager::stopSound(const std::string& name)
 {
 	if (sounds.find(name) != sounds.end())
 	{
-		sounds[name].stop();
+		sounds[name]->stop();
 	}
 }
 
@@ -95,5 +96,21 @@ void SoundManager::stopMusic(const std::string& name)
 	{
 		std::cout << "Music stopped" << std::endl;
 		musicTracks[name]->stop();
+	}
+}
+
+void SoundManager::setSoundVolume(const std::string& name, float volume)
+{
+	if (sounds.find(name) != sounds.end())
+	{
+		sounds[name]->setVolume(volume);
+	}
+}
+
+void SoundManager::setMusicVolume(const std::string& name, float volume)
+{
+	if (musicTracks.find(name) != musicTracks.end())
+	{
+		musicTracks[name]->setVolume(volume);
 	}
 }

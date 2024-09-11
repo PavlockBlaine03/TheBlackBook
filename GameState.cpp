@@ -2,6 +2,18 @@
 #include "GameState.h"
 
 
+void GameState::initGameMusic()
+{
+	this->soundManager.setMusicVolume("GAME_MUSIC", 1.f);
+	this->soundManager.playMusic("GAME_MUSIC");
+}
+
+void GameState::initGameSound()
+{
+	this->soundManager.setSoundVolume("SWORD_ATTACK", 12.f);
+	this->soundManager.setSoundVolume("WALK", 10.f);
+}
+
 void GameState::initDeferredRender()
 {
 	this->renderTexture.create(
@@ -96,6 +108,11 @@ void GameState::initTextures()
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
+	if (!this->textures["BIRD1_SHEET"].loadFromFile(this->textureManager->getTextures().at("RAT1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
 }
 
 void GameState::initPauseMenu()
@@ -125,9 +142,11 @@ void GameState::initPlayerGUI()
 	this->playerGUI = new PlayerGUI(this->player, stateData->gfxSettings->resolution);
 }
 
-GameState::GameState(StateData* state_data)
-	: State(state_data)
+GameState::GameState(StateData* state_data, SoundManager* soundManager)
+	: State(state_data), soundManager(*soundManager)
 {
+	this->initGameMusic();
+	this->initGameSound();
 	this->initDeferredRender();
 	this->initTextureManager();
 	this->initTextTagSystem();
@@ -164,18 +183,27 @@ void GameState::updateInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("PAUSE"))) && this->getKeytime())
 	{
 		if (!this->paused)
+		{
+			this->soundManager.pauseMusic("GAME_MUSIC");
 			this->pauseState();
+		}
 		else
+		{
+			this->soundManager.playMusic("GAME_MUSIC");
 			this->unpauseState();
+		}
 	}
 }
 
 void GameState::updateView(const float& dt)
 {
-	this->view.setCenter(
-		std::floor(this->player->getPosition().x + (static_cast<float>(mousePosWindow.x) - static_cast<float>(stateData->gfxSettings->resolution.width / 2.f)) / 10.f),
-		std::floor(this->player->getPosition().y + (static_cast<float>(mousePosWindow.y) - static_cast<float>(stateData->gfxSettings->resolution.height / 2.f)) / 10.f)
-	);
+	if (!this->playerGUI->getTabsOpen())
+	{
+		this->view.setCenter(
+			std::floor(this->player->getPosition().x + (static_cast<float>(mousePosWindow.x) - static_cast<float>(stateData->gfxSettings->resolution.width / 2.f)) / 10.f),
+			std::floor(this->player->getPosition().y + (static_cast<float>(mousePosWindow.y) - static_cast<float>(stateData->gfxSettings->resolution.height / 2.f)) / 10.f)
+		);
+	}
 
 	if (view.getSize().x <= tileMap->getMaxSizeF().x)
 	{
@@ -215,11 +243,18 @@ void GameState::updateTileMap(const float& dt)
 void GameState::updatePlayerGUI(const float& dt)
 {
 	this->playerGUI->update(dt);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_PLAYER_CHARACTER_TAB"))) && this->getKeytime())
+	{
+		this->playerGUI->toggleCharacterTab();
+	}
 }
 
 void GameState::updatePlayer(const float& dt)
 {
+	this->player->update(dt, mousePosView);
 
+	this->updatePlayerGUI(dt);
 }
 
 void GameState::updateCombatAndEnemies(const float& dt)
@@ -257,10 +292,11 @@ void GameState::updateCombatAndEnemies(const float& dt)
 
 void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) 
-		&& enemy->getGlobalBounds().contains(this->mousePosView) 
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+		&& enemy->getGlobalBounds().contains(this->mousePosView)
 		&& enemy->getDistance(*this->player) < this->player->getSword()->getRange())
 	{
+		this->soundManager.playSound("SWORD_ATTACK");
 		if (this->player->getSword()->getAttackTimer())
 		{
 			int dmg = static_cast<int>(this->player->getSword()->getDamage());
@@ -291,9 +327,7 @@ void GameState::update(const float& dt)
 
 		this->updateTileMap(dt);
 
-		this->player->update(dt, mousePosView);
-
-		this->updatePlayerGUI(dt);
+		this->updatePlayer(dt);
 
 		this->updateCombatAndEnemies(dt);
 
@@ -311,29 +345,42 @@ void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("EXIT_STATE"))
 	{
+		this->soundManager.stopMusic("GAME_MUSIC");
+		this->soundManager.playMusic("MENU_MUSIC");
 		this->endState();
-		//this->restartMenuMusic();
 	}
 }
 
 void GameState::updatePlayerInput(const float& dt)
 {
 	// update player input
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+	if (!this->playerGUI->getTabsOpen())
 	{
-		this->player->move(-1.f, 0.f, dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-	{
-		this->player->move(0.f, 1.f, dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-	{
-		this->player->move(1.f, 0.f, dt);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-	{
-		this->player->move(0.f, -1.f, dt);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+		{
+			if (this->getKeytime())
+				this->soundManager.playSound("WALK");
+
+			this->player->move(-1.f, 0.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+		{
+			if (this->getKeytime())
+				this->soundManager.playSound("WALK");
+			this->player->move(0.f, 1.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+		{
+			if (this->getKeytime())
+				this->soundManager.playSound("WALK");
+			this->player->move(1.f, 0.f, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+		{
+			if (this->getKeytime())
+				this->soundManager.playSound("WALK");
+			this->player->move(0.f, -1.f, dt);
+		}
 	}
 }
 
