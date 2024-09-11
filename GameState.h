@@ -22,7 +22,6 @@ private:
 	sf::Sprite renderSprite;
 
 	sf::Font font;
-	sf::Music* menuMusic;
 
 	std::vector<Enemy*> activeEnemies;
 
@@ -52,11 +51,10 @@ private:
 	void initTextTagSystem();
 
 public:
-	GameState(StateData* state_data, sf::Music* menu_music);
+	GameState(StateData* state_data);
 	virtual ~GameState();
 
 	// Functions
-	void restartMenuMusic();
 	void updateInput(const float& dt);
 	void updateView(const float& dt);
 	void updateTileMap(const float& dt);

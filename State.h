@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Gui.h"
 #include "GraphicSettings.h"
+#include "SoundManager.h"
 
 class Player;
 class Gui;
@@ -25,8 +26,9 @@ class State
 {
 private:
 
-
 protected:
+
+	SoundManager soundManager;
 	StateData* stateData;
 	std::stack<State*>* states;
 	sf::RenderWindow* window;

@@ -62,23 +62,6 @@ void MainMenuState::initGui()
 		sf::Color(125, 125, 125, 200), sf::Color(255, 255, 255, 255), sf::Color(70, 70, 70, 200),				// Text Colors
 		sf::Color(100, 100, 100, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));		// Button Colors
 }
-void MainMenuState::initAudio()
-{
-	if (!this->menuBuffer.loadFromFile("C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav"))
-	{
-		std::cerr << "ERROR::MAIN_MENU_STATE::INIT_AUDIO::COULD_NOT_LOAD_AUDIO_FILE" << std::endl;
-	}
-	this->menuSound.setBuffer(this->menuBuffer);
-
-	if (!this->menuMusic.openFromFile("C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav"))
-	{
-		std::cerr << "ERROR::MAIN_MENU_STATE::INIT_AUDIO::COULD_NOT_LOAD_MUSIC_FILE" << std::endl;
-	}
-
-	this->menuMusic.setLoop(true);
-	this->menuMusic.setVolume(25);
-	//this->menuMusic.play();
-}
 
 void MainMenuState::resetGui()
 {
@@ -102,32 +85,31 @@ void MainMenuState::resetGui()
 	this->initGui();
 }
 
+void MainMenuState::initMenuMusic()
+{
+	this->soundManager.loadMusic("MENU_MUSIC", "C:/VisualCodeProjects/TheBlackBook/resources/sound/menu/MenuMusic.wav");
+}
+
 MainMenuState::MainMenuState(StateData* state_data)
 	: State(state_data)
 {
 	this->initVariables();
+	this->initMenuMusic();
 	this->initFonts();
 	this->initKeybinds();
 	this->initGui();
-	this->initAudio();
 	this->resetGui();
 
 }
 
 MainMenuState::~MainMenuState()
 {
-	this->stopMusic();
 	auto it = this->buttons.begin();
 	auto end = this->buttons.end();
 	for (it; it != end; ++it)
 	{
 		delete it->second;
 	}
-}
-
-void MainMenuState::stopMusic()
-{
-	this->menuMusic.stop();
 }
 
 void MainMenuState::updateInput(const float& dt)
@@ -146,31 +128,35 @@ void MainMenuState::updateButtons()
 	// New game
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		this->stopMusic();
-		this->states->push(new GameState(this->stateData, &this->menuMusic));
+		this->soundManager.stopMusic("MENU_MUSIC");
+		this->states->push(new GameState(this->stateData));
 	}
 
 	// Settings
 	if (this->buttons["SETTINGS_STATE"]->isPressed())
 	{
+		this->soundManager.stopMusic("MENU_MUSIC");
 		this->states->push(new SettingsState(this->stateData));
 	}
 
 	// Editor
 	if (this->buttons["EDITOR_STATE"]->isPressed())
 	{
+		this->soundManager.stopMusic("MENU_MUSIC");
 		this->states->push(new EditorState(this->stateData));
 	}
 
 	// Quit game
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
+		this->soundManager.stopMusic("MENU_MUSIC");
 		this->endState();
 	}
 }
 
 void MainMenuState::update(const float& dt)
 {
+	this->soundManager.playMusic("MENU_MUSIC");
 	this->updateMousePositions();
 	this->updateInput(dt);
 	this->updateButtons();

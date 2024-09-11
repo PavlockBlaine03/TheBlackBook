@@ -125,10 +125,9 @@ void GameState::initPlayerGUI()
 	this->playerGUI = new PlayerGUI(this->player, stateData->gfxSettings->resolution);
 }
 
-GameState::GameState(StateData* state_data, sf::Music* menu_music)
+GameState::GameState(StateData* state_data)
 	: State(state_data)
 {
-	this->menuMusic = menu_music;
 	this->initDeferredRender();
 	this->initTextureManager();
 	this->initTextTagSystem();
@@ -158,13 +157,6 @@ GameState::~GameState()
 	delete this->enemySystem;
 	delete this->textTagSystem;
 	delete this->textureManager;
-}
-
-void GameState::restartMenuMusic()
-{
-	this->menuMusic->setLoop(true);
-	this->menuMusic->setVolume(25);
-	this->menuMusic->play();
 }
 
 void GameState::updateInput(const float& dt)

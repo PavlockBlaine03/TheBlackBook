@@ -216,6 +216,9 @@
     <ClCompile Include="TextTagSystem.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -333,6 +336,9 @@
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="TextTagSystem.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
       <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
