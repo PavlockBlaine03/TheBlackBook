@@ -22,7 +22,8 @@ public:
 
 
 	// Functions
-	void createEnemy(const short type, const float x_pos, const float y_pos);
+	void createEnemy(const short type, const float x_pos, const float y_pos, EnemySpawnerTile& enemy_spawner_tile);
+	void removeEnemy(const int index);
 	void update(const float& dt);
 	void render(sf::RenderTarget* target);
 

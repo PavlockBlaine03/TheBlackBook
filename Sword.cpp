@@ -30,6 +30,11 @@ void Sword::update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center
 	float deg = atan2(dy, dx) * 180.f / PI;
 
 	weaponSprite.setRotation(deg + 90.f);
+
+	if (this->attackTimer.getElapsedTime().asMilliseconds() < this->attackTimerMax)
+	{
+		this->weaponSprite.rotate(45.f);
+	}
 }
 
 void Sword::render(sf::RenderTarget& target, sf::Shader* shader)

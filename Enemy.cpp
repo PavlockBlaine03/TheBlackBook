@@ -11,7 +11,8 @@ void Enemy::initAnimations()
 
 }
 
-Enemy::Enemy()
+Enemy::Enemy(EnemySpawnerTile& enemy_spawner_tile)
+	:enemySpawnerTile(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initAnimations();
@@ -25,6 +26,11 @@ Enemy::~Enemy()
 const unsigned& Enemy::getGainExp() const
 {
 	return this->gainExp;
+}
+
+EnemySpawnerTile& Enemy::getEnemySpawnerTile()
+{
+	return this->enemySpawnerTile;
 }
 
 void Enemy::generateAttributes(const unsigned level)

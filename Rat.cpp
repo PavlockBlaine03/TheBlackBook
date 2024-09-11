@@ -23,8 +23,8 @@ void Rat::initGui()
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
 }
 
-Rat::Rat(sf::Texture& texture_sheet, float x, float y)
-	: Enemy()
+Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y)
+	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initGui();

@@ -12,6 +12,7 @@ private:
 	bool spawned;
 	int enemyType;
 	int enemyAmount;
+	int enemyCounter;
 	sf::Int32 enemyTimeToSpawn;
 	float enemyMaxDistance;
 
@@ -24,11 +25,19 @@ public:
 	virtual ~EnemySpawnerTile();
 
 
+	// Accessors
+	const bool& getSpawned() const;
+	virtual const std::string getAsString() const;
+	const int& getEnemyCounter() const;
+	const int& getEnemyAmount() const;
+
+	// Modifiers
+	void setSpawned(const bool spawned);
+
 	// Functions
 	const bool canSpawn() const;
-	const bool& getSpawned() const;
-	void setSpawned(const bool spawned);
-	virtual const std::string getAsString() const;
+	void increaseEnemyCounter();
+	void decreaseEnemyCounter();
 
 	void update();
 	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());

@@ -254,10 +254,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 				"+", "exp"
 			);
 
-			delete this->activeEnemies[index];
-			this->activeEnemies.erase(
-				this->activeEnemies.begin() + index
-			);
+			this->enemySystem->removeEnemy(index);
 
 			--index;
 		}
