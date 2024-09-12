@@ -42,8 +42,8 @@ void GameState::initView()
 {
 	this->view.setSize(
 		sf::Vector2f(
-			static_cast<float>(this->stateData->gfxSettings->resolution.width),
-			static_cast<float>(this->stateData->gfxSettings->resolution.height)
+			static_cast<float>(this->stateData->gfxSettings->resolution.width / 2),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)
 		)
 	);
 
@@ -149,13 +149,13 @@ GameState::GameState(StateData* state_data, SoundManager* soundManager)
 	this->initGameSound();
 	this->initDeferredRender();
 	this->initTextureManager();
+	this->initTextures();
+	this->initPlayers();
 	this->initTextTagSystem();
 	this->initView();
 	this->initKeybinds();
 	this->initFonts();
-	this->initTextures();
 	this->initPauseMenu();
-	this->initPlayers();
 	this->initEnemySystem();
 	this->initPlayerGUI();
 	this->initTileMap();
@@ -257,24 +257,31 @@ void GameState::updatePlayer(const float& dt)
 
 void GameState::updateCombatAndEnemies(const float& dt)
 {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->player->getWeapon()->getAttackTimer())
+	{
+		this->soundManager.playSound("SWORD_ATTACK");
+		this->player->setInitAttack(true);
+	}
+
 	unsigned index = 0;
 	for (auto* enemy : activeEnemies) 
 	{
 		enemy->update(dt, mousePosView);
 		this->tileMap->updateWorldBoundsCollision(enemy, dt);
 		this->tileMap->updateTilesCollision(enemy, dt);
+
 		this->updateCombat(enemy, index, dt);
 
 		// Dangerous!!! Delete later
 		if (enemy->isDead())
 		{
 			this->player->gainEXP(
-				enemy->getGainExp()
+				static_cast<int>(enemy->getGainExp())
 			);
 
 			this->textTagSystem->addTextTag(
 				TagTypes::EXPERIENCE_TAG, 
-				this->player->getCenter().x,this->player->getCenter().y, 
+				this->player->getCenter().x - gui::p2pX(1.f, this->stateData->gfxSettings->resolution), this->player->getCenter().y,
 				static_cast<int>(enemy->getGainExp()),
 				"+", "exp"
 			);
@@ -286,29 +293,41 @@ void GameState::updateCombatAndEnemies(const float& dt)
 
 		++index;
 	}
+	this->player->setInitAttack(false);
 }
 
 void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)
+	if (this->player->getInitAttack() 
 		&& enemy->getGlobalBounds().contains(this->mousePosView)
-		&& enemy->getDistance(*this->player) < this->player->getSword()->getRange())
+		&& enemy->getDistance(*this->player) < this->player->getWeapon()->getRange()
+		&& enemy->getDamageTimer())
 	{
-		this->soundManager.playSound("SWORD_ATTACK");
-		if (this->player->getSword()->getAttackTimer())
-		{
-			int dmg = static_cast<int>(this->player->getSword()->getDamage());
+		int dmg = static_cast<int>(this->player->getDamage());
+		this->textTagSystem->addTextTag(
+			TagTypes::DEFAULT_TAG, enemy->getCenter().x,
+			enemy->getCenter().y,
+			dmg, "", ""
+		);
 
-			this->textTagSystem->addTextTag(
-				TagTypes::NEGATIVE_TAG, enemy->getCenter().x,
-				enemy->getCenter().y,
-				dmg, "-", "hp"
-			);
-
-			enemy->loseHP(dmg);
-		}
+		enemy->loseHP(dmg);
 	}
 
+	// Check for enemy damage
+	if (enemy->getGlobalBounds().intersects(player->getGlobalBounds()) && player->getDamageTimer())
+	{
+		int dmg = enemy->getAttributeComponent()->dmgMax;
+		player->loseHP(dmg);
+		this->textTagSystem->addTextTag(TagTypes::NEGATIVE_TAG, player->getPosition().x, player->getPosition().y, dmg, "-", "hp");
+
+		// Test Death of character
+		/*if (player->getAttributeComponent()->hp <= 0)
+		{
+			this->soundManager.stopMusic("GAME_MUSIC");
+			this->soundManager.playMusic("MENU_MUSIC");
+			this->endState();
+		}*/
+	}
 }
 
 void GameState::update(const float& dt)

@@ -195,6 +195,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="VectorMath.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +246,7 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="VectorMath.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

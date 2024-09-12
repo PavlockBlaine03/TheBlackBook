@@ -210,6 +210,9 @@
     <ClCompile Include="AIRoam.cpp">
       <Filter>Header Files\AI\Options</Filter>
     </ClCompile>
+    <ClCompile Include="VectorMath.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="AIRoam.h">
       <Filter>Header Files\AI\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorMath.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

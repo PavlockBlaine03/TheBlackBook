@@ -38,7 +38,7 @@ Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(1);
+	this->createAttributeComponent(rand() % 5 + 1);
 
 	this->generateAttributes(this->attributeComponent->level);
 
@@ -78,11 +78,19 @@ void Rat::updateAnimation(const float& dt)
 	{
 		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
+
+	if (this->damageTimer.getElapsedTime().asMilliseconds() <= this->damageTimerMax)
+	{
+		this->sprite.setColor(sf::Color::Red);
+	}
+	else
+		this->sprite.setColor(sf::Color::White);
 }
 
 void Rat::update(const float& dt, sf::Vector2f& mos_pos_view)
 {
 	this->movementComponent->update(dt);
+	this->attributeComponent->update();
 
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));

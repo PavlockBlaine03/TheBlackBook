@@ -104,6 +104,16 @@ void Entity::stopVelocityY()
 		this->movementComponent->stopVelocityY();
 }
 
+const bool Entity::getDamageTimer()
+{
+	if (this->damageTimer.getElapsedTime().asMilliseconds() >= this->damageTimerMax)
+	{
+		this->damageTimer.restart();
+		return true;
+	}
+	return false;
+}
+
 const sf::Vector2f& Entity::getPosition() const
 {
 	if (this->hitboxComponent)

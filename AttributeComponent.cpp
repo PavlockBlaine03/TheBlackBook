@@ -67,12 +67,15 @@ void AttributeComponent::gainExp(const int exp)
 
 void AttributeComponent::updateStats(const bool reset)
 {
-	hpMax		= vitality * 5 + vitality + strength / 2 + intelligence / 5;
-	dmgMax		= strength * 2 + strength / 2 + intelligence / 5;
-	dmgMin		= strength * 2 + strength / 4 + intelligence / 5;
+	hpMax		= vitality * 5 + ((vitality + strength) / 2) + intelligence / 5 + (this->level * 2);
+	dmgMax		= strength * 2 + strength / 2 + intelligence / 5 + this->level + 1;
+	dmgMin		= strength * 2 + strength / 4 + intelligence / 5 + this->level;
 	accuracy	= dexterity * 4 + dexterity / 3 + intelligence / 5;
-	defense		= agility * 2 + agility / 4 + intelligence / 5;
-	luck		= intelligence * 2 + intelligence / 5;
+	defense		= agility * 2 + agility / 4 + intelligence / 5 + (this->level * 3);
+	luck		= intelligence * 2 + intelligence / 5 + (this->level * 2);
+	vitality	= vitality + ((vitality + strength) / 2);
+	strength	= strength + 1;
+	intelligence = this->level * this->level / 2;
 
 
 	if (reset)
@@ -89,6 +92,7 @@ void AttributeComponent::updateLevel()
 		exp -= expNext;
 		expNext = static_cast<int>((50 / 3) * (pow(this->level, 3) - 6 * pow(this->level, 2) + (this->level * 17) - 12));
 		++attributePoints;
+		updateStats(true);
 	}
 }
 

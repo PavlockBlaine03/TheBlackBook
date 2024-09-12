@@ -3,9 +3,11 @@
 
 void Player::initVariables()
 {
-	this->mainAttack = false;
-	this->sword = new Sword(1, 2, 5, 50 , 20, this->textureManager->getTextures().at("SWORD"));
-	this->sword->generate(3, 1);
+	this->initAttack = false;
+	this->attacking = false;
+	this->weapon = new Sword(1, 2, 5, 55 , 20, this->textureManager->getTextures().at("SWORD"));
+	this->weapon->generate(3, 1);
+	this->damageTimerMax = 1000.f;
 }
 
 void Player::initAnimations()
@@ -30,7 +32,7 @@ Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, floa
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, 12.f, 10.f, 40.f, 54.f);
-	this->createMovementComponent(200.f, 1600.f, 1000.f);
+	this->createMovementComponent(150.f, 1300.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
 	this->createSkillComponent();
@@ -43,18 +45,12 @@ Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, floa
 
 Player::~Player()
 {
-	delete this->sword;
-	delete this->bow;
+	delete this->weapon;
 	delete this->inventory;
 }
 
 void Player::updateAnimation(const float& dt)
 {
-	if (this->mainAttack)
-	{
-		
-	}
-
 	if (this->movementComponent->getState(IDLE))
 	{
 		this->animationComponent->play("IDLE", dt);
@@ -104,21 +100,16 @@ AttributeComponent* Player::getAttributeComponent()
 	return attributeComponent;
 }
 
-Weapon* Player::getSword() const
+Weapon* Player::getWeapon() const
 {
-	return this->sword;
-}
-
-Weapon* Player::getBow() const
-{
-	return this->bow;
+	return this->weapon;
 }
 
 const std::string Player::toStringCharacterTab() const
 {
 	std::stringstream ss;
 	AttributeComponent* ac = this->attributeComponent;
-
+	Weapon* w = this->weapon;
 	ss << "Level: " << ac->level << "\n"
 		<< "Exp: " << ac->exp << "\n"
 		<< "Exp next: " << ac->expNext - ac->exp << "\n"
@@ -131,10 +122,34 @@ const std::string Player::toStringCharacterTab() const
 		<< "Intelligence: " << ac->intelligence << "\n"
 		<< "Vitality: " << ac->vitality << "\n"
 		<< "Luck: " << ac->luck << "\n"
-		<< "Max HP: " << ac->hpMax << "\n"
-		<< "Damage: " << ac->dmgMax << "-" << ac->dmgMin << "\n";
+		<< "Max HP: " << ac->hpMax << "\n\n\n"
+
+		<< "Weapon Level: " << w->getLevel() << "\n"
+		<< "Weapon Value: " << w->getValue() << "\n"
+		<< "Weapon Damage Min: " << w->getDamageMin() + ac->dmgMin << "(" << ac->dmgMin << ")" << "\n"
+		<< "Weapon Damage Max: " << w->getDamageMax() + ac->dmgMax << "(" << ac->dmgMax << ")" << "\n"
+		<< "Weapon Range: " << w->getRange() << "\n"
+		<< "Weapon Type: " << w->getType() << "\n";
 
 	return ss.str();
+}
+
+const bool& Player::getInitAttack() const
+{
+	return this->initAttack;
+}
+
+const unsigned Player::getDamage() const
+{
+	return rand() % (
+		(this->attributeComponent->dmgMax + this->weapon->getDamageMax()) - 
+		(this->attributeComponent->dmgMin + this->weapon->getDamageMin() + 1)) + 
+		(this->attributeComponent->dmgMin + this->weapon->getDamageMin());
+}
+
+void Player::setInitAttack(const bool init_attack)
+{
+	this->initAttack = init_attack;
 }
 
 void Player::loseHP(const int hp)
@@ -162,8 +177,7 @@ void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
 	this->movementComponent->update(dt);
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-	this->sword->update(mos_pos_view, getCenter());
-	//this->bow->update(mos_pos_view, getCenter());
+	this->weapon->update(mos_pos_view, getCenter());
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader,
@@ -178,14 +192,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader,
 
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", light_position);
-		this->sword->render(target, shader);
-		//this->bow->render(target, shader);
+		this->weapon->render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		this->sword->render(target);
-		//this->bow->render(target);
+		this->weapon->render(target);
 	}
 
 	if(show_hitbox)

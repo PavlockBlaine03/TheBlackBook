@@ -20,6 +20,9 @@ protected:
 	AnimationComponent* animationComponent;
 	AttributeComponent* attributeComponent;
 
+	sf::Clock damageTimer;
+	sf::Int32 damageTimerMax;
+
 public:
 	Entity();
 	virtual ~Entity();
@@ -39,7 +42,7 @@ public:
 	virtual void stopVelocityX();
 	virtual void stopVelocityY();
 
-
+	virtual const bool getDamageTimer();
 	sf::Sprite getSprite() const { return sprite; }
 	void setTexture(sf::Texture& texture);
 	void setScale(sf::Vector2f& scale);

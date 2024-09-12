@@ -4,6 +4,7 @@
 void Enemy::initVariables()
 {
 	this->gainExp = 10;
+	this->damageTimerMax = 1000.f;
 }
 
 void Enemy::initAnimations()
@@ -37,7 +38,9 @@ void Enemy::generateAttributes(const unsigned level)
 {
 	if (this->attributeComponent)
 	{
-		this->gainExp = level * (rand() % 5 + 1);
+		this->attributeComponent->hpMax = this->attributeComponent->hpMax +  (level * (rand() % 3 + 1) + (level + gainExp / 3));
+		this->attributeComponent->hp = this->attributeComponent->hpMax;
+		this->gainExp = level * (rand() % 5 + level + 1);
 	}
 }
 

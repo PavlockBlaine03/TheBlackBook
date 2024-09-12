@@ -7,17 +7,17 @@
 
 class Sword;
 class Entity;
-class Player : public Entity
+class Player final : public Entity
 {
 private:
 	// variables
 	Inventory* inventory;
 	TextureManager* textureManager;
 
-	bool mainAttack;
+	bool initAttack;
+	bool attacking;
 
-	Sword* sword;
-	Bow* bow;
+	Weapon* weapon;
 
 	// init functions
 	void initVariables();
@@ -30,9 +30,12 @@ public:
 
 	// Functions
 	AttributeComponent* getAttributeComponent();
-	Weapon* getSword() const;
-	Weapon* getBow() const;
+	Weapon* getWeapon() const;
 	const std::string toStringCharacterTab() const;
+	const bool& getInitAttack() const;
+	const unsigned getDamage() const;
+
+	void setInitAttack(const bool init_attack);
 
 	void loseHP(const int hp);
 	void loseEXP(const int exp);

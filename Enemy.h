@@ -7,11 +7,10 @@
 class Enemy :
     public Entity
 {
-private:
+protected:
     // Variables
     EnemySpawnerTile& enemySpawnerTile;
     unsigned gainExp;
-
 
     // Init functions
     virtual void initVariables() = 0;
@@ -28,7 +27,7 @@ public:
     // Functions
     virtual void generateAttributes(const unsigned level);
     virtual void loseHP(const int hp);
-    virtual  const bool isDead() const; 
+    virtual const bool isDead() const; 
     virtual const AttributeComponent* getAttributeComponent() const;
 
     virtual void updateAnimation(const float& dt) = 0;
