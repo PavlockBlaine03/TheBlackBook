@@ -4,7 +4,8 @@
 void Enemy::initVariables()
 {
 	this->gainExp = 10;
-	this->damageTimerMax = 1000.f;
+	this->damageTimerMax = 500.f;
+	this->despawnTimerMax = 1000.f;
 }
 
 void Enemy::initAnimations()
@@ -34,11 +35,16 @@ EnemySpawnerTile& Enemy::getEnemySpawnerTile()
 	return this->enemySpawnerTile;
 }
 
+const bool Enemy::getDespawnTimerDone() const
+{
+	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
+}
+
 void Enemy::generateAttributes(const unsigned level)
 {
 	if (this->attributeComponent)
 	{
-		this->attributeComponent->hpMax = this->attributeComponent->hpMax +  (level * (rand() % 3 + 1) + (level + gainExp / 3));
+		this->attributeComponent->hpMax = this->attributeComponent->hpMax +  (level * (rand() % 3 + 1) + (level + gainExp / 4));
 		this->attributeComponent->hp = this->attributeComponent->hpMax;
 		this->gainExp = level * (rand() % 5 + level + 1);
 	}
@@ -70,4 +76,10 @@ const AttributeComponent* Enemy::getAttributeComponent() const
 		std::cerr << "ERROR::ENEMY::GET_ATTRIBUTE_COMPONENT::NO_ATTRIBUTE_COMPONENT" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+}
+
+void Enemy::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
+{
+	if (vec::vectorDistance(this->getPosition(), view.getCenter()) < 1250.f)
+		this->despawnTimer.restart();
 }

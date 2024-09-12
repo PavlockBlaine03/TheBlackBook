@@ -4,7 +4,7 @@
 #include "Rat.h"
 #include "Bird.h"
 
-enum EnemyTypes {RAT = 0, BIRD};
+enum EnemyTypes {BIRD = 0, RAT};
 
 class EnemySystem
 {

@@ -23,7 +23,7 @@ void Bird::initGui()
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
 }
 
-Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y)
+Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player)
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
@@ -38,6 +38,8 @@ Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 
 	this->setPosition(x, y);
 	this->initAnimations();
+
+	this->follow = new AIFollow(*this, player);
 }
 
 Bird::~Bird()
@@ -67,10 +69,20 @@ void Bird::updateAnimation(const float& dt)
 	{
 		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
+
+	if (this->damageTimer.getElapsedTime().asMilliseconds() <= this->damageTimerMax)
+	{
+		this->sprite.setColor(sf::Color::Red);
+	}
+	else
+		this->sprite.setColor(sf::Color::White);
+
 }
 
-void Bird::update(const float& dt, sf::Vector2f& mos_pos_view)
+void Bird::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
 {
+	Enemy::update(dt, mos_pos_view, view);
+
 	this->movementComponent->update(dt);
 
 	// Update Gui Test
@@ -79,6 +91,8 @@ void Bird::update(const float& dt, sf::Vector2f& mos_pos_view)
 
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
+
+	this->follow->update(dt);
 }
 
 void Bird::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)

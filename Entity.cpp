@@ -104,6 +104,50 @@ void Entity::stopVelocityY()
 		this->movementComponent->stopVelocityY();
 }
 
+MovementComponent* Entity::getMovementComponent()
+{
+	if (this->movementComponent)
+		return this->movementComponent;
+	else
+	{
+		std::cerr << "ERROR::ENTITY::NO_MOVEMENT_COMPONENT" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
+AttributeComponent* Entity::getAttributeComponent()
+{
+	if(this->attributeComponent)
+		return this->attributeComponent;
+	else
+	{
+		std::cerr << "ERROR::ENTITY::NO_ATTRIBUTE_COMPONENT" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
+AnimationComponent* Entity::getAnimationComponent()
+{
+	if(this->animationComponent)
+		return this->animationComponent;
+	else
+	{
+		std::cerr << "ERROR::ENTITY::NO_ANIMATION_COMPONENT" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
+SkillComponent* Entity::getSkillComponent()
+{
+	if(this->skillcomponent)
+		return this->skillcomponent;
+	else
+	{
+		std::cerr << "ERROR::ENTITY::NO_SKILL_COMPONENT" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
 const bool Entity::getDamageTimer()
 {
 	if (this->damageTimer.getElapsedTime().asMilliseconds() >= this->damageTimerMax)
@@ -122,11 +166,21 @@ const sf::Vector2f& Entity::getPosition() const
 	return this->sprite.getPosition();
 }
 
+const sf::Vector2f& Entity::getSpritePosition() const
+{
+	return this->sprite.getPosition();
+}
+
 const sf::Vector2f Entity::getCenter() const
 {
 	if (this->hitboxComponent)
 		return this->hitboxComponent->getPosition() + sf::Vector2f(hitboxComponent->getGlobalBounds().width / 2.f, hitboxComponent->getGlobalBounds().height / 2.f);
 
+	return this->sprite.getPosition() + sf::Vector2f(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
+}
+
+const sf::Vector2f Entity::getSpriteCenter() const
+{
 	return this->sprite.getPosition() + sf::Vector2f(sprite.getGlobalBounds().width / 2.f, sprite.getGlobalBounds().height / 2.f);
 }
 
@@ -161,4 +215,9 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
 const float Entity::getDistance(const Entity& entity) const
 {
 	return static_cast<float>(sqrt(pow(this->getCenter().x - entity.getCenter().x, 2) + pow(this->getCenter().y - entity.getCenter().y, 2)));
+}
+
+const float Entity::getSpriteDistance(const Entity& entity) const
+{
+	return static_cast<float>(sqrt(pow(this->getSpriteCenter().x - entity.getSpriteCenter().x, 2) + pow(this->getSpriteCenter().y - entity.getSpriteCenter().y, 2)));
 }

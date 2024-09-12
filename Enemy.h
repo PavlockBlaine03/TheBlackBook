@@ -11,6 +11,8 @@ protected:
     // Variables
     EnemySpawnerTile& enemySpawnerTile;
     unsigned gainExp;
+    sf::Clock despawnTimer;
+    sf::Int32 despawnTimerMax;
 
     // Init functions
     virtual void initVariables() = 0;
@@ -23,6 +25,7 @@ public:
     // Accessors
     const unsigned& getGainExp() const;
     EnemySpawnerTile& getEnemySpawnerTile();
+    const bool getDespawnTimerDone() const;
 
     // Functions
     virtual void generateAttributes(const unsigned level);
@@ -31,7 +34,7 @@ public:
     virtual const AttributeComponent* getAttributeComponent() const;
 
     virtual void updateAnimation(const float& dt) = 0;
-    virtual void update(const float& dt, sf::Vector2f& mos_pos_view) = 0;
+    virtual void update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view) = 0;
     virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f light_position = sf::Vector2f(), const bool show_hitbox = false) = 0;
 };
 

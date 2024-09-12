@@ -31,7 +31,7 @@ Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, floa
 	this->textureManager = texture_manager;
 	this->initVariables();
 
-	this->createHitboxComponent(this->sprite, 12.f, 10.f, 40.f, 54.f);
+	this->createHitboxComponent(this->sprite, 16.f, 26.f, 32.f, 38.f);
 	this->createMovementComponent(150.f, 1300.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
 	this->createAttributeComponent(1);
@@ -172,12 +172,12 @@ void Player::gainEXP(const int exp)
 	attributeComponent->gainExp(exp);
 }
 
-void Player::update(const float& dt, sf::Vector2f& mos_pos_view)
+void Player::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
 {
 	this->movementComponent->update(dt);
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-	this->weapon->update(mos_pos_view, getCenter());
+	this->weapon->update(mos_pos_view, sf::Vector2f(getSpriteCenter().x, getSpriteCenter().y + 10.f));
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader,

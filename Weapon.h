@@ -34,6 +34,7 @@ public:
     const unsigned getDamage() const;
     const unsigned& getRange() const;
     const bool getAttackTimer();
+    const sf::Sprite& getSprite() const;
 
     // Function
     virtual Weapon* clone() = 0;

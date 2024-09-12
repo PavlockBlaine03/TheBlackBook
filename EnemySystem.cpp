@@ -20,12 +20,15 @@ void EnemySystem::createEnemy(const short type, const float x_pos, const float y
 	case EnemyTypes::RAT:
 		this->activeEnemies.push_back(new Rat(enemy_spawner_tile, textures["RAT1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
+		std::cout << "BIRD SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::BIRD:
-		this->activeEnemies.push_back(new Bird(enemy_spawner_tile, textures["BIRD1_SHEET"], x_pos, y_pos));
+		this->activeEnemies.push_back(new Bird(enemy_spawner_tile, textures["BIRD1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
+		std::cout << "RAT SPAWNED" << std::endl;
+		break;
 	default:
-		std::cerr << "ERROR::ENEMY_SYSTEM::CREATE_ENEMY_FUNCTION::INVALID_TYPE";
+		std::cerr << "ERROR::ENEMY_SYSTEM::CREATE_ENEMY_FUNCTION::INVALID_TYPE" << std::endl;
 		exit(EXIT_FAILURE);
 		break;
 	}

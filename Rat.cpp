@@ -87,8 +87,10 @@ void Rat::updateAnimation(const float& dt)
 		this->sprite.setColor(sf::Color::White);
 }
 
-void Rat::update(const float& dt, sf::Vector2f& mos_pos_view)
+void Rat::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
 {
+	Enemy::update(dt, mos_pos_view, view);
+
 	this->movementComponent->update(dt);
 	this->attributeComponent->update();
 

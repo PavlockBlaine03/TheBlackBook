@@ -2,6 +2,14 @@
 #include "GameState.h"
 
 
+void GameState::initDebugText()
+{
+	this->debugText.setFont(fonts.at("FOLKER"));
+	this->debugText.setFillColor(sf::Color::Green);
+	this->debugText.setCharacterSize(15);
+	this->debugText.setPosition(20.f, this->window->getSize().y / 2.f);
+}
+
 void GameState::initGameMusic()
 {
 	this->soundManager.setMusicVolume("GAME_MUSIC", 1.f);
@@ -74,7 +82,13 @@ void GameState::initKeybinds()
 
 void GameState::initFonts()
 {
-	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Bricks.ttf"))
+	if (!this->fonts["BRICKS"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Bricks.ttf"))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
+		exit(EXIT_FAILURE);
+	}
+
+	if (!this->fonts["FOLKER"].loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/Folker.ttf"))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 		exit(EXIT_FAILURE);
@@ -108,9 +122,9 @@ void GameState::initTextures()
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
-	if (!this->textures["BIRD1_SHEET"].loadFromFile(this->textureManager->getTextures().at("RAT1")))
+	if (!this->textures["BIRD1_SHEET"].loadFromFile(this->textureManager->getTextures().at("BIRD1")))
 	{
-		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT_TEXTURE";
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BIRD_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
 }
@@ -119,7 +133,7 @@ void GameState::initPauseMenu()
 {
 	const sf::VideoMode& vm = stateData->gfxSettings->resolution;
 
-	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
+	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->fonts["BRICKS"]);
 	this->pmenu->addButton("EXIT_STATE", gui::p2pY(66.7f, vm), gui::p2pX(6.f, vm), gui::p2pY(3.5f, vm), gui::calcCharSize(vm), "Quit");
 }
 
@@ -160,6 +174,7 @@ GameState::GameState(StateData* state_data, SoundManager* soundManager)
 	this->initPlayerGUI();
 	this->initTileMap();
 	this->initShaders();
+	this->initDebugText();
 
 }
 
@@ -250,7 +265,7 @@ void GameState::updatePlayerGUI(const float& dt)
 
 void GameState::updatePlayer(const float& dt)
 {
-	this->player->update(dt, mousePosView);
+	this->player->update(dt, mousePosView, this->view);
 
 	this->updatePlayerGUI(dt);
 }
@@ -266,7 +281,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 	unsigned index = 0;
 	for (auto* enemy : activeEnemies) 
 	{
-		enemy->update(dt, mousePosView);
+		enemy->update(dt, mousePosView, this->view);
 		this->tileMap->updateWorldBoundsCollision(enemy, dt);
 		this->tileMap->updateTilesCollision(enemy, dt);
 
@@ -287,8 +302,12 @@ void GameState::updateCombatAndEnemies(const float& dt)
 			);
 
 			this->enemySystem->removeEnemy(index);
-
-			--index;
+			continue;
+		}
+		else if (enemy->getDespawnTimerDone())
+		{
+			this->enemySystem->removeEnemy(index);
+			continue;
 		}
 
 		++index;
@@ -299,8 +318,8 @@ void GameState::updateCombatAndEnemies(const float& dt)
 void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 {
 	if (this->player->getInitAttack() 
-		&& enemy->getGlobalBounds().contains(this->mousePosView)
-		&& enemy->getDistance(*this->player) < this->player->getWeapon()->getRange()
+		&& enemy->getGlobalBounds().intersects(this->player->getWeapon()->getSprite().getGlobalBounds())
+		&& enemy->getSpriteDistance(*this->player) < this->player->getWeapon()->getRange()
 		&& enemy->getDamageTimer())
 	{
 		int dmg = static_cast<int>(this->player->getDamage());
@@ -335,6 +354,7 @@ void GameState::update(const float& dt)
 	this->updateMousePositions(&this->view);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
+	this->updateDebugText(dt);
 
 	if (!this->paused)	// Unpaused update
 	{
@@ -398,6 +418,16 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 }
 
+void GameState::updateDebugText(const float& dt)
+{
+	std::stringstream ss;
+
+	ss << "Mouse Pos View: " << this->mousePosView.x << " X " << this->mousePosView.y << "\n"
+		<< "Active Enemies: " << activeEnemies.size() << "\n";
+
+	this->debugText.setString(ss.str());
+}
+
 void GameState::render(sf::RenderTarget* target)
 {
 	if (!target)
@@ -415,10 +445,10 @@ void GameState::render(sf::RenderTarget* target)
 	);
 
 	for (auto* enemy : activeEnemies) {
-		enemy->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
+		enemy->render(this->renderTexture, &this->coreShader, this->player->getCenter(), true);
 	}
 
-	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), false);
+	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), true);
 
 	this->tileMap->renderDeferred(this->renderTexture, &coreShader, player->getCenter());
 
@@ -432,6 +462,8 @@ void GameState::render(sf::RenderTarget* target)
 		this->renderTexture.setView(this->renderTexture.getDefaultView());
 		this->pmenu->render(this->renderTexture);
 	}
+
+	this->renderTexture.draw(this->debugText);
 
 	// final render
 	this->renderTexture.display();

@@ -2,14 +2,11 @@
 
 #include "Tile.h"
 
-class Tile;
-class Entity;
-class Enemy;
 class EnemySpawnerTile : public Tile
 {
 private:
 
-	bool spawned;
+	bool firstSpawn;
 	int enemyType;
 	int enemyAmount;
 	int enemyCounter;
@@ -26,16 +23,16 @@ public:
 
 
 	// Accessors
-	const bool& getSpawned() const;
 	virtual const std::string getAsString() const;
 	const int& getEnemyCounter() const;
 	const int& getEnemyAmount() const;
+	const bool getSpawnTimer();
+	const int& getEnemyType() const;
+	const float& getEnemymaxDistance() const;
 
 	// Modifiers
-	void setSpawned(const bool spawned);
 
 	// Functions
-	const bool canSpawn() const;
 	void increaseEnemyCounter();
 	void decreaseEnemyCounter();
 

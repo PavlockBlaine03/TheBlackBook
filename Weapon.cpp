@@ -76,3 +76,8 @@ const bool Weapon::getAttackTimer()
 	}
 	return false;
 }
+
+const sf::Sprite& Weapon::getSprite() const
+{
+	return this->weaponSprite;
+}

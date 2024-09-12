@@ -17,12 +17,14 @@ private:
 	TextureManager* textureManager;
 	TextTagSystem* textTagSystem;
 
+	sf::Text debugText;
+
 	sf::View view;
 	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 
-	sf::Font font;
+	std::map<std::string, sf::Font> fonts;
 
 	std::vector<Enemy*> activeEnemies;
 
@@ -37,6 +39,7 @@ private:
 	sf::Shader coreShader;
 
 	// init functions
+	void initDebugText();
 	void initGameMusic();
 	void initGameSound();
 	void initDeferredRender();
@@ -68,6 +71,7 @@ public:
 	void update(const float& dt);
 	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& dt);
+	void updateDebugText(const float& dt);
 	void render(sf::RenderTarget* target = nullptr);
 };
 
