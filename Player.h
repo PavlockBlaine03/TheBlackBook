@@ -32,6 +32,7 @@ public:
 	AttributeComponent* getAttributeComponent();
 	Weapon* getSword() const;
 	Weapon* getBow() const;
+	const std::string toStringCharacterTab() const;
 
 	void loseHP(const int hp);
 	void loseEXP(const int exp);

@@ -1,11 +1,25 @@
 #include "stdafx.h"
 #include "CharacterTab.h"
 
+void CharacterTab::initText()
+{
+	// Text
+	this->infoText.setFont(this->font);
+	this->infoText.setCharacterSize(gui::calcCharSize(this->vm, 150));
+	this->infoText.setFillColor(sf::Color(200, 200, 200, 255));
+	this->infoText.setPosition(
+		this->backTab.getPosition().x + gui::p2pX(1.f, this->vm),
+		this->backTab.getPosition().y + gui::p2pY(1.f, this->vm)
+	);
+
+	this->infoText.setString(this->player.toStringCharacterTab());
+}
+
 CharacterTab::CharacterTab(sf::VideoMode& vm, sf::Font& font, Player& player)
-	: Tab(vm, font, player, false)
+	: Tab(vm, font, player, true)
 {
 	// Background
-	this->backTab.setFillColor(sf::Color(20, 20, 20, 200));
+	this->backTab.setFillColor(sf::Color(20, 20, 20, 225));
 
 	this->backTab.setSize(
 		sf::Vector2f(
@@ -14,14 +28,7 @@ CharacterTab::CharacterTab(sf::VideoMode& vm, sf::Font& font, Player& player)
 		)
 	);
 
-	// Text
-	this->infoText.setFont(this->font);
-	this->infoText.setCharacterSize(gui::calcCharSize(this->vm, 200));
-	this->infoText.setFillColor(sf::Color::White);
-	this->infoText.setPosition(
-		this->backTab.getPosition().x + gui::p2pX(1.f, this->vm),
-		this->backTab.getPosition().y + gui::p2pY(1.f, this->vm)
-	);
+	initText();
 }
 
 CharacterTab::~CharacterTab()
@@ -33,7 +40,7 @@ void CharacterTab::update()
 {
 	if (!this->hidden)
 	{
-		this->infoText.setString("TEST");
+		this->infoText.setString(this->player.toStringCharacterTab());
 	}
 }
 

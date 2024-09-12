@@ -144,6 +144,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="AIFollow.cpp" />
+    <ClCompile Include="AIOption.cpp" />
+    <ClCompile Include="AIRoam.cpp" />
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bird.cpp" />
@@ -171,7 +175,7 @@
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
-    <ClCompile Include="PlayerTabs.cpp" />
+    <ClCompile Include="PlayerGUITabs.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Rat.cpp" />
     <ClCompile Include="RegularTile.cpp" />
@@ -194,6 +198,10 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="AIFollow.h" />
+    <ClInclude Include="AIOption.h" />
+    <ClInclude Include="AIRoam.h" />
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bird.h" />
@@ -222,7 +230,7 @@
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGUI.h" />
-    <ClInclude Include="PlayerTabs.h" />
+    <ClInclude Include="PlayerGUITabs.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Rat.h" />
     <ClInclude Include="RegularTile.h" />

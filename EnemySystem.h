@@ -11,9 +11,10 @@ class EnemySystem
 private:
 	std::map<std::string, sf::Texture>& textures;
 	std::vector<Enemy*>& activeEnemies;
+	Entity& player;
 
 public:
-	EnemySystem(std::vector<Enemy*>& active_enemies, std::map<std::string, sf::Texture>& textures);
+	EnemySystem(std::vector<Enemy*>& active_enemies, std::map<std::string, sf::Texture>& textures, Entity& player);
 	virtual ~EnemySystem();
 
 	// Accessors

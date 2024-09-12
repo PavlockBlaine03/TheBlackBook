@@ -1,16 +1,11 @@
 #pragma once
+
 #include "HitboxComponent.h"
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
 
-
-class SkillComponent;
-class HitboxComponent;
-class MovementComponent;
-class AnimationComponent;
-class AttributeComponent;
 class Entity
 {
 private:
@@ -35,6 +30,7 @@ public:
 	void createHitboxComponent(sf::Sprite& sprite, const float offset_x, const float offset_y, const float width, const float height);
 	void createAttributeComponent(const int level);
 	void createSkillComponent();
+	void createAIComponent();
 
 	// Functions
 	virtual void setPosition(const float x, const float y);

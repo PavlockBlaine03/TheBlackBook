@@ -1,6 +1,6 @@
  #pragma once
 
-#include "PlayerTabs.h"
+#include "PlayerGUITabs.h"
 
 class PlayerGUI
 {
@@ -10,7 +10,7 @@ private:
 
 	sf::Font font;
 	Player* player;
-	std::unique_ptr<PlayerTabs> playerTabs;
+	std::unique_ptr<PlayerGUITabs> playerTabs;
 	
 	// Level Bar
 	std::string lvlBarString;

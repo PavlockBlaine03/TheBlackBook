@@ -88,7 +88,7 @@ void GameState::initTileMap()
 
 void GameState::initEnemySystem()
 {
-	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures, *this->player);
 }
 
 void GameState::initTextTagSystem()
@@ -154,9 +154,9 @@ GameState::GameState(StateData* state_data, SoundManager* soundManager)
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
-	this->initEnemySystem();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initEnemySystem();
 	this->initPlayerGUI();
 	this->initTileMap();
 	this->initShaders();
@@ -197,13 +197,11 @@ void GameState::updateInput(const float& dt)
 
 void GameState::updateView(const float& dt)
 {
-	if (!this->playerGUI->getTabsOpen())
-	{
-		this->view.setCenter(
-			std::floor(this->player->getPosition().x + (static_cast<float>(mousePosWindow.x) - static_cast<float>(stateData->gfxSettings->resolution.width / 2.f)) / 10.f),
-			std::floor(this->player->getPosition().y + (static_cast<float>(mousePosWindow.y) - static_cast<float>(stateData->gfxSettings->resolution.height / 2.f)) / 10.f)
-		);
-	}
+
+	this->view.setCenter(
+		std::floor(this->player->getPosition().x + (static_cast<float>(mousePosWindow.x) - static_cast<float>(stateData->gfxSettings->resolution.width / 2.f)) / 10.f),
+		std::floor(this->player->getPosition().y + (static_cast<float>(mousePosWindow.y) - static_cast<float>(stateData->gfxSettings->resolution.height / 2.f)) / 10.f)
+	);
 
 	if (view.getSize().x <= tileMap->getMaxSizeF().x)
 	{
@@ -354,33 +352,30 @@ void GameState::updatePauseMenuButtons()
 void GameState::updatePlayerInput(const float& dt)
 {
 	// update player input
-	if (!this->playerGUI->getTabsOpen())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
-		{
-			if (this->getKeytime())
-				this->soundManager.playSound("WALK");
+		if (this->getKeytime())
+			this->soundManager.playSound("WALK");
 
-			this->player->move(-1.f, 0.f, dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-		{
-			if (this->getKeytime())
-				this->soundManager.playSound("WALK");
-			this->player->move(0.f, 1.f, dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-		{
-			if (this->getKeytime())
-				this->soundManager.playSound("WALK");
-			this->player->move(1.f, 0.f, dt);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-		{
-			if (this->getKeytime())
-				this->soundManager.playSound("WALK");
-			this->player->move(0.f, -1.f, dt);
-		}
+		this->player->move(-1.f, 0.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+	{
+		if (this->getKeytime())
+			this->soundManager.playSound("WALK");
+		this->player->move(0.f, 1.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+	{
+		if (this->getKeytime())
+			this->soundManager.playSound("WALK");
+		this->player->move(1.f, 0.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+	{
+		if (this->getKeytime())
+			this->soundManager.playSound("WALK");
+		this->player->move(0.f, -1.f, dt);
 	}
 }
 

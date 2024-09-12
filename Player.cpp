@@ -15,7 +15,7 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("WALK_LEFT", 11.f, 4, 1, 7, 1, 64, 64);
 	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 8, 1, 11, 1, 64, 64);
 	this->animationComponent->addAnimation("WALK_UP", 11.f, 12, 1, 15, 1, 64, 64);
-	this->animationComponent->addAnimation("ATTACK", 6.f, 0, 2, 3, 2, 64, 64);
+	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
 }
 
 void Player::initInventory()
@@ -112,6 +112,29 @@ Weapon* Player::getSword() const
 Weapon* Player::getBow() const
 {
 	return this->bow;
+}
+
+const std::string Player::toStringCharacterTab() const
+{
+	std::stringstream ss;
+	AttributeComponent* ac = this->attributeComponent;
+
+	ss << "Level: " << ac->level << "\n"
+		<< "Exp: " << ac->exp << "\n"
+		<< "Exp next: " << ac->expNext - ac->exp << "\n"
+		<< "Attribute Points: " << ac->attributePoints << "\n"
+		<< "Accuracy: " << ac->accuracy << "\n"
+		<< "Agility: " << ac->agility << "\n"
+		<< "Dexterity: " << ac->dexterity << "\n"
+		<< "Defense: " << ac->defense << "\n"
+		<< "Strength: " << ac->strength << "\n"
+		<< "Intelligence: " << ac->intelligence << "\n"
+		<< "Vitality: " << ac->vitality << "\n"
+		<< "Luck: " << ac->luck << "\n"
+		<< "Max HP: " << ac->hpMax << "\n"
+		<< "Damage: " << ac->dmgMax << "-" << ac->dmgMin << "\n";
+
+	return ss.str();
 }
 
 void Player::loseHP(const int hp)

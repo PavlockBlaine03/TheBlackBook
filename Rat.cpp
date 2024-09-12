@@ -11,9 +11,9 @@ void Rat::initAnimations()
 	this->animationComponent->addAnimation("IDLE", 25.f, 0, 0, 3, 0, 60, 64);
 	this->animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 1, 3, 1, 60, 64);
 	this->animationComponent->addAnimation("WALK_LEFT", 11.f, 0, 2, 3, 2, 60, 64);
-	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 8, 1, 11, 1, 64, 64);
+	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 0, 3, 3, 3, 60, 64);
 	this->animationComponent->addAnimation("WALK_UP", 11.f, 0, 4, 3, 4, 60, 64);
-	this->animationComponent->addAnimation("ATTACK", 6.f, 0, 2, 3, 2, 60, 64);
+	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 60, 64);
 }
 
 void Rat::initGui()
@@ -23,11 +23,17 @@ void Rat::initGui()
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
 }
 
-Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y)
+void Rat::initAI()
+{
+
+}
+
+Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player)
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initGui();
+	this->initAI();
 
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
@@ -38,11 +44,15 @@ Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 
 	this->setPosition(x, y);
 	this->initAnimations();
+
+	this->follow = new AIFollow(*this, player);
+	this->roam = new AIRoam(*this, player);
 }
 
 Rat::~Rat()
 {
-
+	delete this->follow;
+	delete this->roam;
 }
 
 void Rat::updateAnimation(const float& dt)
@@ -80,6 +90,9 @@ void Rat::update(const float& dt, sf::Vector2f& mos_pos_view)
 
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
+
+	this->follow->update(dt);
+	//this->roam->update(dt);
 }
 
 void Rat::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)

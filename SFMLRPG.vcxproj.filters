@@ -16,47 +16,23 @@
     <Filter Include="Header Files\States">
       <UniqueIdentifier>{e4f2a4b9-a77d-4859-a5c9-8563e257c549}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\States">
-      <UniqueIdentifier>{15257fd2-509d-478d-a2a2-38b490930fda}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{39a911f0-9eaf-4243-9da9-8a8373e52e07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine">
-      <UniqueIdentifier>{d57fe444-e763-44b1-b78f-9ed3e7c94e68}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Entities">
       <UniqueIdentifier>{7b6ca1a4-1fad-42c2-95ac-8e5244dd6cbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities">
-      <UniqueIdentifier>{e600acca-db2e-405d-b8e3-8a3e450ee0ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{18910473-8598-42ee-8c0d-d95dc7b013ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{924f4470-3887-456d-91f2-a4c1f08ae922}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{a7a2c687-3f18-48d6-a44e-513e1da13640}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GUI">
-      <UniqueIdentifier>{a620c3c9-14f9-413f-a04c-e070b2d95dd0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{a28b93b4-0b69-4d0d-b330-c3d02299e084}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Map">
-      <UniqueIdentifier>{3d3ab629-ecda-4587-8041-6a07f38b7b8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Items">
       <UniqueIdentifier>{e8bc6a2c-0ba3-4ed1-9775-5beb6dbfd13f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items">
-      <UniqueIdentifier>{2113d07d-777a-4d35-a02e-1cf7b282e14d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Map\Tile">
-      <UniqueIdentifier>{f5818a52-4533-440c-94fc-0f581f0327fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Map\Tile">
       <UniqueIdentifier>{a2ace657-3f59-4429-ad51-cb0ce1eb1645}</UniqueIdentifier>
@@ -64,35 +40,17 @@
     <Filter Include="Header Files\States\Editor Modes">
       <UniqueIdentifier>{b78e4746-e79c-4ce6-a531-c98f75deb35a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\States\Editor Modes">
-      <UniqueIdentifier>{34ed50bf-ba07-41de-b9c3-13b0be86fa78}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Entities\Enemies">
       <UniqueIdentifier>{fb833310-f9cc-4191-b506-89fb726116c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Enemies">
-      <UniqueIdentifier>{b47371dc-cfa0-40ff-871b-d97f5225ec1b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Items\Weapons">
       <UniqueIdentifier>{89b5ffef-964b-4393-bce9-0ad2927ee24b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\Weapons">
-      <UniqueIdentifier>{d2a0b608-ddea-4745-b6d6-c9ef7a8e5191}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\Weapons\MeleeWeapon">
-      <UniqueIdentifier>{f94fdbe2-869a-4687-80d1-3c27291cdf1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\Weapons\RangedWeapon">
-      <UniqueIdentifier>{dec67a17-d70c-43b6-9351-dc27c1d21a17}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Items\Weapons\MeleeWeapon">
       <UniqueIdentifier>{71372bba-bd84-42ed-9a0e-f5315a0c64d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Items\Weapons\RangedWeapon">
       <UniqueIdentifier>{b383273b-6992-4f47-82e0-4e0aecdc90ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items\Armors">
-      <UniqueIdentifier>{44f67ec4-a09f-4d5d-93ae-a611fe1b7e27}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Items\Armors">
       <UniqueIdentifier>{0672dc3e-7ef6-4e91-8750-46d5a56a91ba}</UniqueIdentifier>
@@ -103,118 +61,19 @@
     <Filter Include="Header Files\GUI\PlayerGUITabs">
       <UniqueIdentifier>{e6d7f171-ccaf-467f-81c5-9b6209a88d97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GUI\PlayerGUITabs">
-      <UniqueIdentifier>{97be3746-5231-47e9-beb4-ddefae0484c8}</UniqueIdentifier>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{6777d942-71f9-4b34-ae5a-26b54245fa94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AI\Options">
+      <UniqueIdentifier>{3f020845-e6fa-416f-9b1b-890af5cbef99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="HitboxComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseMenu.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingsState.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicSettings.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Gui.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="AttributeComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerGUI.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="MeleeWeapon.cpp">
-      <Filter>Source Files\Items\Weapons\MeleeWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Sword.cpp">
-      <Filter>Source Files\Items\Weapons\MeleeWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="RangedWeapon.cpp">
-      <Filter>Source Files\Items\Weapons\RangedWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Bow.cpp">
-      <Filter>Source Files\Items\Weapons\RangedWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemySpawnerTile.cpp">
-      <Filter>Source Files\Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorMode.cpp">
-      <Filter>Source Files\States\Editor Modes</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultEditorMode.cpp">
-      <Filter>Source Files\States\Editor Modes</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyEditorMode.cpp">
-      <Filter>Source Files\States\Editor Modes</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Rat.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="RegularTile.cpp">
-      <Filter>Source Files\Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemySystem.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Source Files\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Source Files\Items\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Tools</Filter>
@@ -225,17 +84,131 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Bird.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>Header Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerTabs.cpp">
-      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
+    <ClCompile Include="AttributeComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillComponent.cpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicSettings.cpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Bird.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Rat.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Header Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="CharacterTab.cpp">
-      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGUITabs.cpp">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
     </ClCompile>
     <ClCompile Include="Tab.cpp">
-      <Filter>Source Files\GUI\PlayerGUITabs</Filter>
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOption.cpp">
+      <Filter>Header Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGUI.cpp">
+      <Filter>Header Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Header Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Header Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Header Files\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Header Files\Items\Weapons\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Header Files\Items\Weapons\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Header Files\Items\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Header Files\Items\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawnerTile.cpp">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="RegularTile.cpp">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Header Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultEditorMode.cpp">
+      <Filter>Header Files\States\Editor Modes</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorMode.cpp">
+      <Filter>Header Files\States\Editor Modes</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyEditorMode.cpp">
+      <Filter>Header Files\States\Editor Modes</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorState.cpp">
+      <Filter>Header Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Header Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Header Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsState.cpp">
+      <Filter>Header Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Header Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="AIFollow.cpp">
+      <Filter>Header Files\AI\Options</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySystem.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Header Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AIRoam.cpp">
+      <Filter>Header Files\AI\Options</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +335,7 @@
     <ClInclude Include="Bird.h">
       <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerTabs.h">
+    <ClInclude Include="PlayerGUITabs.h">
       <Filter>Header Files\GUI\PlayerGUITabs</Filter>
     </ClInclude>
     <ClInclude Include="CharacterTab.h">
@@ -371,15 +344,27 @@
     <ClInclude Include="Tab.h">
       <Filter>Header Files\GUI\PlayerGUITabs</Filter>
     </ClInclude>
+    <ClInclude Include="AIOption.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIFollow.h">
+      <Filter>Header Files\AI\Options</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AIRoam.h">
+      <Filter>Header Files\AI\Options</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config\supported_keys.ini" />
     <None Include="config\gamestate_keybinds.ini" />
     <None Include="vertex_shader.vert">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Header Files\Engine</Filter>
     </None>
     <None Include="fragment_shader.frag">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Header Files\Engine</Filter>
     </None>
   </ItemGroup>
 </Project>

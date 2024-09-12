@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "EnemySystem.h"
 
-EnemySystem::EnemySystem(std::vector<Enemy*>& active_enemies, std::map<std::string, sf::Texture>& textures)
-	: textures(textures), activeEnemies(active_enemies)
+EnemySystem::EnemySystem(std::vector<Enemy*>& active_enemies,
+	std::map<std::string, sf::Texture>& textures, Entity& player)
+	: textures(textures), activeEnemies(active_enemies), player(player)
 {
 	
 }
@@ -17,7 +18,7 @@ void EnemySystem::createEnemy(const short type, const float x_pos, const float y
 	switch (type)
 	{
 	case EnemyTypes::RAT:
-		this->activeEnemies.push_back(new Rat(enemy_spawner_tile, textures["RAT1_SHEET"], x_pos, y_pos));
+		this->activeEnemies.push_back(new Rat(enemy_spawner_tile, textures["RAT1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
 		break;
 	case EnemyTypes::BIRD:

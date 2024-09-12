@@ -54,7 +54,7 @@ void PlayerGUI::initExpBar()
 
 void PlayerGUI::initPlayerTabs(sf::VideoMode& vm, sf::Font& font, Player& player)
 {
-	this->playerTabs = std::make_unique<PlayerTabs>(vm, font, player);
+	this->playerTabs = std::make_unique<PlayerGUITabs>(vm, font, player);
 }
 
 PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
@@ -81,7 +81,7 @@ const bool PlayerGUI::getTabsOpen() const
 
 void PlayerGUI::toggleCharacterTab()
 {
-	this->playerTabs->toggleCharacterTab();
+	this->playerTabs->toggleTab(Player_Tabs::CHARACTER_TAB);
 }
 
 void PlayerGUI::updatePlayerTabs()

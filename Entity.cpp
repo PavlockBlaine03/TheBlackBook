@@ -59,6 +59,11 @@ void Entity::createSkillComponent()
 	this->skillcomponent = new SkillComponent();
 }
 
+void Entity::createAIComponent()
+{
+
+}
+
 void Entity::setPosition(const float x, const float y)
 {
 	if (this->hitboxComponent)
