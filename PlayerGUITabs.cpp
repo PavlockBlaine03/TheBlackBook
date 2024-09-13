@@ -4,6 +4,7 @@
 void PlayerGUITabs::initTabs()
 {
 	this->tabs.push_back(new CharacterTab(vm, font, player));
+	this->tabs.push_back(new InventoryTab(vm, font, player));
 }
 
 PlayerGUITabs::PlayerGUITabs(sf::VideoMode& vm, sf::Font& font, Player& player)

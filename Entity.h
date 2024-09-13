@@ -5,6 +5,7 @@
 #include "AnimationComponent.h"
 #include "AttributeComponent.h"
 #include "SkillComponent.h"
+#include "SoundManager.h"
 
 class Entity
 {

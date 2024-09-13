@@ -79,9 +79,9 @@ const bool PlayerGUI::getTabsOpen() const
 	return this->playerTabs->tabsOpen();
 }
 
-void PlayerGUI::toggleCharacterTab()
+void PlayerGUI::toggleCharacterTab(const short type)
 {
-	this->playerTabs->toggleTab(Player_Tabs::CHARACTER_TAB);
+	this->playerTabs->toggleTab(type);
 }
 
 void PlayerGUI::updatePlayerTabs()

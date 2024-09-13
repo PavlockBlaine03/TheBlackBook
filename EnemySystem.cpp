@@ -27,6 +27,21 @@ void EnemySystem::createEnemy(const short type, const float x_pos, const float y
 		enemy_spawner_tile.increaseEnemyCounter();
 		std::cout << "RAT SPAWNED" << std::endl;
 		break;
+	case EnemyTypes::SCORPION:
+		this->activeEnemies.push_back(new Scorpion(enemy_spawner_tile, textures["SCORPION1_SHEET"], x_pos, y_pos, this->player));
+		enemy_spawner_tile.increaseEnemyCounter();
+		std::cout << "SCORPION SPAWNED" << std::endl;
+		break;
+	case EnemyTypes::BLOB1:
+		this->activeEnemies.push_back(new Blob(enemy_spawner_tile, textures["BLOB1_SHEET"], x_pos, y_pos, this->player));
+		enemy_spawner_tile.increaseEnemyCounter();
+		std::cout << "BLOB SPAWNED" << std::endl;
+		break;
+	case EnemyTypes::ORC1:
+		this->activeEnemies.push_back(new Orc(enemy_spawner_tile, textures["ORC1_SHEET"], x_pos, y_pos, this->player));
+		enemy_spawner_tile.increaseEnemyCounter();
+		std::cout << "ORC SPAWNED" << std::endl;
+		break;
 	default:
 		std::cerr << "ERROR::ENEMY_SYSTEM::CREATE_ENEMY_FUNCTION::INVALID_TYPE" << std::endl;
 		exit(EXIT_FAILURE);

@@ -4,17 +4,13 @@
 #include "AIFollow.h"
 #include "AIRoam.h"
 
-class Enemy;
-
-class Rat :
+class Scorpion :
     public Enemy
 {
-private:
-
-
     // Init functions
     virtual void initVariables();
     virtual void initAnimations();
+    virtual void initAttributes();
     virtual void initGui();
     void initAI(Entity& player);
 
@@ -24,11 +20,10 @@ private:
     AIRoam* roam;
 
 public:
-    Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
-    virtual ~Rat();
+    Scorpion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
+    virtual ~Scorpion();
 
     // Functions
-
     void playDeath(SoundManager& sound_manager);
     void playHurt(SoundManager& sound_manager);
     virtual void updateAnimation(const float& dt);

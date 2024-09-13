@@ -34,6 +34,7 @@ public:
 	const std::string toStringCharacterTab() const;
 	const bool& getInitAttack() const;
 	const unsigned getDamage() const;
+	Inventory* getInventory() const;
 
 	void setInitAttack(const bool init_attack);
 

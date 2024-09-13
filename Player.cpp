@@ -5,7 +5,8 @@ void Player::initVariables()
 {
 	this->initAttack = false;
 	this->attacking = false;
-	this->weapon = new Sword(1, 2, 5, 55 , 20, this->textureManager->getTextures().at("SWORD"));
+	//this->weapon = new Bow(WeaponType::WEAPON_BOW, 1, 3, 7, 2000 , 20, this->textureManager->getTextures().at("BOW"));
+	this->weapon = new Sword(WeaponType::WEAPON_SWORD, 1, 3, 7, 65 , 20, this->textureManager->getTextures().at("SWORD"));
 	this->weapon->generate(3, 1);
 	this->damageTimerMax = 1000.f;
 }
@@ -23,6 +24,7 @@ void Player::initAnimations()
 void Player::initInventory()
 {
 	this->inventory = new Inventory(100);
+	this->inventory->add(this->weapon);
 }
 
 Player::Player(sf::Texture& texture_sheet, TextureManager* texture_manager, float x, float y)
@@ -145,6 +147,11 @@ const unsigned Player::getDamage() const
 		(this->attributeComponent->dmgMax + this->weapon->getDamageMax()) - 
 		(this->attributeComponent->dmgMin + this->weapon->getDamageMin() + 1)) + 
 		(this->attributeComponent->dmgMin + this->weapon->getDamageMin());
+}
+
+Inventory* Player::getInventory() const
+{
+	return this->inventory;
 }
 
 void Player::setInitAttack(const bool init_attack)

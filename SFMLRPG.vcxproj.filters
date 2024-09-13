@@ -213,6 +213,18 @@
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Header Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Scorpion.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Blob.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryTab.cpp">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -361,6 +373,18 @@
     </ClInclude>
     <ClInclude Include="VectorMath.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Scorpion.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Blob.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryTab.h">
+      <Filter>Header Files\GUI\PlayerGUITabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

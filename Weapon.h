@@ -2,6 +2,7 @@
 
 #include "Item.h"
 
+enum WeaponType {WEAPON_SWORD = 1, WEAPON_BOW};
 
 class Weapon :
     public Item
@@ -17,18 +18,21 @@ protected:
     unsigned damageMax;
     unsigned range;
 
+    short weaponType;
+
     sf::Clock attackTimer;
     sf::Int32 attackTimerMax;
 
 public:
     Weapon(unsigned level, unsigned value, std::string texture_file);
 
-    Weapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
+    Weapon(const short type, unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
         unsigned value, std::string texture_file);
 
     virtual ~Weapon();
 
     // Accessors
+    const short getWeaponType() const;
     const unsigned& getDamageMin() const;
     const unsigned& getDamageMax() const;
     const unsigned getDamage() const;

@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "EnemySpawnerTile.h"
 
-
 class Enemy :
     public Entity
 {
@@ -28,10 +27,12 @@ public:
     const bool getDespawnTimerDone() const;
 
     // Functions
-    virtual void generateAttributes(const unsigned level);
+
+    virtual void playDeath(SoundManager& sound_manager) = 0;
+    virtual void playHurt(SoundManager& sound_manager) = 0;
+    virtual void generateAttributes(const unsigned level, const int type);
     virtual void loseHP(const int hp);
     virtual const bool isDead() const; 
-    virtual const AttributeComponent* getAttributeComponent() const;
 
     virtual void updateAnimation(const float& dt) = 0;
     virtual void update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view) = 0;

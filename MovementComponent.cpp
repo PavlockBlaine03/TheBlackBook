@@ -170,9 +170,9 @@ void MovementComponent::stopVelocityY()
 	this->velocity.y = 0.f;
 }
 
-void MovementComponent::setAcceleration()
+void MovementComponent::setAcceleration(const float acc)
 {
-	this->acceleration = this->ogAcceleration;
+	this->acceleration = acc;
 }
 
 void MovementComponent::addAcceleration()

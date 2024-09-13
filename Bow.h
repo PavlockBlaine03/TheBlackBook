@@ -10,7 +10,7 @@ private:
 
 
 public:
-    Bow(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
+    Bow(const short type, unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
         unsigned value, std::string texture_file);
     virtual ~Bow();
 

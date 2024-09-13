@@ -3,8 +3,11 @@
 #include "EnemySpawnerTile.h"
 #include "Rat.h"
 #include "Bird.h"
+#include "Scorpion.h"
+#include "Blob.h"
+#include "Orc.h"
 
-enum EnemyTypes {BIRD = 0, RAT};
+enum EnemyTypes {RAT = 0, BIRD, SCORPION, BLOB1, ORC1};
 
 class EnemySystem
 {

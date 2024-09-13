@@ -35,7 +35,7 @@ public:
 
 	// Functions
 	const bool getTabsOpen() const;
-	void toggleCharacterTab();
+	void toggleCharacterTab(const short type);
 
 	void updatePlayerTabs();
 	void updateHpBar();

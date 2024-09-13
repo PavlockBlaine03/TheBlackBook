@@ -34,5 +34,6 @@ public:
 
 	const bool saveToFile(const std::string file_name);
 	const bool loadFromFile(const std::string file_name);
+
 };
 

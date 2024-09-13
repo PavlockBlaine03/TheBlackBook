@@ -31,7 +31,7 @@ public:
 	void stopVelocityX();
 	void stopVelocityY();
 
-	void setAcceleration();
+	void setAcceleration(const float acc);
 	void addAcceleration();
 	void setMaxVelocity(const float& max_velocity);
 

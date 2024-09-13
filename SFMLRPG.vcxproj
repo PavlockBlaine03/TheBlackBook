@@ -151,6 +151,7 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AttributeComponent.cpp" />
     <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="Blob.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="CharacterTab.cpp" />
     <ClCompile Include="DefaultEditorMode.cpp" />
@@ -167,11 +168,13 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HitboxComponent.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryTab.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGUI.cpp" />
@@ -179,6 +182,7 @@
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Rat.cpp" />
     <ClCompile Include="RegularTile.cpp" />
+    <ClCompile Include="Scorpion.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="SoundManager.cpp" />
@@ -206,6 +210,7 @@
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AttributeComponent.h" />
     <ClInclude Include="Bird.h" />
+    <ClInclude Include="Blob.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="CharacterTab.h" />
     <ClInclude Include="DefaultEditorMode.h" />
@@ -223,11 +228,13 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="HitboxComponent.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryTab.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="Orc.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGUI.h" />
@@ -235,6 +242,7 @@
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Rat.h" />
     <ClInclude Include="RegularTile.h" />
+    <ClInclude Include="Scorpion.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />
     <ClInclude Include="SoundManager.h" />
