@@ -21,7 +21,7 @@ void GameState::initGameSound()
 	this->soundManager.setSoundVolume("SWORD_ATTACK", 12.f);
 	this->soundManager.setSoundVolume("WALK", 10.f);
 	this->soundManager.setSoundVolume("DAMAGED", 12.f);
-	this->soundManager.setSoundVolume("ENEMY_DAMAGED", 12.f);
+	this->soundManager.setSoundVolume("BOW_ATTACK", 12.f);
 }
 
 void GameState::initDeferredRender()
@@ -135,6 +135,11 @@ void GameState::initTextures()
 		exit(EXIT_FAILURE);
 	}
 	if (!this->textures["BLOB1_SHEET"].loadFromFile(this->textureManager->getTextures().at("BLOB1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BLOB_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["ORC1_SHEET"].loadFromFile(this->textureManager->getTextures().at("ORC1")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BLOB_TEXTURE";
 		exit(EXIT_FAILURE);
@@ -271,7 +276,11 @@ void GameState::updatePlayerGUI(const float& dt)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_PLAYER_CHARACTER_TAB"))) && this->getKeytime())
 	{
-		this->playerGUI->toggleCharacterTab();
+		this->playerGUI->toggleCharacterTab(Player_Tabs::CHARACTER_TAB);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_PLAYER_INVENTORY_TAB"))) && this->getKeytime())
+	{
+		this->playerGUI->toggleCharacterTab(Player_Tabs::INVENTORY_TAB);
 	}
 }
 
@@ -286,7 +295,12 @@ void GameState::updateCombatAndEnemies(const float& dt)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->player->getWeapon()->getAttackTimer())
 	{
-		this->soundManager.playSound("SWORD_ATTACK");
+		if(this->player->getWeapon()->getWeaponType() == WeaponType::WEAPON_SWORD)
+			this->soundManager.playSound("SWORD_ATTACK");
+
+		if (this->player->getWeapon()->getWeaponType() == WeaponType::WEAPON_BOW)
+			this->soundManager.playSound("BOW_ATTACK");
+
 		this->player->setInitAttack(true);
 	}
 
@@ -313,6 +327,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 				"+", "exp"
 			);
 
+			enemy->playDeath(soundManager);
 			this->enemySystem->removeEnemy(index);
 			continue;
 		}
@@ -340,7 +355,8 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			enemy->getCenter().y,
 			dmg, "", ""
 		);
-		this->soundManager.playSound("ENEMY_DAMAGED");
+
+		enemy->playHurt(soundManager);
 		enemy->loseHP(dmg);
 	}
 
@@ -459,10 +475,10 @@ void GameState::render(sf::RenderTarget* target)
 	);
 
 	for (auto* enemy : activeEnemies) {
-		enemy->render(this->renderTexture, &this->coreShader, this->player->getCenter(), true);
+		enemy->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
 	}
 
-	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), true);
+	this->player->render(this->renderTexture, &coreShader, this->player->getCenter(), false);
 
 	this->tileMap->renderDeferred(this->renderTexture, &coreShader, player->getCenter());
 

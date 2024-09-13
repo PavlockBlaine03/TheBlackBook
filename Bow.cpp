@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-Bow::Bow(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
+Bow::Bow(const short type, unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
     unsigned value, std::string texture_file)
-    : RangedWeapon(level, damage_min, damage_max, range, value, texture_file)
+    : RangedWeapon(type, level, damage_min, damage_max, range, value, texture_file)
 {
 	// Visual Weapon
 	weaponSprite.setOrigin

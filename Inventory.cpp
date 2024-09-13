@@ -108,3 +108,4 @@ const bool Inventory::loadFromFile(const std::string file_name)
 {
 	return false;
 }
+

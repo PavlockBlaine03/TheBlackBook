@@ -26,10 +26,11 @@ Weapon::Weapon(unsigned level, unsigned value, std::string texture_file)
 	weaponSprite.setTexture(weaponTexture);
 }
 
-Weapon::Weapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range, unsigned value, std::string texture_file)
+Weapon::Weapon(const short type, unsigned level, unsigned damage_min, unsigned damage_max, unsigned range, unsigned value, std::string texture_file)
 	: Item(level, value)
 {
 	initVariables();
+	this->weaponType = type;
 	this->damageMin = damage_min;
 	this->damageMax = damage_max;
 	this->range = range;
@@ -45,6 +46,11 @@ Weapon::Weapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigne
 Weapon::~Weapon()
 {
 
+}
+
+const short Weapon::getWeaponType() const
+{
+	return this->weaponType;
 }
 
 const unsigned& Weapon::getDamageMin() const

@@ -47,7 +47,8 @@ void Enemy::generateAttributes(const unsigned level, const int type)
 	* 0 = RAT
 	* 1 = BIRD
 	* 2 = SCORPION
-	* 
+	* 3 = BLOB
+	* 4 = ORC
 	*/
 
 	switch (type)
@@ -78,6 +79,16 @@ void Enemy::generateAttributes(const unsigned level, const int type)
 		if (this->attributeComponent)
 		{
 			this->gainExp = level * (rand() % 4 + level + 2);
+		}
+		break;
+	case 4:
+		if (this->attributeComponent)
+		{
+			this->attributeComponent->hpMax += (level * rand() % 10 + 5) * std::pow(level, 2);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+			this->attributeComponent->dmgMax += level;
+			this->attributeComponent->dmgMin += level - 4;
+			this->gainExp = level * (rand() % 10 + pow(level + 2, 2));
 		}
 		break;
 	default:

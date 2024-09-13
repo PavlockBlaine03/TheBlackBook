@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "MeleeWeapon.h"
 
-MeleeWeapon::MeleeWeapon(unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
+MeleeWeapon::MeleeWeapon(const short type, unsigned level, unsigned damage_min, unsigned damage_max, unsigned range,
 	unsigned value, std::string texture_file)
-	: Weapon(level, damage_min, damage_max, range, value, texture_file)
+	: Weapon(type, level, damage_min, damage_max, range, value, texture_file)
 {
 	this->type = ItemTypes::IT_MELEEWEAPON;
 }

@@ -54,6 +54,19 @@ Rat::~Rat()
 	delete this->roam;
 }
 
+void Rat::playDeath(SoundManager& sound_manager)
+{
+	sound_manager.setSoundVolume("ENEMY_DEATH", 12.f);
+
+	sound_manager.playSound("ENEMY_DEATH");
+}
+
+void Rat::playHurt(SoundManager& sound_manager)
+{
+	sound_manager.setSoundVolume("ENEMY_HURT", 12.f);
+	sound_manager.playSound("ENEMY_HURT");
+}
+
 void Rat::updateAnimation(const float& dt)
 {
 	if (this->movementComponent->getState(IDLE))

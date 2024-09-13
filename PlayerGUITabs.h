@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CharacterTab.h"
+#include "InventoryTab.h"
 
 enum Player_Tabs {CHARACTER_TAB = 0, INVENTORY_TAB};
 

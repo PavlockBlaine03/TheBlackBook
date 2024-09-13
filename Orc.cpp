@@ -1,78 +1,68 @@
 #include "stdafx.h"
-#include "Scorpion.h"
+#include "Orc.h"
 
-void Scorpion::initVariables()
-{
-
-}
-
-void Scorpion::initAnimations()
-{
-												//  start_frame_x, start_frame_y , frames_x, frames_y
-	this->animationComponent->addAnimation("IDLE", 25.f, 0, 0, 2, 0, 60, 64);
-	this->animationComponent->addAnimation("WALK_DOWN", 11.f, 0, 0, 2, 0, 60, 64);
-	this->animationComponent->addAnimation("WALK_LEFT", 11.f, 0, 1, 2, 1, 60, 64);
-	this->animationComponent->addAnimation("WALK_RIGHT", 11.f, 0, 2, 2, 2, 60, 64);
-	this->animationComponent->addAnimation("WALK_UP", 11.f, 0, 3, 2, 3, 60, 64);
-	//this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 60, 64);
-}
-
-void Scorpion::initAttributes()
+void Orc::initVariables()
 {
 }
 
-void Scorpion::initGui()
+void Orc::initAnimations()
+{
+	this->animationComponent->addAnimation("IDLE", 30.f, 0, 0, 5, 0, 64, 64);
+	this->animationComponent->addAnimation("WALK_DOWN", 15.f, 0, 0, 5, 0, 64, 64);
+	this->animationComponent->addAnimation("WALK_UP", 15.f, 0, 1, 5, 1, 64, 64);
+	this->animationComponent->addAnimation("WALK_LEFT", 15.f, 0, 2, 5, 2, 64, 64);
+	this->animationComponent->addAnimation("WALK_RIGHT", 15.f, 0, 3, 5, 3, 64, 64);
+	//this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
+}
+
+void Orc::initGui()
 {
 	this->hpBar.setFillColor(sf::Color::Red);
-	this->hpBar.setSize(sf::Vector2f(75.f, 5.f));
-	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
+	this->hpBar.setSize(sf::Vector2f(100.f, 10.f));
+	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 200.f));
 }
 
-void Scorpion::initAI(Entity& player)
+void Orc::initAI(Entity& player)
 {
 	this->follow = new AIFollow(*this, player);
 	this->roam = new AIRoam(*this, player);
 }
 
-Scorpion::Scorpion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player)
+Orc::Orc(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player)
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
-	this->initGui();
 
-	this->createHitboxComponent(this->sprite, 15.f, 39.f, 30.f, 30.f);
-	this->createMovementComponent(100.f, 1400.f, 1000.f);
+	this->createHitboxComponent(this->sprite, 36.f, 36.f, 50.f, 50.f);
+	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 6 + 1);
-	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());
+	this->createAttributeComponent(rand() % 12 + 4);
 
-	this->initAttributes();
+	this->sprite.setScale(sf::Vector2f(2.f, 2.f));
+
+	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());
 
 	this->setPosition(x, y);
 	this->initAnimations();
-
+	this->initGui();
 	this->initAI(player);
 }
 
-Scorpion::~Scorpion()
+Orc::~Orc()
 {
-	delete this->follow;
-	delete this->roam;
 }
 
-void Scorpion::playDeath(SoundManager& sound_manager)
+void Orc::playDeath(SoundManager& sound_manager)
 {
-	sound_manager.setSoundVolume("ENEMY_DEATH", 12.f);
-	sound_manager.playSound("ENEMY_DEATH");
+	sound_manager.playSound("ORC_DEATH");
 }
 
-void Scorpion::playHurt(SoundManager& sound_manager)
+void Orc::playHurt(SoundManager& sound_manager)
 {
-	sound_manager.setSoundVolume("ENEMY_HURT", 12.f);
-	sound_manager.playSound("ENEMY_HURT");
+	sound_manager.playSound("ORC_HURT");
 }
 
-void Scorpion::updateAnimation(const float& dt)
+void Orc::updateAnimation(const float& dt)
 {
 	if (this->movementComponent->getState(IDLE))
 	{
@@ -98,13 +88,13 @@ void Scorpion::updateAnimation(const float& dt)
 
 	if (this->damageTimer.getElapsedTime().asMilliseconds() <= this->damageTimerMax)
 	{
-		this->sprite.setColor(sf::Color(225, 0, 255));
+		this->sprite.setColor(sf::Color::Red);
 	}
 	else
 		this->sprite.setColor(sf::Color::White);
 }
 
-void Scorpion::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
+void Orc::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& view)
 {
 	Enemy::update(dt, mos_pos_view, view);
 
@@ -113,7 +103,7 @@ void Scorpion::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::Vie
 
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
-	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
+	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x + 20.f, this->sprite.getPosition().y + 100.f));
 
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
@@ -122,7 +112,7 @@ void Scorpion::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::Vie
 	//this->roam->update(dt);
 }
 
-void Scorpion::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
+void Orc::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
 {
 	if (shader)
 	{

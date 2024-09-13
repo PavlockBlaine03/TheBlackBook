@@ -27,6 +27,9 @@ public:
     const bool getDespawnTimerDone() const;
 
     // Functions
+
+    virtual void playDeath(SoundManager& sound_manager) = 0;
+    virtual void playHurt(SoundManager& sound_manager) = 0;
     virtual void generateAttributes(const unsigned level, const int type);
     virtual void loseHP(const int hp);
     virtual const bool isDead() const; 
