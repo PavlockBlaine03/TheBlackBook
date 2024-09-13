@@ -24,4 +24,4 @@ Explore the land, hone your skills, and become powerful enough to take on the mo
 Your mission is to eliminate enemies, level up, and prepare yourself for more challenging battles. The game world becomes progressively harder, with stronger enemies and tougher world bosses awaiting your approach. Strategically manage your resources, gear up, and use your skills to overcome the enemies standing in your way.
 
 ## Development
-*The Black Book* is developed using C++ and SFML, with mechanics for gravity, jumping, and AI roaming in place to offer an engaging gameplay experience.
+*The Black Book* is developed using C++ and SFML, with mechanics for of AI roaming in place to offer an engaging gameplay experience.
