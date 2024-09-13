@@ -4,7 +4,7 @@
 #include "AIFollow.h"
 #include "AIRoam.h"
 
-class Orc :
+class OrcMinion :
     public Enemy
 {
 private:
@@ -20,8 +20,8 @@ private:
     AIRoam* roam;
 
 public:
-    Orc(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
-    virtual ~Orc();
+    OrcMinion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
+    virtual ~OrcMinion();
 
     // Functions
 

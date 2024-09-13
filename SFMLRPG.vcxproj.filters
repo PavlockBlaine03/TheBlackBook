@@ -225,6 +225,12 @@
     <ClCompile Include="Orc.cpp">
       <Filter>Header Files\Entities\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="OrcMinion.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Spider.cpp">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
@@ -384,6 +390,12 @@
       <Filter>Header Files\GUI\PlayerGUITabs</Filter>
     </ClInclude>
     <ClInclude Include="Orc.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="OrcMinion.h">
+      <Filter>Header Files\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Spider.h">
       <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

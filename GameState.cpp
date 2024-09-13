@@ -141,7 +141,22 @@ void GameState::initTextures()
 	}
 	if (!this->textures["ORC1_SHEET"].loadFromFile(this->textureManager->getTextures().at("ORC1")))
 	{
-		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BLOB_TEXTURE";
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_ORC_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["ORCMINION1_SHEET"].loadFromFile(this->textureManager->getTextures().at("ORC_MINION1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_ORC_MINION1_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["ORCMINION2_SHEET"].loadFromFile(this->textureManager->getTextures().at("ORC_MINION2")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_ORC_MINION2_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["SPIDER1_SHEET"].loadFromFile(this->textureManager->getTextures().at("SPIDER1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_SPIDER_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
 }
@@ -176,6 +191,8 @@ void GameState::initPlayerGUI()
 GameState::GameState(StateData* state_data, SoundManager* soundManager)
 	: State(state_data), soundManager(*soundManager)
 {
+	this->isGameOver = false;
+
 	this->initGameMusic();
 	this->initGameSound();
 	this->initDeferredRender();
@@ -193,6 +210,11 @@ GameState::GameState(StateData* state_data, SoundManager* soundManager)
 	this->initShaders();
 	this->initDebugText();
 
+	this->gameOverText.setString("GAME OVER");
+	this->gameOverText.setFillColor(sf::Color::Red);
+	this->gameOverText.setCharacterSize(gui::calcCharSize(stateData->gfxSettings->resolution, 50));
+	this->gameOverText.setPosition(sf::Vector2f(this->stateData->gfxSettings->resolution.width / 2.f - 200.f, this->stateData->gfxSettings->resolution.height / 2.f -100.f));
+	this->gameOverText.setFont(this->fonts.at("BRICKS"));
 }
 
 GameState::~GameState()
@@ -208,6 +230,11 @@ GameState::~GameState()
 	delete this->enemySystem;
 	delete this->textTagSystem;
 	delete this->textureManager;
+}
+
+void GameState::gameOver()
+{
+	this->isGameOver = true;
 }
 
 void GameState::updateInput(const float& dt)
@@ -370,12 +397,11 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 		this->textTagSystem->addTextTag(TagTypes::NEGATIVE_TAG, player->getPosition().x, player->getPosition().y, dmg, "-", "hp");
 
 		// Test Death of character
-		/*if (player->getAttributeComponent()->hp <= 0)
+		if (player->getAttributeComponent()->hp <= 0)
 		{
 			this->soundManager.stopMusic("GAME_MUSIC");
-			this->soundManager.playMusic("MENU_MUSIC");
-			this->endState();
-		}*/
+			this->gameOver();
+		}
 	}
 }
 
@@ -386,7 +412,7 @@ void GameState::update(const float& dt)
 	this->updateInput(dt);
 	this->updateDebugText(dt);
 
-	if (!this->paused)	// Unpaused update
+	if (!this->paused && !isGameOver)	// Unpaused update
 	{
 		this->updateView(dt);
 
@@ -406,14 +432,25 @@ void GameState::update(const float& dt)
 		this->pmenu->update(this->mousePosWindow);
 		this->updatePauseMenuButtons();
 	}
+
+	if (isGameOver)
+	{
+		this->pmenu->update(this->mousePosWindow);
+		this->updatePauseMenuButtons();
+
+		if (this->pmenu->isButtonPressed("EXIT_STATE"))
+		{
+			this->endState();
+			this->soundManager.playMusic("MENU_MUSIC");
+		}
+	}
+
 }
 
 void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("EXIT_STATE"))
 	{
-		this->soundManager.stopMusic("GAME_MUSIC");
-		this->soundManager.playMusic("MENU_MUSIC");
 		this->endState();
 	}
 }
@@ -494,6 +531,13 @@ void GameState::render(sf::RenderTarget* target)
 	}
 
 	this->renderTexture.draw(this->debugText);
+
+	if (isGameOver)
+	{
+		this->renderTexture.setView(this->renderTexture.getDefaultView());
+		this->pmenu->render(this->renderTexture);
+		this->renderTexture.draw(this->gameOverText);
+	}
 
 	// final render
 	this->renderTexture.display();

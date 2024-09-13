@@ -49,46 +49,92 @@ void Enemy::generateAttributes(const unsigned level, const int type)
 	* 2 = SCORPION
 	* 3 = BLOB
 	* 4 = ORC
+	* 5 = ORC_MINION1
+	* 6 = ORC_MINION2
+	* 7 = SPIDER
 	*/
 
 	switch (type)
 	{
-	case 0:
+	case 0:	// RAT
 		if (this->attributeComponent)
 		{
 			this->gainExp = level * (rand() % 5 + level + 1);
 		}
 		break;
-	case 1:
+	case 1:	// BIRD
 		if (this->attributeComponent)
 		{
 			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
 			this->attributeComponent->hp = this->attributeComponent->hpMax;
-			this->gainExp = level * (rand() % 7 + level + 2);
+
+			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
+			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+
+			this->gainExp = level * (rand() % 6 + 3) + level;
 		}
 		break;
-	case 2:
+	case 2:	// SCORPION
 		if (this->attributeComponent)
 		{
 			this->attributeComponent->hpMax += (level * rand() % 3 + 1) + (level + gainExp / 5);
 			this->attributeComponent->hp = this->attributeComponent->hpMax;
+
+			this->attributeComponent->dmgMax += (rand() % 3 + 2);
+			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+
 			this->gainExp = level * (rand() % 5 + level + 2);
 		}
 		break;
-	case 3:
+	case 3:	// BLOB
 		if (this->attributeComponent)
 		{
+			this->attributeComponent->hpMax += (level + rand() % 3 + 1) + (level * 2);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+
 			this->gainExp = level * (rand() % 4 + level + 2);
 		}
 		break;
-	case 4:
+	case 4:	// ORC
 		if (this->attributeComponent)
 		{
-			this->attributeComponent->hpMax += (level * rand() % 10 + 5) * std::pow(level, 2);
+			this->attributeComponent->hpMax += (level * rand() % 10 + 5) * (std::pow(level, 2) / 2);
 			this->attributeComponent->hp = this->attributeComponent->hpMax;
+
 			this->attributeComponent->dmgMax += level;
 			this->attributeComponent->dmgMin += level - 4;
-			this->gainExp = level * (rand() % 10 + pow(level + 2, 2));
+
+			this->gainExp = pow(level + 1, 2) * (rand() % level) + 6;
+		}
+		break;
+	case 5: // ORC_MINION1
+		if (this->attributeComponent)
+		{
+			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+
+			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
+			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+
+			this->gainExp = level * (rand() % 6 + 3) + level;
+		}
+		break;
+	case 6: // ORC_MINION 2
+		if (this->attributeComponent)
+		{
+			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+
+			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
+			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+
+			this->gainExp = level * (rand() % 6 + 3) + level;
+		}
+		break;
+	case 7: // SPIDER
+		if (this->attributeComponent)
+		{
+			this->gainExp = level * (rand() % 5 + 2) + level;
 		}
 		break;
 	default:

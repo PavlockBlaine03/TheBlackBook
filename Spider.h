@@ -4,10 +4,14 @@
 #include "AIFollow.h"
 #include "AIRoam.h"
 
-class Orc :
+class Enemy;
+
+class Spider :
     public Enemy
 {
 private:
+
+
     // Init functions
     virtual void initVariables();
     virtual void initAnimations();
@@ -20,8 +24,8 @@ private:
     AIRoam* roam;
 
 public:
-    Orc(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
-    virtual ~Orc();
+    Spider(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player);
+    virtual ~Spider();
 
     // Functions
 

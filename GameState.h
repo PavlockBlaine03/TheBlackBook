@@ -19,6 +19,8 @@ private:
 
 	sf::Text debugText;
 
+	sf::Text gameOverText;
+
 	sf::View view;
 	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
@@ -35,6 +37,8 @@ private:
 	PauseMenu* pmenu;
 	
 	TileMap* tileMap;
+
+	bool isGameOver;
 
 	sf::Shader coreShader;
 
@@ -61,6 +65,7 @@ public:
 	virtual ~GameState();
 
 	// Functions
+	void gameOver();
 	void updateInput(const float& dt);
 	void updateView(const float& dt);
 	void updateTileMap(const float& dt);

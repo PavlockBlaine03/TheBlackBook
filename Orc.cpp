@@ -36,7 +36,7 @@ Orc::Orc(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 	this->createHitboxComponent(this->sprite, 36.f, 36.f, 50.f, 50.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 12 + 4);
+	this->createAttributeComponent(rand() % 12 + 8);
 
 	this->sprite.setScale(sf::Vector2f(2.f, 2.f));
 

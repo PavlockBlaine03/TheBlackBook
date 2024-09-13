@@ -6,8 +6,10 @@
 #include "Scorpion.h"
 #include "Blob.h"
 #include "Orc.h"
+#include "Spider.h"
+#include "OrcMinion.h"
 
-enum EnemyTypes {RAT = 0, BIRD, SCORPION, BLOB1, ORC1};
+enum EnemyTypes {RAT = 0, BIRD, SCORPION, BLOB1, ORC1, ORC_MINION1, ORC_MINION2, SPIDER1};
 
 class EnemySystem
 {
