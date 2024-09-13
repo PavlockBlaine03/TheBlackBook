@@ -20,6 +20,8 @@ void GameState::initGameSound()
 {
 	this->soundManager.setSoundVolume("SWORD_ATTACK", 12.f);
 	this->soundManager.setSoundVolume("WALK", 10.f);
+	this->soundManager.setSoundVolume("DAMAGED", 12.f);
+	this->soundManager.setSoundVolume("ENEMY_DAMAGED", 12.f);
 }
 
 void GameState::initDeferredRender()
@@ -125,6 +127,16 @@ void GameState::initTextures()
 	if (!this->textures["BIRD1_SHEET"].loadFromFile(this->textureManager->getTextures().at("BIRD1")))
 	{
 		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BIRD_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["SCORPION1_SHEET"].loadFromFile(this->textureManager->getTextures().at("SCORPION1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_SCORPION_TEXTURE";
+		exit(EXIT_FAILURE);
+	}
+	if (!this->textures["BLOB1_SHEET"].loadFromFile(this->textureManager->getTextures().at("BLOB1")))
+	{
+		std::cerr << "ERROR::GAME_STATE::COULD_NOT_LOAD_BLOB_TEXTURE";
 		exit(EXIT_FAILURE);
 	}
 }
@@ -328,13 +340,15 @@ void GameState::updateCombat(Enemy* enemy, const int index, const float& dt)
 			enemy->getCenter().y,
 			dmg, "", ""
 		);
-
+		this->soundManager.playSound("ENEMY_DAMAGED");
 		enemy->loseHP(dmg);
 	}
 
 	// Check for enemy damage
 	if (enemy->getGlobalBounds().intersects(player->getGlobalBounds()) && player->getDamageTimer())
 	{
+		this->soundManager.playSound("DAMAGED");
+
 		int dmg = enemy->getAttributeComponent()->dmgMax;
 		player->loseHP(dmg);
 		this->textTagSystem->addTextTag(TagTypes::NEGATIVE_TAG, player->getPosition().x, player->getPosition().y, dmg, "-", "hp");

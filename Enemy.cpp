@@ -40,13 +40,50 @@ const bool Enemy::getDespawnTimerDone() const
 	return this->despawnTimer.getElapsedTime().asMilliseconds() >= this->despawnTimerMax;
 }
 
-void Enemy::generateAttributes(const unsigned level)
+void Enemy::generateAttributes(const unsigned level, const int type)
 {
-	if (this->attributeComponent)
+	/*
+	* Types:
+	* 0 = RAT
+	* 1 = BIRD
+	* 2 = SCORPION
+	* 
+	*/
+
+	switch (type)
 	{
-		this->attributeComponent->hpMax = this->attributeComponent->hpMax +  (level * (rand() % 3 + 1) + (level + gainExp / 4));
-		this->attributeComponent->hp = this->attributeComponent->hpMax;
-		this->gainExp = level * (rand() % 5 + level + 1);
+	case 0:
+		if (this->attributeComponent)
+		{
+			this->gainExp = level * (rand() % 5 + level + 1);
+		}
+		break;
+	case 1:
+		if (this->attributeComponent)
+		{
+			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+			this->gainExp = level * (rand() % 7 + level + 2);
+		}
+		break;
+	case 2:
+		if (this->attributeComponent)
+		{
+			this->attributeComponent->hpMax += (level * rand() % 3 + 1) + (level + gainExp / 5);
+			this->attributeComponent->hp = this->attributeComponent->hpMax;
+			this->gainExp = level * (rand() % 5 + level + 2);
+		}
+		break;
+	case 3:
+		if (this->attributeComponent)
+		{
+			this->gainExp = level * (rand() % 4 + level + 2);
+		}
+		break;
+	default:
+		std::cerr << "ERROR::GENERATE_ATTRIBUTES::ENEMY::WRONG_TYPE" << std::endl;
+		exit(EXIT_FAILURE);
+		break;
 	}
 }
 
@@ -63,17 +100,6 @@ const bool Enemy::isDead() const
 	else
 	{
 		std::cerr << "ERROR::ENEMY::IS_DEAD::NO_ATTRIBUTE_COMPONENT" << std::endl;
-		exit(EXIT_FAILURE);
-	}
-}
-
-const AttributeComponent* Enemy::getAttributeComponent() const
-{
-	if (this->attributeComponent)
-		return this->attributeComponent;
-	else
-	{
-		std::cerr << "ERROR::ENEMY::GET_ATTRIBUTE_COMPONENT::NO_ATTRIBUTE_COMPONENT" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 }

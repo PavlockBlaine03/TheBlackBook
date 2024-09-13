@@ -20,6 +20,8 @@ void Game::initSoundManager()
 	// Sound Effects
 	this->soundManager.loadSound("SWORD_ATTACK", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/attackSword.wav");
 	this->soundManager.loadSound("WALK", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/walk.wav");
+	this->soundManager.loadSound("DAMAGED", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/damage.wav");
+	this->soundManager.loadSound("ENEMY_DAMAGED", "C:/VisualCodeProjects/TheBlackBook/resources/sound/game/effects/enemy_damaged.wav");
 }
 
 void Game::initGraphicSettings()

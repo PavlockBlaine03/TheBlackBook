@@ -23,9 +23,10 @@ void Rat::initGui()
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
 }
 
-void Rat::initAI()
+void Rat::initAI(Entity& player)
 {
-
+	this->follow = new AIFollow(*this, player);
+	this->roam = new AIRoam(*this, player);
 }
 
 Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float x, float y, Entity& player)
@@ -33,20 +34,18 @@ Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 {
 	this->initVariables();
 	this->initGui();
-	this->initAI();
 
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 5 + 1);
+	this->createAttributeComponent(rand() % 3 + 1);
 
-	this->generateAttributes(this->attributeComponent->level);
+	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());
 
 	this->setPosition(x, y);
 	this->initAnimations();
 
-	this->follow = new AIFollow(*this, player);
-	this->roam = new AIRoam(*this, player);
+	this->initAI(player);
 }
 
 Rat::~Rat()
@@ -101,8 +100,8 @@ void Rat::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& vi
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 
-	this->follow->update(dt);
-	//this->roam->update(dt);
+	//this->follow->update(dt);
+	this->roam->update(dt);
 }
 
 void Rat::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
