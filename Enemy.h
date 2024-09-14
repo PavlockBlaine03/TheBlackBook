@@ -13,6 +13,9 @@ protected:
     sf::Clock despawnTimer;
     sf::Int32 despawnTimerMax;
 
+    sf::Font font;
+    sf::Text headerText;
+
     // Init functions
     virtual void initVariables() = 0;
     virtual void initAnimations() = 0;

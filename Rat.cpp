@@ -18,6 +18,15 @@ void Rat::initAnimations()
 
 void Rat::initGui()
 {
+	std::stringstream ss;
+	ss << this->attributeComponent->level;
+
+	this->headerText.setFont(this->font);
+	this->headerText.setString("RAT LVL: " + ss.str());
+	this->headerText.setCharacterSize(8.f);
+	this->headerText.setFillColor(sf::Color::White);
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y));
+
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(75.f, 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
@@ -33,7 +42,6 @@ Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
-	this->initGui();
 
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
@@ -44,7 +52,7 @@ Rat::Rat(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 
 	this->setPosition(x, y);
 	this->initAnimations();
-
+	this->initGui();
 	this->initAI(player);
 }
 
@@ -109,7 +117,7 @@ void Rat::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& vi
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
-
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x + 8.f, this->sprite.getPosition().y + 14.f));
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 
@@ -132,6 +140,7 @@ void Rat::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2
 	}
 
 	target.draw(this->hpBar);
+	target.draw(this->headerText);
 
 	if (show_hitbox)
 		hitboxComponent->render(target);

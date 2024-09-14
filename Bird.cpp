@@ -18,6 +18,15 @@ void Bird::initAnimations()
 
 void Bird::initGui()
 {
+	std::stringstream ss;
+	ss << this->attributeComponent->level;
+
+	this->headerText.setFont(this->font);
+	this->headerText.setString("BIRD LVL: " + ss.str());
+	this->headerText.setCharacterSize(8.f);
+	this->headerText.setFillColor(sf::Color::Yellow );
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y));
+
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(75.f, 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
@@ -27,7 +36,6 @@ Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
-	this->initGui();
 
 	this->createHitboxComponent(this->sprite, 16.f, 16.f, 30.f, 30.f);
 	this->createMovementComponent(70.f, 1600.f, 1000.f);
@@ -38,8 +46,9 @@ Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 
 	this->setPosition(x, y);
 	this->initAnimations();
-
+	this->initGui();
 	this->follow = new AIFollow(*this, player);
+	this->roam = new AIRoam(*this, player);
 }
 
 Bird::~Bird()
@@ -101,11 +110,12 @@ void Bird::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& v
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
-
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x + 8.f, this->sprite.getPosition().y - 5.f));
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 
 	this->follow->update(dt);
+	//this->roam->update(dt);
 }
 
 void Bird::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
@@ -123,6 +133,7 @@ void Bird::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector
 	}
 
 	target.draw(this->hpBar);
+	target.draw(this->headerText);
 
 	if (show_hitbox)
 		hitboxComponent->render(target);

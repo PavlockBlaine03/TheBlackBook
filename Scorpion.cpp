@@ -23,6 +23,16 @@ void Scorpion::initAttributes()
 
 void Scorpion::initGui()
 {
+
+	std::stringstream ss;
+	ss << this->attributeComponent->level;
+
+	this->headerText.setFont(this->font);
+	this->headerText.setString("SCORPION LVL: " + ss.str());
+	this->headerText.setCharacterSize(8.f);
+	this->headerText.setFillColor(sf::Color::Yellow);
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y));
+
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(75.f, 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
@@ -38,7 +48,7 @@ Scorpion::Scorpion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sh
 	: Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
-	this->initGui();
+	
 
 	this->createHitboxComponent(this->sprite, 15.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(100.f, 1400.f, 1000.f);
@@ -50,7 +60,7 @@ Scorpion::Scorpion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sh
 
 	this->setPosition(x, y);
 	this->initAnimations();
-
+	this->initGui();
 	this->initAI(player);
 }
 
@@ -114,7 +124,7 @@ void Scorpion::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::Vie
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
-
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y + 14.f));
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
 
@@ -137,6 +147,7 @@ void Scorpion::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Ve
 	}
 
 	target.draw(this->hpBar);
+	target.draw(this->headerText);
 
 	if (show_hitbox)
 		hitboxComponent->render(target);

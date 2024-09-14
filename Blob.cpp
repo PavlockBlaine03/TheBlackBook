@@ -24,6 +24,15 @@ void Blob::initAttributes()
 
 void Blob::initGui()
 {
+	std::stringstream ss;
+	ss << this->attributeComponent->level;
+
+	this->headerText.setFont(this->font);
+	this->headerText.setString("BLOB LVL: " + ss.str());
+	this->headerText.setCharacterSize(8.f);
+	this->headerText.setFillColor(sf::Color::Yellow);
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y));
+
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(75.f, 5.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
@@ -39,7 +48,7 @@ Blob::Blob(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 	: Enemy(enemy_spawner_tile), player(player)
 {
 	this->initVariables();
-	this->initGui();
+	
 	this->createHitboxComponent(this->sprite, 15.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(80.f, 1400.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
@@ -50,7 +59,7 @@ Blob::Blob(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 
 	this->setPosition(x, y);
 	this->initAnimations();
-
+	this->initGui();
 	this->initAI(player);
 }
 
@@ -113,10 +122,10 @@ void Blob::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& v
 
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
-	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 75.f));
+	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 10.f, this->sprite.getPosition().y + 75.f));
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
-
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x + 8.f, this->sprite.getPosition().y + 14.f));
 	this->follow->update(dt);
 	//this->roam->update(dt);
 }
@@ -136,6 +145,7 @@ void Blob::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector
 	}
 
 	target.draw(this->hpBar);
+	target.draw(this->headerText);
 
 	if (show_hitbox)
 		hitboxComponent->render(target);

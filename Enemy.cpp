@@ -3,6 +3,12 @@
 
 void Enemy::initVariables()
 {
+	if (!this->font.loadFromFile("C:/VisualCodeProjects/TheBlackBook/fonts/KOMIKAX_.ttf"))
+	{
+		std::cerr << "ERROR::ENEMY_HEADER_FONT::COULD_NOT_LOAD" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
 	this->gainExp = 10;
 	this->damageTimerMax = 500.f;
 	this->despawnTimerMax = 1000.f;
@@ -104,7 +110,7 @@ void Enemy::generateAttributes(const unsigned level, const int type)
 			this->attributeComponent->dmgMax += level;
 			this->attributeComponent->dmgMin += level - 4;
 
-			this->gainExp = pow(level + 1, 2) * (rand() % level) + 6;
+			this->gainExp = pow(level + 1, 2) * (rand() % level + (level * 2)) + 6;
 		}
 		break;
 	case 5: // ORC_MINION1

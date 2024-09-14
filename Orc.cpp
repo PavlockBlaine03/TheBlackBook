@@ -3,6 +3,7 @@
 
 void Orc::initVariables()
 {
+
 }
 
 void Orc::initAnimations()
@@ -17,6 +18,15 @@ void Orc::initAnimations()
 
 void Orc::initGui()
 {
+	std::stringstream ss;
+	ss << this->attributeComponent->level;
+
+	this->headerText.setFont(this->font);
+	this->headerText.setString("ORC LVL: " + ss.str());
+	this->headerText.setCharacterSize(12.f);
+	this->headerText.setFillColor(sf::Color::Red);
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y));
+
 	this->hpBar.setFillColor(sf::Color::Red);
 	this->hpBar.setSize(sf::Vector2f(100.f, 10.f));
 	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x - 5.f, this->sprite.getPosition().y + 200.f));
@@ -36,7 +46,7 @@ Orc::Orc(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, float
 	this->createHitboxComponent(this->sprite, 36.f, 36.f, 50.f, 50.f);
 	this->createMovementComponent(50.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 12 + 8);
+	this->createAttributeComponent(rand() % 14 + 8);
 
 	this->sprite.setScale(sf::Vector2f(2.f, 2.f));
 
@@ -103,7 +113,9 @@ void Orc::update(const float& dt, sf::Vector2f& mos_pos_view, const sf::View& vi
 
 	// Update Gui Test
 	this->hpBar.setSize(sf::Vector2f(75.f * (static_cast<float>(this->attributeComponent->hp) / static_cast<float>(this->attributeComponent->hpMax)), 5.f));
-	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x + 20.f, this->sprite.getPosition().y + 100.f));
+	this->hpBar.setPosition(sf::Vector2f(this->sprite.getPosition().x + 24.f, this->sprite.getPosition().y + 100.f));
+
+	this->headerText.setPosition(sf::Vector2f(this->sprite.getPosition().x + 35.f, this->sprite.getPosition().y));
 
 	this->updateAnimation(dt);
 	this->hitboxComponent->update();
@@ -127,6 +139,7 @@ void Orc::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2
 	}
 
 	target.draw(this->hpBar);
+	target.draw(this->headerText);
 
 	if (show_hitbox)
 		hitboxComponent->render(target);

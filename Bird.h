@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "AIFollow.h"
+#include "AIRoam.h"
 
 class Bird :
     public Enemy
@@ -14,6 +15,7 @@ private:
 
     sf::RectangleShape hpBar;
 
+    AIRoam* roam;
     AIFollow* follow;
 
 public:
