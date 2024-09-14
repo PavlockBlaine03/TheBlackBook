@@ -53,7 +53,7 @@ Scorpion::Scorpion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sh
 	this->createHitboxComponent(this->sprite, 15.f, 39.f, 30.f, 30.f);
 	this->createMovementComponent(100.f, 1400.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 6 + 1);
+	this->createAttributeComponent(rand() % 4 + 5);
 	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());
 
 	this->initAttributes();

@@ -40,7 +40,7 @@ Bird::Bird(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_sheet, flo
 	this->createHitboxComponent(this->sprite, 16.f, 16.f, 30.f, 30.f);
 	this->createMovementComponent(70.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 8 + 3);
+	this->createAttributeComponent(rand() % 6 + 5);
 
 	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());
 

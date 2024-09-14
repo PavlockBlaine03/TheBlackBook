@@ -20,42 +20,34 @@ void EnemySystem::createEnemy(const short type, const float x_pos, const float y
 	case EnemyTypes::RAT:
 		this->activeEnemies.push_back(new Rat(enemy_spawner_tile, textures["RAT1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "BIRD SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::BIRD:
 		this->activeEnemies.push_back(new Bird(enemy_spawner_tile, textures["BIRD1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "RAT SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::SCORPION:
 		this->activeEnemies.push_back(new Scorpion(enemy_spawner_tile, textures["SCORPION1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "SCORPION SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::BLOB1:
 		this->activeEnemies.push_back(new Blob(enemy_spawner_tile, textures["BLOB1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "BLOB SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::ORC1:
 		this->activeEnemies.push_back(new Orc(enemy_spawner_tile, textures["ORC1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "ORC SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::ORC_MINION1:
 		this->activeEnemies.push_back(new OrcMinion(enemy_spawner_tile, textures["ORCMINION1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "ORC MINION SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::ORC_MINION2:
 		this->activeEnemies.push_back(new OrcMinion(enemy_spawner_tile, textures["ORCMINION2_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "ORC MINION SPAWNED" << std::endl;
 		break;
 	case EnemyTypes::SPIDER1:
 		this->activeEnemies.push_back(new Spider(enemy_spawner_tile, textures["SPIDER1_SHEET"], x_pos, y_pos, this->player));
 		enemy_spawner_tile.increaseEnemyCounter();
-		std::cout << "ORC MINION SPAWNED" << std::endl;
 		break;
 	default:
 		std::cerr << "ERROR::ENEMY_SYSTEM::CREATE_ENEMY_FUNCTION::INVALID_TYPE" << std::endl;

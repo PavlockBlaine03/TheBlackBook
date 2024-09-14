@@ -50,7 +50,7 @@ OrcMinion::OrcMinion(EnemySpawnerTile& enemy_spawner_tile, sf::Texture& texture_
 	this->createHitboxComponent(this->sprite, 16.f, 16.f, 30.f, 30.f);
 	this->createMovementComponent(90.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
-	this->createAttributeComponent(rand() % 10 + 6);
+	this->createAttributeComponent(rand() % 5 + 8);
 
 
 	this->generateAttributes(this->attributeComponent->level, enemy_spawner_tile.getEnemyType());

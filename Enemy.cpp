@@ -60,94 +60,98 @@ void Enemy::generateAttributes(const unsigned level, const int type)
 	* 7 = SPIDER
 	*/
 
-	switch (type)
-	{
-	case 0:	// RAT
-		if (this->attributeComponent)
-		{
-			this->gainExp = level * (rand() % 5 + level + 1);
-		}
-		break;
-	case 1:	// BIRD
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+    switch (type)
+    {
+    case 0: // RAT (Non-aggressive, low stats)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hp = 12;
+            this->gainExp = level * (rand() % 4 + level + 2);  // Low EXP
+        }
+        break;
+    case 1: // BIRD (Tier 1 Enemy, easy to kill)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 4 + 3);  // Light HP scaling
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
-			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+            this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;  // Lower damage
+            this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
 
-			this->gainExp = level * (rand() % 6 + 3) + level;
-		}
-		break;
-	case 2:	// SCORPION
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level * rand() % 3 + 1) + (level + gainExp / 5);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+            this->gainExp = (rand() % 11 + 20) + level;  // EXP range 20-30
+        }
+        break;
+    case 2: // SCORPION (Tier 1 Enemy, moderate difficulty)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 3 + 5);  // Moderate HP scaling
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->attributeComponent->dmgMax += (rand() % 3 + 2);
-			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+            this->attributeComponent->dmgMax += (rand() % 4 + 3);  // Moderate damage
+            this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
 
-			this->gainExp = level * (rand() % 5 + level + 2);
-		}
-		break;
-	case 3:	// BLOB
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level + rand() % 3 + 1) + (level * 2);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+            this->gainExp = (rand() % 11 + 25) + level;  // EXP range 25-35
+        }
+        break;
+    case 3: // BLOB (Tier 1 Enemy, easy to kill)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 2 + 4);  // Lower HP scaling
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->gainExp = level * (rand() % 4 + level + 2);
-		}
-		break;
-	case 4:	// ORC
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level * rand() % 10 + 5) * (std::pow(level, 2) / 2);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+            this->gainExp = (rand() % 11 + 20) + level;  // EXP range 20-30
+        }
+        break;
+    case 4: // ORC (First area boss, difficult)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 20 + 100);  // High HP scaling, large base HP
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->attributeComponent->dmgMax += level;
-			this->attributeComponent->dmgMin += level - 4;
+            this->attributeComponent->dmgMax += level + (rand() % 5 + 20);  // Higher damage scaling
+            this->attributeComponent->dmgMin += level;
 
-			this->gainExp = pow(level + 1, 2) * (rand() % level + (level * 2)) + 6;
-		}
-		break;
-	case 5: // ORC_MINION1
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+            std::cout << this->attributeComponent->dmgMax << std::endl;
+            std::cout << this->attributeComponent->hp << std::endl;
 
-			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
-			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+            this->gainExp = level * (rand() % 6 + 50);  // Higher EXP reward
+        }
+        break;
+    case 5: // ORC_MINION1 (Tier 2 Enemy, moderate difficulty)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 6 + 25);
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->gainExp = level * (rand() % 6 + 3) + level;
-		}
-		break;
-	case 6: // ORC_MINION 2
-		if (this->attributeComponent)
-		{
-			this->attributeComponent->hpMax += (level * rand() % 4 + 2) + (level + gainExp / 3);
-			this->attributeComponent->hp = this->attributeComponent->hpMax;
+            this->attributeComponent->dmgMax += (rand() % 4 + 4) + this->attributeComponent->strength;  // Moderate damage
+            this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
 
-			this->attributeComponent->dmgMax += (rand() % 3 + 2) + this->attributeComponent->strength;
-			this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+            this->gainExp = (rand() % 16 + 40) + level;  // EXP range 40-55
+        }
+        break;
+    case 6: // ORC_MINION2 (Tier 2 Enemy, moderate difficulty)
+        if (this->attributeComponent)
+        {
+            this->attributeComponent->hpMax += (level * rand() % 6 + 25); 
+            this->attributeComponent->hp = this->attributeComponent->hpMax;
 
-			this->gainExp = level * (rand() % 6 + 3) + level;
-		}
-		break;
-	case 7: // SPIDER
-		if (this->attributeComponent)
-		{
-			this->gainExp = level * (rand() % 5 + 2) + level;
-		}
-		break;
-	default:
-		std::cerr << "ERROR::GENERATE_ATTRIBUTES::ENEMY::WRONG_TYPE" << std::endl;
-		exit(EXIT_FAILURE);
-		break;
-	}
+            this->attributeComponent->dmgMax += (rand() % 4 + 4) + this->attributeComponent->strength;  // Moderate damage
+            this->attributeComponent->dmgMin = this->attributeComponent->dmgMax - (this->attributeComponent->dmgMax / 4);
+
+            this->gainExp = (rand() % 16 + 40) + level;  // EXP range 40-55
+        }
+        break;
+    case 7: // SPIDER (Tier 2 Enemy, moderate difficulty)
+        if (this->attributeComponent)
+        {
+            this->gainExp = (rand() % 11 + 35) + level;  // EXP range 35-45
+        }
+        break;
+    default:
+        std::cerr << "ERROR::GENERATE_ATTRIBUTES::ENEMY::WRONG_TYPE" << std::endl;
+        exit(EXIT_FAILURE);
+        break;
+    }
 }
 
 void Enemy::loseHP(const int hp)
